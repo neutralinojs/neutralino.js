@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export interface CreateDirectoryOptions extends BaseOption {
   path: string;
@@ -50,7 +50,7 @@ export interface ReadDirectoryOptions extends BaseOption {
 export function createDirectory(options: CreateDirectoryOptions) {
     request({
         url: '/filesystem/createDirectory',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           path: options.path
         },
@@ -63,7 +63,7 @@ export function createDirectory(options: CreateDirectoryOptions) {
 export function removeDirectory(options: RemoveDirectoryOptions) {
     request({
         url: '/filesystem/removeDirectory',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           path: options.path
         },
@@ -75,7 +75,7 @@ export function removeDirectory(options: RemoveDirectoryOptions) {
 export function writeFile(options: WriteFileOptions) {
     request({
         url: '/filesystem/writeFile',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           fileName : options.fileName,
           data : options.data
@@ -88,7 +88,7 @@ export function writeFile(options: WriteFileOptions) {
 export function readFile(options: ReadFileOptions) {
     request({
         url: '/filesystem/readFile',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           fileName : options.fileName
         },
@@ -100,7 +100,7 @@ export function readFile(options: ReadFileOptions) {
 export function removeFile(options: RemoveFileOptions) {
     request({
         url : '/filesystem/removeFile',
-        type : 'POST',
+        type : RequestType.POST,
         data : {
           fileName : options.fileName
         },
@@ -112,7 +112,7 @@ export function removeFile(options: RemoveFileOptions) {
 export function readDirectory(options: ReadDirectoryOptions) {
     request({
         url : '/filesystem/readDirectory',
-        type : 'POST',
+        type : RequestType.POST,
         data : {
           path : options.path
         },

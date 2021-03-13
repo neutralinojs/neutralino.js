@@ -38,8 +38,10 @@ export interface RequestOptions {
     onError?: Function;
     data?: any;
     url: string;
-    type: string;
+    type: RequestType;
 }
+
+export enum RequestType {GET = 'GET', POST = 'POST'};
 
 export function request(config: RequestOptions) {
     let sendString: string = "";

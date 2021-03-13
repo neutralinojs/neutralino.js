@@ -20,12 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export function getRamUsage(options: BaseOption) {
     request({
         url: '/computer/getRamUsage',
-        type: 'GET',
+        type: RequestType.GET,
         onSuccess: options.onSuccess,
         onError: options.onError
     });

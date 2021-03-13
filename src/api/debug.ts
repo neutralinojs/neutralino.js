@@ -20,17 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
-export interface DebugOptions extends BaseOption {
-  type: string;
+export interface LoggerOptions extends BaseOption {
+  type: LoggerType;
   message: string;
 }
 
-export function log(options: DebugOptions) {
+export enum LoggerType {
+  WARN = 'WARN',
+  ERROR = 'ERROR',
+  INFO = 'INFO'
+};
+
+export function log(options: LoggerOptions) {
     request({
         url: '/debug/log',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           type: options.type,
           message: options.message

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export interface ExecCommandOptions extends BaseOption {
     command: string;
@@ -47,13 +47,20 @@ export interface NotificationOptions extends BaseOption {
 export interface MessageBoxOptions extends BaseOption {
     title: string;
     content: string;
-    type: string;
+    type: MessageBoxType;
 }  
+
+export enum MessageBoxType {
+    WARN = 'WARN',
+    ERROR = 'ERROR',
+    INFO = 'INFO',
+    QUESTION = 'QUESTION'
+};
 
 export function execCommand(options: ExecCommandOptions) {
     request({
         url: '/os/runCommand',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           command: options.command
         },
@@ -66,7 +73,7 @@ export function execCommand(options: ExecCommandOptions) {
 export function getEnvar(options: GetEnvarOptions) {
     request({
         url: '/os/getEnvar',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           key: options.key
         },
@@ -80,7 +87,7 @@ export function getEnvar(options: GetEnvarOptions) {
 export function showDialogOpen(options: DialogOpenOptions) {
     request({
         url: '/os/dialogOpen',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           title: options.title,
           isDirectoryMode: options.isDirectoryMode
@@ -94,7 +101,7 @@ export function showDialogOpen(options: DialogOpenOptions) {
 export function showDialogSave(options: DialogSaveOptions) {
     request({
         url: '/os/dialogSave',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           title: options.title
         },
@@ -107,7 +114,7 @@ export function showDialogSave(options: DialogSaveOptions) {
 export function showNotification(options: NotificationOptions) {
     request({
         url: '/os/showNotification',
-        type: 'POST',
+        type: RequestType.POST,
         data: options,
         onSuccess: options.onSuccess,
         onError: options.onError
@@ -118,7 +125,7 @@ export function showNotification(options: NotificationOptions) {
 export function showMessageBox(options: MessageBoxOptions) {
     request({
         url : '/os/showMessageBox',
-        type : 'POST',
+        type : RequestType.POST,
         data : options,
         onSuccess: options.onSuccess,
         onError: options.onError

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export interface StorageWriterOptions extends BaseOption {
   bucket: string;
@@ -34,7 +34,7 @@ export interface StorageReaderOptions extends BaseOption {
 export function putData(options: StorageWriterOptions) {
     request({
         url: '/storage/putData',
-        type: 'POST',
+        type: RequestType.POST,
         data: {
           bucket : options.bucket,
           data : options.data
@@ -48,7 +48,7 @@ export function putData(options: StorageWriterOptions) {
 export function getData(options: StorageReaderOptions) {
     request({
         url : '/storage/getData',
-        type : 'POST',
+        type : RequestType.POST,
         data : {
           bucket: options.bucket
         },

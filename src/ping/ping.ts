@@ -20,14 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export let ping = {
     start : function (pingSuccessCallback, pingFailCallback) {
         setInterval(function () {
             request({
                 url: '/ping',
-                type: 'GET',
+                type: RequestType.GET,
                 onSuccess: function(){
                     if(pingSuccessCallback)
                         pingSuccessCallback();

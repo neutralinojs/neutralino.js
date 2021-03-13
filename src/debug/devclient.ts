@@ -20,14 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request } from '../http/request';
+import { request, RequestType } from '../http/request';
 
 export let devClient = {
     start: function () {
         setInterval(function () {
             request({
                 url: 'http://localhost:8080',
-                type: 'GET',
+                type: RequestType.GET,
                 onSuccess: (data: any) => {
                     if(data && data.needsReload) {
                         location.reload();
