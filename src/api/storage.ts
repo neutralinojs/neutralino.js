@@ -29,31 +29,33 @@ export interface StorageWriterOptions extends BaseOption {
 
 export interface StorageReaderOptions extends BaseOption {
   bucket: string;
-} 
+}
 
 export function putData(options: StorageWriterOptions) {
     request({
-        url: '/storage/putData',
+        url: 'storage.putData',
         type: RequestType.POST,
         data: {
           bucket : options.bucket,
           data : options.data
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
 
 export function getData(options: StorageReaderOptions) {
     request({
-        url : '/storage/getData',
+        url : 'storage.getData',
         type : RequestType.POST,
         data : {
           bucket: options.bucket
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };

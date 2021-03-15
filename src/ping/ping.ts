@@ -26,7 +26,7 @@ export let ping = {
     start : function (pingSuccessCallback, pingFailCallback) {
         setInterval(function () {
             request({
-                url: '/ping',
+                url: 'app.keepAlive',
                 type: RequestType.GET,
                 onSuccess: function(){
                     if(pingSuccessCallback)
@@ -35,7 +35,8 @@ export let ping = {
                 onError: function () {
                     if(pingFailCallback)
                         pingFailCallback();
-                }
+                },
+                isNativeMethod: true
             });
         }, 5000);
     }

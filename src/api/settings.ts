@@ -24,10 +24,11 @@ import { request, RequestType } from '../http/request';
 
 export function getSettings(options: BaseOption) {
     request({
-        url: '/settings.json',
+        url: 'app.getSettings',
         type: RequestType.GET,
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };

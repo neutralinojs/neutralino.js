@@ -34,6 +34,7 @@ function initXMLhttp() {
 }
 
 export interface RequestOptions {
+    isNativeMethod?: boolean;
     onSuccess?: Function;
     onError?: Function;
     data?: any;
@@ -61,7 +62,10 @@ export function request(config: RequestOptions) {
         }
     }
 
-   if(config.data)
+    if(config.isNativeMethod)
+        config.url = "/__nativeMethod_" + config.url;
+
+    if(config.data)
         sendString = JSON.stringify(config.data);
 
     if (config.type == "GET") {

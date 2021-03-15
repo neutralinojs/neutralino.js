@@ -36,7 +36,6 @@ export let devClient = {
                 onError: () => {
                     console.error('Unable to communicate with neu devServer');
                 }
-
             });
         }, 1000);
     }

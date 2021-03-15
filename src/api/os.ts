@@ -28,27 +28,27 @@ export interface ExecCommandOptions extends BaseOption {
 
 export interface GetEnvarOptions extends BaseOption {
     key: string;
-}  
+}
 
 export interface DialogOpenOptions extends BaseOption {
     title: string;
     isDirectoryMode: boolean;
-}  
+}
 
 export interface DialogSaveOptions extends BaseOption {
     title: string;
-}  
+}
 
 export interface NotificationOptions extends BaseOption {
     body: string;
     summary: string;
-}  
+}
 
 export interface MessageBoxOptions extends BaseOption {
     title: string;
     content: string;
     type: MessageBoxType;
-}  
+}
 
 export enum MessageBoxType {
     WARN = 'WARN',
@@ -59,26 +59,28 @@ export enum MessageBoxType {
 
 export function execCommand(options: ExecCommandOptions) {
     request({
-        url: '/os/runCommand',
+        url: 'os.runCommand',
         type: RequestType.POST,
         data: {
           command: options.command
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
 
 export function getEnvar(options: GetEnvarOptions) {
     request({
-        url: '/os/getEnvar',
+        url: 'os.getEnvar',
         type: RequestType.POST,
         data: {
           key: options.key
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
@@ -86,48 +88,52 @@ export function getEnvar(options: GetEnvarOptions) {
 
 export function showDialogOpen(options: DialogOpenOptions) {
     request({
-        url: '/os/dialogOpen',
+        url: 'os.dialogOpen',
         type: RequestType.POST,
         data: {
           title: options.title,
           isDirectoryMode: options.isDirectoryMode
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
 
 export function showDialogSave(options: DialogSaveOptions) {
     request({
-        url: '/os/dialogSave',
+        url: 'os.dialogSave',
         type: RequestType.POST,
         data: {
           title: options.title
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
 
 export function showNotification(options: NotificationOptions) {
     request({
-        url: '/os/showNotification',
+        url: 'os.showNotification',
         type: RequestType.POST,
         data: options,
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };
 
 export function showMessageBox(options: MessageBoxOptions) {
     request({
-        url : '/os/showMessageBox',
+        url : 'os.showMessageBox',
         type : RequestType.POST,
         data : options,
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 };

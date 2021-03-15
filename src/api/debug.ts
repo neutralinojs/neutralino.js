@@ -35,14 +35,15 @@ export enum LoggerType {
 
 export function log(options: LoggerOptions) {
     request({
-        url: '/debug/log',
+        url: 'debug.log',
         type: RequestType.POST,
         data: {
           type: options.type,
           message: options.message
         },
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 
 };

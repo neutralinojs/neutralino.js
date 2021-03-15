@@ -24,7 +24,8 @@ import { request, RequestType } from '../http/request';
 
 export function exit() {
     request({
-        url : '/app/exit',
-        type : RequestType.POST
+        url: 'app.exit',
+        type: RequestType.POST,
+        isNativeMethod: true
     });
 };

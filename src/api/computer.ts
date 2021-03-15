@@ -24,9 +24,10 @@ import { request, RequestType } from '../http/request';
 
 export function getRamUsage(options: BaseOption) {
     request({
-        url: '/computer/getRamUsage',
+        url: 'computer.getRamUsage',
         type: RequestType.GET,
         onSuccess: options.onSuccess,
-        onError: options.onError
+        onError: options.onError,
+        isNativeMethod: true
     });
 };
