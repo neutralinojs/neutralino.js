@@ -44,38 +44,44 @@ export interface RequestOptions {
 
 export enum RequestType {GET = 'GET', POST = 'POST'};
 
-export function request(config: RequestOptions) {
+export function request(options: RequestOptions) {
     let sendString: string = "";
 
     let xmlhttp: XMLHttpRequest = initXMLhttp();
 
     xmlhttp.onreadystatechange = () => {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if (config.onSuccess) {
-                config.onSuccess(JSON.parse(xmlhttp.responseText));
-            }
+            let responseObject: any = null;
+            let responsePayload: string = xmlhttp.responseText;
+
+            if(responsePayload)
+                responseObject = JSON.parse(responsePayload);
+
+            if(options.onSuccess && responseObject && responseObject.success)
+                options.onSuccess(responseObject);
+            if(options.onError && responseObject && responseObject.error)
+                options.onError(responseObject.error);
         }
         else if(xmlhttp.readyState == 4) {
-            if(config.onError){
-                config.onError("Neutralino server is offline");
-            }
+            if(options.onError)
+                options.onError("Neutralino server is offline. Try restarting the application");
         }
     }
 
-    if(config.isNativeMethod)
-        config.url = "/__nativeMethod_" + config.url;
+    if(options.isNativeMethod)
+        options.url = "/__nativeMethod_" + options.url;
 
-    if(config.data)
-        sendString = JSON.stringify(config.data);
+    if(options.data)
+        sendString = JSON.stringify(options.data);
 
-    if (config.type == "GET") {
-        xmlhttp.open("GET", config.url, true);
+    if (options.type == "GET") {
+        xmlhttp.open("GET", options.url, true);
         xmlhttp.setRequestHeader("Authorization", "Basic " + window.NL_TOKEN);
         xmlhttp.send();
     }
 
-    if (config.type == "POST") {
-        xmlhttp.open("POST", config.url, true);
+    if (options.type == "POST") {
+        xmlhttp.open("POST", options.url, true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("Authorization", "Basic " + window.NL_TOKEN);
         xmlhttp.send(sendString);
