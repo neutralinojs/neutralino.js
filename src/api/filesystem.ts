@@ -51,9 +51,7 @@ export function createDirectory(options: CreateDirectoryOptions) {
     request({
         url: 'filesystem.createDirectory',
         type: RequestType.POST,
-        data: {
-          path: options.path
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -65,9 +63,7 @@ export function removeDirectory(options: RemoveDirectoryOptions) {
     request({
         url: 'filesystem.removeDirectory',
         type: RequestType.POST,
-        data: {
-          path: options.path
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -78,10 +74,7 @@ export function writeFile(options: WriteFileOptions) {
     request({
         url: 'filesystem.writeFile',
         type: RequestType.POST,
-        data: {
-          fileName : options.fileName,
-          data : options.data
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -92,9 +85,7 @@ export function readFile(options: ReadFileOptions) {
     request({
         url: 'filesystem.readFile',
         type: RequestType.POST,
-        data: {
-          fileName : options.fileName
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -103,11 +94,9 @@ export function readFile(options: ReadFileOptions) {
 
 export function removeFile(options: RemoveFileOptions) {
     request({
-        url : 'filesystem.removeFile',
-        type : RequestType.POST,
-        data : {
-          fileName : options.fileName
-        },
+        url: 'filesystem.removeFile',
+        type: RequestType.POST,
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -116,11 +105,9 @@ export function removeFile(options: RemoveFileOptions) {
 
 export function readDirectory(options: ReadDirectoryOptions) {
     request({
-        url : 'filesystem.readDirectory',
-        type : RequestType.POST,
-        data : {
-          path : options.path
-        },
+        url: 'filesystem.readDirectory',
+        type: RequestType.POST,
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true

@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 export * as filesystem from './api/filesystem';
-export * as settings from './api/settings';
 export * as os from './api/os';
 export * as computer from './api/computer';
 export * as storage from './api/storage';

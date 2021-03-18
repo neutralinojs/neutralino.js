@@ -21,23 +21,17 @@
 // SOFTWARE.
 
 import { request, RequestType } from '../http/request';
+import { keepAlive } from '../api/app';
+
+const PING_INTERVAL_MS: number = 5000;
 
 export let ping = {
-    start : function (pingSuccessCallback, pingFailCallback) {
+    start: function (pingSuccessCallback, pingFailCallback) {
         setInterval(function () {
-            request({
-                url: 'app.keepAlive',
-                type: RequestType.GET,
-                onSuccess: function(){
-                    if(pingSuccessCallback)
-                        pingSuccessCallback();
-                },
-                onError: function () {
-                    if(pingFailCallback)
-                        pingFailCallback();
-                },
-                isNativeMethod: true
+            keepAlive({
+                onSuccess: pingSuccessCallback,
+                onError: pingFailCallback
             });
-        }, 5000);
+        }, PING_INTERVAL_MS);
     }
 }

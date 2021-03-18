@@ -22,10 +22,45 @@
 
 import { request, RequestType } from '../http/request';
 
+export interface OpenActionOptions extends BaseOption {
+    url: string;
+}
+
 export function exit() {
     request({
         url: 'app.exit',
         type: RequestType.POST,
+        isNativeMethod: true
+    });
+};
+
+export function keepAlive(options: BaseOption) {
+    request({
+        url: 'app.keepAlive',
+        type: RequestType.GET,
+        onSuccess: options.onSuccess,
+        onError: options.onError,
+        isNativeMethod: true
+    });
+};
+
+export function getConfig(options: BaseOption) {
+    request({
+        url: 'app.getConfig',
+        type: RequestType.GET,
+        onSuccess: options.onSuccess,
+        onError: options.onError,
+        isNativeMethod: true
+    });
+};
+
+export function open(options: OpenActionOptions) {
+    request({
+        url : 'app.open',
+        type : RequestType.POST,
+        data : options,
+        onSuccess: options.onSuccess,
+        onError: options.onError,
         isNativeMethod: true
     });
 };

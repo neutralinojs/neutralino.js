@@ -35,10 +35,7 @@ export function putData(options: StorageWriterOptions) {
     request({
         url: 'storage.putData',
         type: RequestType.POST,
-        data: {
-          bucket : options.bucket,
-          data : options.data
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
@@ -48,11 +45,9 @@ export function putData(options: StorageWriterOptions) {
 
 export function getData(options: StorageReaderOptions) {
     request({
-        url : 'storage.getData',
-        type : RequestType.POST,
-        data : {
-          bucket: options.bucket
-        },
+        url: 'storage.getData',
+        type: RequestType.POST,
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true

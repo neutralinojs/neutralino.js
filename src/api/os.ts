@@ -59,30 +59,24 @@ export enum MessageBoxType {
 
 export function execCommand(options: ExecCommandOptions) {
     request({
-        url: 'os.runCommand',
+        url: 'os.execCommand',
         type: RequestType.POST,
-        data: {
-          command: options.command
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
     });
-
 };
 
 export function getEnvar(options: GetEnvarOptions) {
     request({
         url: 'os.getEnvar',
         type: RequestType.POST,
-        data: {
-          key: options.key
-        },
+        data: options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
     });
-
 };
 
 
@@ -90,29 +84,22 @@ export function showDialogOpen(options: DialogOpenOptions) {
     request({
         url: 'os.dialogOpen',
         type: RequestType.POST,
-        data: {
-          title: options.title,
-          isDirectoryMode: options.isDirectoryMode
-        },
+        data : options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
     });
-
 };
 
 export function showDialogSave(options: DialogSaveOptions) {
     request({
         url: 'os.dialogSave',
         type: RequestType.POST,
-        data: {
-          title: options.title
-        },
+        data : options,
         onSuccess: options.onSuccess,
         onError: options.onError,
         isNativeMethod: true
     });
-
 };
 
 export function showNotification(options: NotificationOptions) {
@@ -124,7 +111,6 @@ export function showNotification(options: NotificationOptions) {
         onError: options.onError,
         isNativeMethod: true
     });
-
 };
 
 export function showMessageBox(options: MessageBoxOptions) {
