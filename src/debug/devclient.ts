@@ -26,7 +26,7 @@ export let devClient = {
     start: function () {
         setInterval(function () {
             request({
-                url: 'http://localhost:8080',
+                url: 'http://localhost:5050',
                 type: RequestType.GET,
                 onSuccess: (data: any) => {
                     if(data && data.needsReload) {
