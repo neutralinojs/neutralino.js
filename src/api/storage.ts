@@ -22,34 +22,30 @@
 
 import { request, RequestType } from '../http/request';
 
-export interface StorageWriterOptions extends BaseOption {
+export interface StorageWriterOptions {
   bucket: string;
   data: string;
 }
 
-export interface StorageReaderOptions extends BaseOption {
+export interface StorageReaderOptions {
   bucket: string;
 }
 
-export function putData(options: StorageWriterOptions) {
-    request({
+export async function putData(options: StorageWriterOptions): Promise<any> {
+    return await request({
         url: 'storage.putData',
         type: RequestType.POST,
         data: options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 
 };
 
-export function getData(options: StorageReaderOptions) {
-    request({
+export async function getData(options: StorageReaderOptions): Promise<any> {
+    return await request({
         url: 'storage.getData',
         type: RequestType.POST,
         data: options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 

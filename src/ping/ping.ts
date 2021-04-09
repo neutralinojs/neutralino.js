@@ -20,18 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { request, RequestType } from '../http/request';
 import { keepAlive } from '../api/app';
 
 const PING_INTERVAL_MS: number = 5000;
 
 export let ping = {
-    start: function (pingSuccessCallback, pingFailCallback) {
-        setInterval(function () {
-            keepAlive({
-                onSuccess: pingSuccessCallback,
-                onError: pingFailCallback
-            });
+    start: () => {
+        setInterval(async () => {
+            await keepAlive();
         }, PING_INTERVAL_MS);
     }
 }

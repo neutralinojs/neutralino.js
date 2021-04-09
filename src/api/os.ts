@@ -22,29 +22,29 @@
 
 import { request, RequestType } from '../http/request';
 
-export interface ExecCommandOptions extends BaseOption {
+export interface ExecCommandOptions {
     command: string;
 }
 
-export interface GetEnvarOptions extends BaseOption {
+export interface GetEnvarOptions {
     key: string;
 }
 
-export interface DialogOpenOptions extends BaseOption {
+export interface DialogOpenOptions {
     title: string;
     isDirectoryMode: boolean;
 }
 
-export interface DialogSaveOptions extends BaseOption {
+export interface DialogSaveOptions {
     title: string;
 }
 
-export interface NotificationOptions extends BaseOption {
+export interface NotificationOptions {
     body: string;
     summary: string;
 }
 
-export interface MessageBoxOptions extends BaseOption {
+export interface MessageBoxOptions {
     title: string;
     content: string;
     type: MessageBoxType;
@@ -57,69 +57,57 @@ export enum MessageBoxType {
     QUESTION = 'QUESTION'
 };
 
-export function execCommand(options: ExecCommandOptions) {
-    request({
+export async function execCommand(options: ExecCommandOptions): Promise<any> {
+    return await request({
         url: 'os.execCommand',
         type: RequestType.POST,
         data: options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function getEnvar(options: GetEnvarOptions) {
-    request({
+export async function getEnvar(options: GetEnvarOptions): Promise<any> {
+    return await request({
         url: 'os.getEnvar',
         type: RequestType.POST,
         data: options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
 
-export function showDialogOpen(options: DialogOpenOptions) {
-    request({
+export async function showDialogOpen(options: DialogOpenOptions): Promise<any> {
+    return await request({
         url: 'os.dialogOpen',
         type: RequestType.POST,
         data : options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function showDialogSave(options: DialogSaveOptions) {
-    request({
+export async function showDialogSave(options: DialogSaveOptions): Promise<any> {
+    return await request({
         url: 'os.dialogSave',
         type: RequestType.POST,
         data : options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function showNotification(options: NotificationOptions) {
-    request({
+export async function showNotification(options: NotificationOptions): Promise<any> {
+    return await request({
         url: 'os.showNotification',
         type: RequestType.POST,
         data: options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function showMessageBox(options: MessageBoxOptions) {
-    request({
+export async function showMessageBox(options: MessageBoxOptions): Promise<any> {
+    return await request({
         url : 'os.showMessageBox',
         type : RequestType.POST,
         data : options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };

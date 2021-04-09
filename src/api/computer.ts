@@ -22,12 +22,10 @@
 
 import { request, RequestType } from '../http/request';
 
-export function getRamUsage(options: BaseOption) {
-    request({
+export async function getRamUsage(): Promise<any> {
+    return await request({
         url: 'computer.getRamUsage',
         type: RequestType.GET,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };

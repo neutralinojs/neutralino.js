@@ -22,7 +22,7 @@
 
 import { request, RequestType } from '../http/request';
 
-export interface LoggerOptions extends BaseOption {
+export interface LoggerOptions {
   type: LoggerType;
   message: string;
 }
@@ -33,16 +33,11 @@ export enum LoggerType {
   INFO = 'INFO'
 };
 
-export function log(options: LoggerOptions) {
-    request({
+export async function log(options: LoggerOptions): Promise<any> {
+    return await request({
         url: 'debug.log',
         type: RequestType.POST,
-        data: {
-          type: options.type,
-          message: options.message
-        },
-        onSuccess: options.onSuccess,
-        onError: options.onError,
+        data: options,
         isNativeMethod: true
     });
 

@@ -22,45 +22,39 @@
 
 import { request, RequestType } from '../http/request';
 
-export interface OpenActionOptions extends BaseOption {
+export interface OpenActionOptions {
     url: string;
 }
 
-export function exit() {
-    request({
+export async function exit(): Promise<any> {
+    return await request({
         url: 'app.exit',
         type: RequestType.POST,
         isNativeMethod: true
     });
 };
 
-export function keepAlive(options: BaseOption) {
-    request({
+export async function keepAlive(): Promise<any> {
+    return await request({
         url: 'app.keepAlive',
         type: RequestType.GET,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function getConfig(options: BaseOption) {
-    request({
+export async function getConfig(): Promise<any> {
+    return await request({
         url: 'app.getConfig',
         type: RequestType.GET,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };
 
-export function open(options: OpenActionOptions) {
-    request({
+export async function open(options: OpenActionOptions): Promise<any> {
+    return await request({
         url : 'app.open',
         type : RequestType.POST,
         data : options,
-        onSuccess: options.onSuccess,
-        onError: options.onError,
         isNativeMethod: true
     });
 };

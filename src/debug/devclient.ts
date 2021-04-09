@@ -24,19 +24,19 @@ import { request, RequestType } from '../http/request';
 
 export let devClient = {
     start: function () {
-        setInterval(function () {
-            request({
-                url: 'http://localhost:5050',
-                type: RequestType.GET,
-                onSuccess: (data: any) => {
-                    if(data && data.needsReload) {
-                        location.reload();
-                    }
-                },
-                onError: () => {
-                    console.error('Unable to communicate with neu devServer');
+        setInterval(async () => {
+            try {
+                let response = await request({
+                    url: 'http://localhost:5050',
+                    type: RequestType.GET
+                });
+                if(response.needsReload) {
+                    location.reload();
                 }
-            });
+            }
+            catch(e) {
+                console.error('Unable to communicate with neu devServer');
+            }
         }, 1000);
     }
 }

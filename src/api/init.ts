@@ -23,26 +23,9 @@
 import { ping } from '../ping/ping';
 import { devClient } from '../debug/devclient';
 
-export interface InitOptions extends BaseOption{
-    pingSuccessCallback: Function;
-    pingFailCallback: Function;
-}
-
-export function init(options: InitOptions) {
-    let pingSuccessCallback = null;
-    let pingFailCallback = null;
-
-    if(options.onSuccess) {
-        options.onSuccess();
-    }
-    if(options.pingSuccessCallback) {
-        pingSuccessCallback = options.pingSuccessCallback;
-    }
-    if(options.pingFailCallback) {
-        pingFailCallback = options.pingFailCallback;
-    }
+export function init() {
     if(window.NL_MODE && window.NL_MODE == 'browser')
-        ping.start(pingSuccessCallback, pingFailCallback);
+        ping.start();
 
     if(typeof window.NL_ARGS != "undefined") {
         for(let i = 0; i < window.NL_ARGS.length; i++) {
