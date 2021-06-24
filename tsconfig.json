@@ -4,6 +4,7 @@
     "noImplicitAny": false,
     "module": "commonjs",
     "target": "es6",
-    "allowJs": false
+    "allowJs": false,
+    "resolveJsonModule": true
   }
 }

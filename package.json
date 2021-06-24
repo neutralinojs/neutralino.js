@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shalithasuranga/neutralino-client-library.git"
+    "url": "git+https://github.com/neutralinojs/neutralino.js.git"
   },
-  "author": "",
+  "author": "Neutralinojs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shalithasuranga/neutralino-client-library/issues"
+    "url": "https://github.com/neutralinojs/neutralino.js/issues"
   },
-  "homepage": "https://github.com/shalithasuranga/neutralino-client-library#readme",
+  "homepage": "https://github.com/neutralinojs/neutralino.js#readme",
   "devDependencies": {
     "@types/node": "^14.14.34",
     "ts-loader": "^8.0.18",

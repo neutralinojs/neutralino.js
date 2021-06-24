@@ -1,5 +1,6 @@
 import { ping } from '../ping/ping';
 import { devClient } from '../debug/devclient';
+import { version } from '../../package.json';
 
 export function init() {
     if(window.NL_MODE && window.NL_MODE == 'browser')
@@ -13,4 +14,6 @@ export function init() {
             }
         }
     }
+    
+    window.NL_CVERSION = version;
 }

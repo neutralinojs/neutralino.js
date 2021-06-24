@@ -28,6 +28,18 @@ export interface MessageBoxOptions {
     type: MessageBoxType;
 }
 
+export interface TrayOptions {
+    icon?: string;
+    menu?: TrayMenuItem[]
+}
+
+interface TrayMenuItem {
+    id?: string;
+    text: string;
+    isDisabled?: boolean;
+    isChecked?: boolean;
+}
+
 export enum MessageBoxType {
     WARN = 'WARN',
     ERROR = 'ERROR',
@@ -52,7 +64,6 @@ export async function getEnvar(options: GetEnvarOptions): Promise<any> {
         isNativeMethod: true
     });
 };
-
 
 export async function showDialogOpen(options: DialogOpenOptions): Promise<any> {
     return await request({
@@ -84,6 +95,15 @@ export async function showNotification(options: NotificationOptions): Promise<an
 export async function showMessageBox(options: MessageBoxOptions): Promise<any> {
     return await request({
         url : 'os.showMessageBox',
+        type : RequestType.POST,
+        data : options,
+        isNativeMethod: true
+    });
+};
+
+export async function setTray(options: TrayOptions): Promise<any> {
+    return await request({
+        url : 'os.setTray',
         type : RequestType.POST,
         data : options,
         isNativeMethod: true

@@ -14,5 +14,6 @@ declare global {
         NL_PORT: number;
         NL_ARGS: string[];
         NL_TOKEN: string;
+        NL_CVERSION: string;
     }
 }
