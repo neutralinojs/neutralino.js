@@ -37,8 +37,12 @@ export function request(options: RequestOptions): Promise<any> {
                 if(responsePayload)
                     responseObject = JSON.parse(responsePayload);
 
-                if(responseObject && responseObject.success)
-                    resolve(responseObject);
+                if(responseObject && responseObject.success) {
+                    if(responseObject.hasOwnProperty("returnValue"))
+                        resolve(responseObject.returnValue);
+                    else
+                        resolve(responseObject);
+                }
                 if(responseObject && responseObject.error)
                     reject(responseObject.error);
             }
