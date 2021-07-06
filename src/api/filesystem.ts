@@ -25,8 +25,8 @@ export interface ReadDirectoryOptions {
   path: string;
 }
 
-export async function createDirectory(options: CreateDirectoryOptions): Promise<any> {
-    return await request({
+export function createDirectory(options: CreateDirectoryOptions): Promise<any> {
+    return request({
         url: 'filesystem.createDirectory',
         type: RequestType.POST,
         data: options,
@@ -35,8 +35,8 @@ export async function createDirectory(options: CreateDirectoryOptions): Promise<
 };
 
 
-export async function removeDirectory(options: RemoveDirectoryOptions): Promise<any> {
-    return await request({
+export function removeDirectory(options: RemoveDirectoryOptions): Promise<any> {
+    return request({
         url: 'filesystem.removeDirectory',
         type: RequestType.POST,
         data: options,
@@ -44,8 +44,8 @@ export async function removeDirectory(options: RemoveDirectoryOptions): Promise<
     });
 };
 
-export async function writeFile(options: WriteFileOptions): Promise<any> {
-    return await request({
+export function writeFile(options: WriteFileOptions): Promise<any> {
+    return request({
         url: 'filesystem.writeFile',
         type: RequestType.POST,
         data: options,
@@ -53,8 +53,8 @@ export async function writeFile(options: WriteFileOptions): Promise<any> {
     });
 };
 
-export async function readFile(options: ReadFileOptions): Promise<any> {
-    return await request({
+export function readFile(options: ReadFileOptions): Promise<any> {
+    return request({
         url: 'filesystem.readFile',
         type: RequestType.POST,
         data: options,
@@ -62,8 +62,8 @@ export async function readFile(options: ReadFileOptions): Promise<any> {
     });
 };
 
-export async function removeFile(options: RemoveFileOptions): Promise<any> {
-    return await request({
+export function removeFile(options: RemoveFileOptions): Promise<any> {
+    return request({
         url: 'filesystem.removeFile',
         type: RequestType.POST,
         data: options,
@@ -71,8 +71,8 @@ export async function removeFile(options: RemoveFileOptions): Promise<any> {
     });
 };
 
-export async function readDirectory(options: ReadDirectoryOptions): Promise<any> {
-    return await request({
+export function readDirectory(options: ReadDirectoryOptions): Promise<any> {
+    return request({
         url: 'filesystem.readDirectory',
         type: RequestType.POST,
         data: options,

@@ -4,32 +4,32 @@ export interface OpenActionOptions {
     url: string;
 }
 
-export async function exit(): Promise<any> {
-    return await request({
+export function exit(): Promise<any> {
+    return request({
         url: 'app.exit',
         type: RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function keepAlive(): Promise<any> {
-    return await request({
+export function keepAlive(): Promise<any> {
+    return request({
         url: 'app.keepAlive',
         type: RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function getConfig(): Promise<any> {
-    return await request({
+export function getConfig(): Promise<any> {
+    return request({
         url: 'app.getConfig',
         type: RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function open(options: OpenActionOptions): Promise<any> {
-    return await request({
+export function open(options: OpenActionOptions): Promise<any> {
+    return request({
         url : 'app.open',
         type : RequestType.POST,
         data : options,

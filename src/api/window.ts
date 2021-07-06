@@ -1,7 +1,7 @@
 import { request, RequestType } from '../http/request';
 
-export async function setTitle(title: string): Promise<any> {
-    return await request({
+export function setTitle(title: string): Promise<any> {
+    return request({
         url : 'window.setTitle',
         type : RequestType.POST,
         data : {
@@ -11,32 +11,32 @@ export async function setTitle(title: string): Promise<any> {
     });
 };
 
-export async function maximize(): Promise<any> {
-    return await request({
+export function maximize(): Promise<any> {
+    return request({
         url : 'window.maximize',
         type : RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function unmaximize(): Promise<any> {
-    return await request({
+export function unmaximize(): Promise<any> {
+    return request({
         url : 'window.unmaximize',
         type : RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function isMaximized(): Promise<any> {
-    return await request({
+export function isMaximized(): Promise<any> {
+    return request({
         url : 'window.isMaximized',
         type : RequestType.GET,
         isNativeMethod: true
     });
 };
 
-export async function minimize(): Promise<any> {
-    let response = await request({
+export function minimize(): Promise<any> {
+    return request({
         url : 'window.minimize',
         type : RequestType.GET,
         isNativeMethod: true

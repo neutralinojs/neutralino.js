@@ -47,8 +47,8 @@ export enum MessageBoxType {
     QUESTION = 'QUESTION'
 };
 
-export async function execCommand(options: ExecCommandOptions): Promise<any> {
-    return await request({
+export function execCommand(options: ExecCommandOptions): Promise<any> {
+    return request({
         url: 'os.execCommand',
         type: RequestType.POST,
         data: options,
@@ -56,8 +56,8 @@ export async function execCommand(options: ExecCommandOptions): Promise<any> {
     });
 };
 
-export async function getEnvar(options: GetEnvarOptions): Promise<any> {
-    return await request({
+export function getEnvar(options: GetEnvarOptions): Promise<any> {
+    return request({
         url: 'os.getEnvar',
         type: RequestType.POST,
         data: options,
@@ -65,8 +65,8 @@ export async function getEnvar(options: GetEnvarOptions): Promise<any> {
     });
 };
 
-export async function showDialogOpen(options: DialogOpenOptions): Promise<any> {
-    return await request({
+export function showDialogOpen(options: DialogOpenOptions): Promise<any> {
+    return request({
         url: 'os.dialogOpen',
         type: RequestType.POST,
         data : options,
@@ -74,8 +74,8 @@ export async function showDialogOpen(options: DialogOpenOptions): Promise<any> {
     });
 };
 
-export async function showDialogSave(options: DialogSaveOptions): Promise<any> {
-    return await request({
+export function showDialogSave(options: DialogSaveOptions): Promise<any> {
+    return request({
         url: 'os.dialogSave',
         type: RequestType.POST,
         data : options,
@@ -83,8 +83,8 @@ export async function showDialogSave(options: DialogSaveOptions): Promise<any> {
     });
 };
 
-export async function showNotification(options: NotificationOptions): Promise<any> {
-    return await request({
+export function showNotification(options: NotificationOptions): Promise<any> {
+    return request({
         url: 'os.showNotification',
         type: RequestType.POST,
         data: options,
@@ -92,8 +92,8 @@ export async function showNotification(options: NotificationOptions): Promise<an
     });
 };
 
-export async function showMessageBox(options: MessageBoxOptions): Promise<any> {
-    return await request({
+export function showMessageBox(options: MessageBoxOptions): Promise<any> {
+    return request({
         url : 'os.showMessageBox',
         type : RequestType.POST,
         data : options,
@@ -101,8 +101,8 @@ export async function showMessageBox(options: MessageBoxOptions): Promise<any> {
     });
 };
 
-export async function setTray(options: TrayOptions): Promise<any> {
-    return await request({
+export function setTray(options: TrayOptions): Promise<any> {
+    return request({
         url : 'os.setTray',
         type : RequestType.POST,
         data : options,

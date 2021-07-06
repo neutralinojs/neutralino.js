@@ -11,8 +11,8 @@ export enum LoggerType {
   INFO = 'INFO'
 };
 
-export async function log(options: LoggerOptions): Promise<any> {
-    return await request({
+export function log(options: LoggerOptions): Promise<any> {
+    return request({
         url: 'debug.log',
         type: RequestType.POST,
         data: options,

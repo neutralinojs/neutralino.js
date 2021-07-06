@@ -9,8 +9,8 @@ export interface StorageReaderOptions {
   bucket: string;
 }
 
-export async function putData(options: StorageWriterOptions): Promise<any> {
-    return await request({
+export function putData(options: StorageWriterOptions): Promise<any> {
+    return request({
         url: 'storage.putData',
         type: RequestType.POST,
         data: options,
@@ -19,8 +19,8 @@ export async function putData(options: StorageWriterOptions): Promise<any> {
 
 };
 
-export async function getData(options: StorageReaderOptions): Promise<any> {
-    return await request({
+export function getData(options: StorageReaderOptions): Promise<any> {
+    return request({
         url: 'storage.getData',
         type: RequestType.POST,
         data: options,
