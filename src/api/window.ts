@@ -109,3 +109,14 @@ export function setIcon(icon: string): Promise<any> {
         }
     });
 };
+
+export function move(x: number, y: number): Promise<any> {
+    return request({
+        url : 'window.move',
+        type : RequestType.POST,
+        isNativeMethod: true,
+        data: {
+            x, y
+        }
+    });
+};
