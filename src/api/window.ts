@@ -121,7 +121,7 @@ export function move(x: number, y: number): Promise<any> {
     });
 };
 
-export function setDraggableRegion(domId): Promise<any> {
+export function setDraggableRegion(domId: string): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
         let draggableRegion = document.getElementById(domId);
         let initialClientX: number = 0;
