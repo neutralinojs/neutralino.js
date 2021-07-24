@@ -120,3 +120,31 @@ export function move(x: number, y: number): Promise<any> {
         }
     });
 };
+
+export function setDraggableRegion(domId): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+        let draggableRegion = document.getElementById(domId);
+        let initialClientX: number = 0;
+        let initialClientY: number = 0;
+
+        if(!draggableRegion)
+            reject(`Unable to find dom element: #${domId}`);
+
+        draggableRegion.addEventListener('mousedown', (evt: MouseEvent) => {
+            initialClientX = evt.clientX;
+            initialClientY = evt.clientY;
+            draggableRegion.addEventListener('mousemove', onMouseMove);
+        });
+
+        draggableRegion.addEventListener('mouseup', () => {
+            draggableRegion.removeEventListener('mousemove', onMouseMove);
+        });
+        
+        async function onMouseMove(evt: MouseEvent) {
+            await Neutralino.window
+                .move(evt.screenX - initialClientX, evt.screenY - initialClientY);
+        }
+        
+        resolve();
+    });
+};

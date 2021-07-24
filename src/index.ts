@@ -16,4 +16,5 @@ declare global {
         NL_TOKEN: string;
         NL_CVERSION: string;
     }
+    let Neutralino: any;
 }
