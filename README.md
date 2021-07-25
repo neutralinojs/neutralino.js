@@ -1,6 +1,6 @@
 # neutralino.js
 
-Official JavaScript client library for [Neutralinojs server](https://github.com/neutralinojs/neutralinojs). See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/app/) for more details.
+The official JavaScript client library for [Neutralinojs server](https://github.com/neutralinojs/neutralinojs). See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/app/) for more details.
 
 ## Developer's FAQ
 
