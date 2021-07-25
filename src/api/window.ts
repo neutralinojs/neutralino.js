@@ -123,7 +123,7 @@ export function move(x: number, y: number): Promise<any> {
 
 export function setDraggableRegion(domId: string): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        let draggableRegion = document.getElementById(domId);
+        let draggableRegion: HTMLElement = document.getElementById(domId);
         let initialClientX: number = 0;
         let initialClientY: number = 0;
 
