@@ -11,6 +11,7 @@ export interface GetEnvarOptions {
 export interface DialogOpenOptions {
     title: string;
     isDirectoryMode: boolean;
+    filter: string[];
 }
 
 export interface DialogSaveOptions {
