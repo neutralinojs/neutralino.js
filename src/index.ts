@@ -5,6 +5,7 @@ export * as storage from './api/storage';
 export * as debug from './api/debug';
 export * as app from './api/app';
 export * as window from './api/window';
+export * as events from './api/events';
 
 export { init } from './api/init';
 
