@@ -1,5 +1,15 @@
 import { request, RequestType } from '../http/request';
 
+export interface WindowSizeOptions {
+  width?: number;
+  height?: number;
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number; 
+  resizable?: boolean;
+}
+
 export function setTitle(title: string): Promise<any> {
     return request({
         url : 'window.setTitle',
@@ -146,5 +156,14 @@ export function setDraggableRegion(domId: string): Promise<any> {
         }
         
         resolve();
+    });
+};
+
+export function setSize(options: WindowSizeOptions): Promise<any> {
+    return request({
+        url : 'window.setSize',
+        type : RequestType.POST,
+        isNativeMethod: true,
+        data: options
     });
 };

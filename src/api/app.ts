@@ -4,9 +4,20 @@ export interface OpenActionOptions {
     url: string;
 }
 
-export function exit(): Promise<any> {
+export function exit(code: number): Promise<any> {
     return request({
         url: 'app.exit',
+        type: RequestType.POST,
+        data: {
+            code
+        },
+        isNativeMethod: true
+    });
+};
+
+export function killProcess(): Promise<any> {
+    return request({
+        url: 'app.killProcess',
         type: RequestType.GET,
         isNativeMethod: true
     });
