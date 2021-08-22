@@ -13,7 +13,16 @@ export interface WriteFileOptions {
   data: string;
 }
 
+export interface WriteBinaryFileOptions {
+  fileName: string;
+  data: ArrayBuffer;
+}
+
 export interface ReadFileOptions {
+  fileName: string;
+}
+
+export interface ReadBinaryFileOptions {
   fileName: string;
 }
 
@@ -53,12 +62,53 @@ export function writeFile(options: WriteFileOptions): Promise<any> {
     });
 };
 
+export function writeBinaryFile(options: WriteBinaryFileOptions): Promise<any> {
+    let bytes: Uint8Array = new Uint8Array(options.data);
+    let asciiStr: string = '';
+    for(let byte of bytes) {
+        asciiStr += String.fromCharCode(byte);
+    }
+    
+    return request({
+        url: 'filesystem.writeBinaryFile',
+        type: RequestType.POST,
+        data: {
+            fileName: options.fileName,
+            data: window.btoa(asciiStr)
+        },
+        isNativeMethod: true
+    });
+};
+
 export function readFile(options: ReadFileOptions): Promise<any> {
     return request({
         url: 'filesystem.readFile',
         type: RequestType.POST,
         data: options,
         isNativeMethod: true
+    });
+};
+
+export function readBinaryFile(options: ReadBinaryFileOptions): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+        request({
+            url: 'filesystem.readBinaryFile',
+            type: RequestType.POST,
+            data: options,
+            isNativeMethod: true
+        })
+        .then((base64Data: string) => {
+            let binaryData: string = window.atob(base64Data);
+            let len: number = binaryData.length;
+            let bytes: Uint8Array = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryData.charCodeAt(i);
+            }
+            resolve({data: bytes.buffer});     
+        })
+        .catch((error: any) => {
+            reject(error);
+        });
     });
 };
 
