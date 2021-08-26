@@ -129,3 +129,38 @@ export function readDirectory(options: ReadDirectoryOptions): Promise<any> {
         isNativeMethod: true
     });
 };
+
+export function copyFile(source: string, destination: string): Promise<any> {
+    return request({
+        url: 'filesystem.copyFile',
+        type: RequestType.POST,
+        data: {
+            source,
+            destination
+        },
+        isNativeMethod: true
+    });
+};
+
+export function moveFile(source: string, destination: string): Promise<any> {
+    return request({
+        url: 'filesystem.moveFile',
+        type: RequestType.POST,
+        data: {
+            source,
+            destination
+        },
+        isNativeMethod: true
+    });
+};
+
+export function getStats(path: string): Promise<any> {
+    return request({
+        url: 'filesystem.getStats',
+        type: RequestType.POST,
+        data: {
+            path
+        },
+        isNativeMethod: true
+    });
+};
