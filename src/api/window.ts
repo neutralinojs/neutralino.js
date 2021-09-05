@@ -1,5 +1,17 @@
 import { request, RequestType } from '../http/request';
 
+export interface WindowOptions extends WindowSizeOptions {
+  title?: string;
+  icon?: string;
+  fullScreen?: boolean;
+  alwaysOnTop?: boolean;
+  enableInspector?: boolean;
+  borderless?: boolean;
+  maximize?: boolean;
+  hidden?: boolean;
+  maximizable?: boolean;
+}
+
 export interface WindowSizeOptions {
   width?: number;
   height?: number;
@@ -165,5 +177,36 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
         type : RequestType.POST,
         isNativeMethod: true,
         data: options
+    });
+};
+
+export function create(url: string, options: WindowOptions): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+        let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
+            if(arg.includes("--path=") || arg.includes("--debug-mode") || index == 0) {
+                acc += " " + arg;
+            }
+            return acc;
+        }, "");
+
+        command += " --url=" + url;
+        
+        for(let key in options) {
+            let cliKey: string = key.replace(/[A-Z]|^[a-z]/g, (token: string) => (
+               "-" + token.toLowerCase() 
+            ));
+            command += ` --window${cliKey}=${options[key]}`
+        }
+        
+        Neutralino.os.execCommand({
+            command,
+            shouldRunInBackground: true
+        })
+            .then(() => {
+                resolve();
+            })
+            .catch((error: any) => {
+                reject(error);
+            });
     });
 };

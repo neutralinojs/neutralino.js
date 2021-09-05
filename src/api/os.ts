@@ -2,6 +2,7 @@ import { request, RequestType } from '../http/request';
 
 export interface ExecCommandOptions {
     command: string;
+    shouldRunInBackground: boolean;
 }
 
 export interface GetEnvarOptions {

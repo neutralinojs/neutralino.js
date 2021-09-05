@@ -25,8 +25,8 @@ export interface RequestOptions {
 export enum RequestType {GET = 'GET', POST = 'POST'};
 
 export function request(options: RequestOptions): Promise<any> {
-    return new Promise((resolve: Function, reject: Function) => {
-        let sendString: string = "";
+    return new Promise((resolve: any, reject: any) => {
+        let sendString: string = null;
         let xmlhttp: XMLHttpRequest = initXMLhttp();
 
         xmlhttp.onreadystatechange = () => {
@@ -56,18 +56,11 @@ export function request(options: RequestOptions): Promise<any> {
 
         if(options.data)
             sendString = JSON.stringify(options.data);
+        
 
-        if (options.type == "GET") {
-            xmlhttp.open("GET", options.url, true);
-            xmlhttp.setRequestHeader("Authorization", "Basic " + window.NL_TOKEN);
-            xmlhttp.send();
-        }
-
-        if (options.type == "POST") {
-            xmlhttp.open("POST", options.url, true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.setRequestHeader("Authorization", "Basic " + window.NL_TOKEN);
-            xmlhttp.send(sendString);
-        }
+        xmlhttp.open(options.type, options.url, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.setRequestHeader("Authorization", "Basic " + window.NL_TOKEN);
+        xmlhttp.send(sendString);
     });
 }
