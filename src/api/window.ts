@@ -182,20 +182,31 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
 
 export function create(url: string, options: WindowOptions): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
+        
+        function normalize(arg: any) {
+            if(typeof arg != "string")
+                return arg;
+            arg = arg.trim();
+            if(arg.includes(" ")) {
+                arg = `"${arg}"`;
+            }
+            return arg;
+        }
+    
         let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
             if(arg.includes("--path=") || arg.includes("--debug-mode") || index == 0) {
-                acc += " " + arg;
+                acc += " " + normalize(arg);
             }
             return acc;
         }, "");
 
-        command += " --url=" + url;
+        command += " --url=" + normalize(url);
         
         for(let key in options) {
             let cliKey: string = key.replace(/[A-Z]|^[a-z]/g, (token: string) => (
                "-" + token.toLowerCase() 
             ));
-            command += ` --window${cliKey}=${options[key]}`
+            command += ` --window${cliKey}=${normalize(options[key])}`
         }
         
         Neutralino.os.execCommand({
