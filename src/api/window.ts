@@ -10,6 +10,7 @@ export interface WindowOptions extends WindowSizeOptions {
   maximize?: boolean;
   hidden?: boolean;
   maximizable?: boolean;
+  processArgs?: string;
 }
 
 export interface WindowSizeOptions {
@@ -203,11 +204,16 @@ export function create(url: string, options: WindowOptions): Promise<any> {
         command += " --url=" + normalize(url);
         
         for(let key in options) {
+            if(key == "processArgs") 
+                continue;
+
             let cliKey: string = key.replace(/[A-Z]|^[a-z]/g, (token: string) => (
                "-" + token.toLowerCase() 
             ));
             command += ` --window${cliKey}=${normalize(options[key])}`
         }
+        if(options.processArgs)
+            command += " " + options.processArgs;
         
         Neutralino.os.execCommand({
             command,
