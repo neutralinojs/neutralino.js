@@ -195,7 +195,8 @@ export function create(url: string, options: WindowOptions): Promise<any> {
         }
     
         let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
-            if(arg.includes("--path=") || arg.includes("--debug-mode") || index == 0) {
+            if(arg.includes("--path=") || arg.includes("--debug-mode") ||
+                arg.includes("--load-dir-res") || index == 0) {
                 acc += " " + normalize(arg);
             }
             return acc;
