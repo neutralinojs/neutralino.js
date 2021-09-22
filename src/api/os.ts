@@ -1,33 +1,12 @@
 import { request, RequestType } from '../http/request';
 
 export interface ExecCommandOptions {
-    command: string;
     shouldRunInBackground: boolean;
 }
 
-export interface GetEnvarOptions {
-    key: string;
-}
-
-export interface DialogOpenOptions {
-    title: string;
+export interface OpenDialogOptions {
     isDirectoryMode: boolean;
     filter: string[];
-}
-
-export interface DialogSaveOptions {
-    title: string;
-}
-
-export interface NotificationOptions {
-    body: string;
-    summary: string;
-}
-
-export interface MessageBoxOptions {
-    title: string;
-    content: string;
-    type: MessageBoxType;
 }
 
 export interface TrayOptions {
@@ -49,74 +28,91 @@ export enum MessageBoxType {
     QUESTION = 'QUESTION'
 };
 
-export function execCommand(options: ExecCommandOptions): Promise<any> {
+export function execCommand(command: string, options: ExecCommandOptions): Promise<any> {
     return request({
         url: 'os.execCommand',
         type: RequestType.POST,
-        data: options,
+        data: {
+            command,
+            ...options
+        },
         isNativeMethod: true
     });
 };
 
-export function getEnvar(options: GetEnvarOptions): Promise<any> {
+export function getEnv(key: string): Promise<any> {
     return request({
-        url: 'os.getEnvar',
+        url: 'os.getEnv',
         type: RequestType.POST,
-        data: options,
+        data: {
+            key
+        },
         isNativeMethod: true
     });
 };
 
-export function showDialogOpen(options: DialogOpenOptions): Promise<any> {
+export function showOpenDialog(title: string, options: OpenDialogOptions): Promise<any> {
     return request({
-        url: 'os.dialogOpen',
+        url: 'os.showOpenDialog',
         type: RequestType.POST,
-        data : options,
+        data: {
+            title,
+            ...options
+        },
         isNativeMethod: true
     });
 };
 
-export function showDialogSave(options: DialogSaveOptions): Promise<any> {
+export function showSaveDialog(title: string): Promise<any> {
     return request({
-        url: 'os.dialogSave',
+        url: 'os.showSaveDialog',
         type: RequestType.POST,
-        data : options,
+        data: {
+            title
+        },
         isNativeMethod: true
     });
 };
 
-export function showNotification(options: NotificationOptions): Promise<any> {
+export function showNotification(title: string, content: string): Promise<any> {
     return request({
         url: 'os.showNotification',
         type: RequestType.POST,
-        data: options,
+        data: {
+            title,
+            content
+        },
         isNativeMethod: true
     });
 };
 
-export function showMessageBox(options: MessageBoxOptions): Promise<any> {
+export function showMessageBox(title: string, content: string, type: MessageBoxType): Promise<any> {
     return request({
-        url : 'os.showMessageBox',
-        type : RequestType.POST,
-        data : options,
+        url: 'os.showMessageBox',
+        type: RequestType.POST,
+        data: {
+            title,
+            content,
+            type
+        },
         isNativeMethod: true
     });
 };
 
 export function setTray(options: TrayOptions): Promise<any> {
     return request({
-        url : 'os.setTray',
-        type : RequestType.POST,
-        data : options,
+        url: 'os.setTray',
+        type: RequestType.POST,
+        data: options,
         isNativeMethod: true
     });
 };
 
 export function open(url: string): Promise<any> {
     return request({
-        url : 'os.open',
-        type : RequestType.POST,
-        data : {
+        url: 'os.open',
+        type: RequestType.POST,
+        data: {
             url
         },
         isNativeMethod: true
