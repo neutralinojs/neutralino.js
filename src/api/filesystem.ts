@@ -1,69 +1,42 @@
 import { request, RequestType } from '../http/request';
 
-export interface CreateDirectoryOptions {
-  path: string;
-}
-
-export interface RemoveDirectoryOptions {
-  path: string;
-}
-
-export interface WriteFileOptions {
-  fileName: string;
-  data: string;
-}
-
-export interface WriteBinaryFileOptions {
-  fileName: string;
-  data: ArrayBuffer;
-}
-
-export interface ReadFileOptions {
-  fileName: string;
-}
-
-export interface ReadBinaryFileOptions {
-  fileName: string;
-}
-
-export interface RemoveFileOptions {
-  fileName: string;
-}
-
-export interface ReadDirectoryOptions {
-  path: string;
-}
-
-export function createDirectory(options: CreateDirectoryOptions): Promise<any> {
+export function createDirectory(path: string): Promise<any> {
     return request({
         url: 'filesystem.createDirectory',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path
+        },
         isNativeMethod: true
     });
 };
 
 
-export function removeDirectory(options: RemoveDirectoryOptions): Promise<any> {
+export function removeDirectory(path: string): Promise<any> {
     return request({
         url: 'filesystem.removeDirectory',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path
+        },
         isNativeMethod: true
     });
 };
 
-export function writeFile(options: WriteFileOptions): Promise<any> {
+export function writeFile(path: string, data: string): Promise<any> {
     return request({
         url: 'filesystem.writeFile',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path,
+            data
+        },
         isNativeMethod: true
     });
 };
 
-export function writeBinaryFile(options: WriteBinaryFileOptions): Promise<any> {
-    let bytes: Uint8Array = new Uint8Array(options.data);
+export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<any> {
+    let bytes: Uint8Array = new Uint8Array(data);
     let asciiStr: string = '';
     for(let byte of bytes) {
         asciiStr += String.fromCharCode(byte);
@@ -73,28 +46,32 @@ export function writeBinaryFile(options: WriteBinaryFileOptions): Promise<any> {
         url: 'filesystem.writeBinaryFile',
         type: RequestType.POST,
         data: {
-            fileName: options.fileName,
+            path,
             data: window.btoa(asciiStr)
         },
         isNativeMethod: true
     });
 };
 
-export function readFile(options: ReadFileOptions): Promise<any> {
+export function readFile(path: string): Promise<any> {
     return request({
         url: 'filesystem.readFile',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path
+        },
         isNativeMethod: true
     });
 };
 
-export function readBinaryFile(options: ReadBinaryFileOptions): Promise<any> {
+export function readBinaryFile(path: string): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
         request({
             url: 'filesystem.readBinaryFile',
             type: RequestType.POST,
-            data: options,
+            data: {
+                path
+            },
             isNativeMethod: true
         })
         .then((base64Data: string) => {
@@ -104,7 +81,7 @@ export function readBinaryFile(options: ReadBinaryFileOptions): Promise<any> {
             for (let i = 0; i < len; i++) {
                 bytes[i] = binaryData.charCodeAt(i);
             }
-            resolve({data: bytes.buffer});     
+            resolve(bytes.buffer);     
         })
         .catch((error: any) => {
             reject(error);
@@ -112,20 +89,24 @@ export function readBinaryFile(options: ReadBinaryFileOptions): Promise<any> {
     });
 };
 
-export function removeFile(options: RemoveFileOptions): Promise<any> {
+export function removeFile(path: string): Promise<any> {
     return request({
         url: 'filesystem.removeFile',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path
+        },
         isNativeMethod: true
     });
 };
 
-export function readDirectory(options: ReadDirectoryOptions): Promise<any> {
+export function readDirectory(path: string): Promise<any> {
     return request({
         url: 'filesystem.readDirectory',
         type: RequestType.POST,
-        data: options,
+        data: {
+            path
+        },
         isNativeMethod: true
     });
 };
