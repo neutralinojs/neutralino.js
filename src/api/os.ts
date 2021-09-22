@@ -111,3 +111,14 @@ export function setTray(options: TrayOptions): Promise<any> {
         isNativeMethod: true
     });
 };
+
+export function open(url: string): Promise<any> {
+    return request({
+        url : 'os.open',
+        type : RequestType.POST,
+        data : {
+            url
+        },
+        isNativeMethod: true
+    });
+};

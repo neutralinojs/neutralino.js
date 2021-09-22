@@ -1,9 +1,5 @@
 import { request, RequestType } from '../http/request';
 
-export interface OpenActionOptions {
-    url: string;
-}
-
 export function exit(code: number): Promise<any> {
     return request({
         url: 'app.exit',
@@ -35,15 +31,6 @@ export function getConfig(): Promise<any> {
     return request({
         url: 'app.getConfig',
         type: RequestType.GET,
-        isNativeMethod: true
-    });
-};
-
-export function open(options: OpenActionOptions): Promise<any> {
-    return request({
-        url : 'app.open',
-        type : RequestType.POST,
-        data : options,
         isNativeMethod: true
     });
 };
