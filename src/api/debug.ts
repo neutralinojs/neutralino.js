@@ -1,21 +1,19 @@
 import { request, RequestType } from '../http/request';
 
-export interface LoggerOptions {
-  type: LoggerType;
-  message: string;
-}
-
 export enum LoggerType {
-  WARN = 'WARN',
+  WARNING = 'WARNING',
   ERROR = 'ERROR',
   INFO = 'INFO'
 };
 
-export function log(options: LoggerOptions): Promise<any> {
+export function log(message: string, type: LoggerType): Promise<any> {
     return request({
         url: 'debug.log',
         type: RequestType.POST,
-        data: options,
+        data: {
+            message,
+            type
+        },
         isNativeMethod: true
     });
 

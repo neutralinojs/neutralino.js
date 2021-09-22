@@ -1,29 +1,25 @@
 import { request, RequestType } from '../http/request';
 
-export interface StorageWriterOptions {
-  bucket: string;
-  data: string;
-}
-
-export interface StorageReaderOptions {
-  bucket: string;
-}
-
-export function putData(options: StorageWriterOptions): Promise<any> {
+export function setData(key: string, data: string): Promise<any> {
     return request({
-        url: 'storage.putData',
+        url: 'storage.setData',
         type: RequestType.POST,
-        data: options,
+        data: {
+            key,
+            data
+        },
         isNativeMethod: true
     });
 
 };
 
-export function getData(options: StorageReaderOptions): Promise<any> {
+export function getData(key: string): Promise<any> {
     return request({
         url: 'storage.getData',
         type: RequestType.POST,
-        data: options,
+        data: {
+            key
+        },
         isNativeMethod: true
     });
 
