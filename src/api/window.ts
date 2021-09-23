@@ -153,19 +153,23 @@ export function setDraggableRegion(domId: string): Promise<any> {
         if(!draggableRegion)
             reject(`Unable to find dom element: #${domId}`);
 
-        draggableRegion.addEventListener('mousedown', (evt: MouseEvent) => {
+        draggableRegion.addEventListener('pointerdown', (evt: PointerEvent) => {
             initialClientX = evt.clientX;
             initialClientY = evt.clientY;
-            draggableRegion.addEventListener('mousemove', onMouseMove);
+            draggableRegion.addEventListener('pointermove', onPointerMove);
+            draggableRegion.setPointerCapture(evt.pointerId);
         });
 
-        draggableRegion.addEventListener('mouseup', () => {
-            draggableRegion.removeEventListener('mousemove', onMouseMove);
+        draggableRegion.addEventListener('pointerup', (evt: PointerEvent) => {
+            draggableRegion.removeEventListener('pointermove', onPointerMove);
+            draggableRegion.releasePointerCapture(evt.pointerId);
         });
-        
-        async function onMouseMove(evt: MouseEvent) {
-            await Neutralino.window
-                .move(evt.screenX - initialClientX, evt.screenY - initialClientY);
+
+        async function onPointerMove(evt: PointerEvent) {
+            await Neutralino.window.move(
+                evt.screenX - initialClientX,
+                evt.screenY - initialClientY
+            );
         }
         
         resolve();
