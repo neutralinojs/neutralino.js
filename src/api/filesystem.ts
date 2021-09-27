@@ -11,7 +11,6 @@ export function createDirectory(path: string): Promise<any> {
     });
 };
 
-
 export function removeDirectory(path: string): Promise<any> {
     return request({
         url: 'filesystem.removeDirectory',
