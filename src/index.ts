@@ -1,3 +1,5 @@
+/// <reference path="./globals.d.ts" />
+
 export * as filesystem from './api/filesystem';
 export * as os from './api/os';
 export * as computer from './api/computer';
@@ -8,14 +10,3 @@ export * as window from './api/window';
 export * as events from './api/events';
 
 export { init } from './api/init';
-
-declare global {
-    interface Window {
-        NL_MODE: string;
-        NL_PORT: number;
-        NL_ARGS: string[];
-        NL_TOKEN: string;
-        NL_CVERSION: string;
-    }
-    let Neutralino: any;
-}

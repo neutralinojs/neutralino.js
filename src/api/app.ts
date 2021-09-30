@@ -4,7 +4,7 @@ export interface OpenActionOptions {
     url: string;
 }
 
-export function exit(code: number): Promise<any> {
+export function exit(code?: number): Promise<any> {
     return request({
         url: 'app.exit',
         type: RequestType.POST,
