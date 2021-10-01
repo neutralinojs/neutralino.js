@@ -38,12 +38,3 @@ export function getConfig(): Promise<any> {
         isNativeMethod: true
     });
 };
-
-export function open(options: OpenActionOptions): Promise<any> {
-    return request({
-        url : 'app.open',
-        type : RequestType.POST,
-        data : options,
-        isNativeMethod: true
-    });
-};

@@ -12,7 +12,7 @@ export let devClient = {
                     location.reload();
                 }
             }
-            catch(e) {
+            catch(e: any) {
                 console.error('Unable to communicate with neu devServer');
             }
         }, 1000);
