@@ -1,8 +1,8 @@
 import { request, RequestType } from '../http/request';
 
-export function getRamUsage(): Promise<any> {
+export function getMemoryInfo(): Promise<any> {
     return request({
-        url: 'computer.getRamUsage',
+        url: 'computer.getMemoryInfo',
         type: RequestType.GET,
         isNativeMethod: true
     });
