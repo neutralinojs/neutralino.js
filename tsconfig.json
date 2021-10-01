@@ -5,9 +5,11 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": false,
-    "module": "commonjs",
+    "module": "es6", // Rollup needs esm inputs
     "target": "es6",
     "allowJs": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "declaration": true
   }
 }
