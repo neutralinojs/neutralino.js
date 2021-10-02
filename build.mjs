@@ -80,7 +80,7 @@ const logError = (err) => { if (err) console.error (''+err) }
 const writeDts = (filepath, definitions) => writeFile (filepath, 
 `// Type definitions for Neutralino ${version}
 // Project: https://github.com/neutralinojs
-// Definitions project: https://github.com/corbane/neutralino.js
+// Definitions project: https://github.com/neutralinojs/neutralino.js
 
 declare namespace Neutralino {
 
