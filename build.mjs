@@ -97,7 +97,7 @@ declare namespace Neutralino {
 ${definitions}
 }
 
-/** Exists but not documented: https://neutralino.js.org/docs/developer-environment/global-variables */
+/** Basic authentication token */
 declare const NL_TOKEN: string;
 
 /** Operating system name: Linux, Windows, or Darwin */
