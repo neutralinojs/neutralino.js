@@ -1,4 +1,14 @@
 
+/*/
+    This script generates the files `neutralino.js` and `neutralino.d.ts`.
+    For a development version, use: `node ./build.mjs --dev`
+    this will produce an unminified `neutralino.js` file and the neutralino.d.ts.map file.
+
+    ISSUE:
+        I don't understand why the source map (`neutralino.js.map`) is not generated.
+        https://github.com/wessberg/rollup-plugin-ts#ignoredoverridden-typescript-options
+/*/
+
 // @ts-check
 
 import { readFileSync, writeFile, mkdirSync, existsSync } from 'fs'
@@ -11,19 +21,21 @@ import { terser as Minify } from 'rollup-plugin-terser'
 // JSON modules is experimental https://nodejs.org/api/esm.html#esm_experimental_json_modules
 const { version } = JSON.parse (readFileSync ('./package.json', { encoding: 'utf8' }))
 const outdir  = 'dist'
+const devmode = process.argv.includes ('--dev')
 
 if (existsSync (outdir) === false)
     mkdirSync (outdir, { recursive: true })
 
 console.log ('import src/index.ts')
+
 rollup ({
     input: 'src/index.ts',
     plugins: [
         Json (),
         Ts ({
-            tsconfig: './tsconfig.json'
+            tsconfig: devmode ? config => ({ ...config, declarationMap: true }) : 'tsconfig.json'
         }),
-        Minify ({ format: { comments: false } })
+        devmode ? null : Minify ({ format: { comments: false } })
     ]
 })
 .then (build =>
@@ -43,9 +55,7 @@ rollup ({
 
     /** @type {string} */
     var filepath
-
-    // Currently there are only two generated files, the .js and the .d.ts,
-    // but maybe in the future if there are dynamic imports, this loop will work.
+    
     for (var entry of output)
     {
         filepath = joinPath (outdir, entry.fileName)
