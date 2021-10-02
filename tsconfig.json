@@ -1,10 +1,15 @@
 {
+  "include": [
+    "src/**/*.ts" // otherwise, the neutralino.d.ts file is included by webpack.
+  ],
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": false,
-    "module": "commonjs",
+    "module": "es6", // Rollup needs esm inputs
     "target": "es6",
     "allowJs": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "declaration": true
   }
 }

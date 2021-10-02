@@ -1,6 +1,10 @@
 import { request, RequestType } from '../http/request';
 
-export function exit(code: number): Promise<any> {
+export interface OpenActionOptions {
+    url: string;
+}
+
+export function exit(code?: number): Promise<any> {
     return request({
         url: 'app.exit',
         type: RequestType.POST,
