@@ -118,3 +118,14 @@ export function open(url: string): Promise<any> {
         isNativeMethod: true
     });
 };
+
+export function getPath(name: string): Promise<any> {
+    return request({
+        url: 'os.getPath',
+        type: RequestType.POST,
+        data: {
+            name
+        },
+        isNativeMethod: true
+    });
+};
