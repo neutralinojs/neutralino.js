@@ -185,7 +185,7 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
     });
 };
 
-export function create(url: string, options: WindowOptions): Promise<any> {
+export function create(url: string, options: WindowOptions = {}): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
         
         function normalize(arg: any) {
