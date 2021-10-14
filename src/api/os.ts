@@ -5,13 +5,23 @@ export interface ExecCommandOptions {
 }
 
 export interface OpenDialogOptions {
-    isDirectoryMode: boolean;
-    filter: string[];
+    multiSelections?: boolean;
+    filters?: Filter[];
+}
+
+export interface SaveDialogOptions {
+    forceOverwrite?: boolean;
+    filters?: Filter[];
+}
+
+export interface Filter {
+    name: string;
+    extensions: string[];
 }
 
 export interface TrayOptions {
     icon?: string;
-    menu?: TrayMenuItem[]
+    menu?: TrayMenuItem[];
 }
 
 interface TrayMenuItem {
@@ -21,14 +31,23 @@ interface TrayMenuItem {
     isChecked?: boolean;
 }
 
-export enum MessageBoxType {
-    WARN = 'WARN',
+export enum Icon {
+    WARNING = 'WARNING',
     ERROR = 'ERROR',
     INFO = 'INFO',
     QUESTION = 'QUESTION'
 };
 
-export function execCommand(command: string, options: ExecCommandOptions): Promise<any> {
+export enum MessageBoxChoice {
+    OK = 'OK',
+    OK_CANCEL = 'OK_CANCEL',
+    YES_NO = 'YES_NO',
+    YES_NO_CANCEL = 'YES_NO_CANCEL',
+    RETRY_CANCEL = 'RETRY_CANCEL',
+    ABORT_RETRY_IGNORE = 'ABORT_RETRY_IGNORE'
+};
+
+export function execCommand(command: string, options?: ExecCommandOptions): Promise<any> {
     return request({
         url: 'os.execCommand',
         type: RequestType.POST,
@@ -51,7 +70,7 @@ export function getEnv(key: string): Promise<any> {
     });
 };
 
-export function showOpenDialog(title: string, options: OpenDialogOptions): Promise<any> {
+export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<any> {
     return request({
         url: 'os.showOpenDialog',
         type: RequestType.POST,
@@ -63,9 +82,9 @@ export function showOpenDialog(title: string, options: OpenDialogOptions): Promi
     });
 };
 
-export function showSaveDialog(title: string): Promise<any> {
+export function showFolderDialog(title?: string): Promise<any> {
     return request({
-        url: 'os.showSaveDialog',
+        url: 'os.showFolderDialog',
         type: RequestType.POST,
         data: {
             title
@@ -74,26 +93,41 @@ export function showSaveDialog(title: string): Promise<any> {
     });
 };
 
-export function showNotification(title: string, content: string): Promise<any> {
+export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<any> {
     return request({
-        url: 'os.showNotification',
+        url: 'os.showSaveDialog',
         type: RequestType.POST,
         data: {
             title,
-            content
+            ...options
         },
         isNativeMethod: true
     });
 };
 
-export function showMessageBox(title: string, content: string, type: MessageBoxType): Promise<any> {
+export function showNotification(title: string, content: string, icon?: Icon): Promise<any> {
+    return request({
+        url: 'os.showNotification',
+        type: RequestType.POST,
+        data: {
+            title,
+            content,
+            icon
+        },
+        isNativeMethod: true
+    });
+};
+
+export function showMessageBox(title: string, content: string, 
+                choice?: MessageBoxChoice, icon?: Icon): Promise<any> {
     return request({
         url: 'os.showMessageBox',
         type: RequestType.POST,
         data: {
             title,
             content,
-            type
+            choice,
+            icon
         },
         isNativeMethod: true
     });
