@@ -185,7 +185,7 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
     });
 };
 
-export function create(url: string, options: WindowOptions = {}): Promise<any> {
+export function create(url: string, options?: WindowOptions): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
         
         function normalize(arg: any) {
@@ -217,7 +217,7 @@ export function create(url: string, options: WindowOptions = {}): Promise<any> {
             ));
             command += ` --window${cliKey}=${normalize(options[key])}`
         }
-        if(options.processArgs)
+        if(options && options.processArgs)
             command += " " + options.processArgs;
         
         Neutralino.os.execCommand(command, { shouldRunInBackground: true })
