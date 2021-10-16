@@ -1,37 +1,15 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export function createDirectory(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.createDirectory',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.createDirectory', { path });
 };
 
 export function removeDirectory(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.removeDirectory',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.removeDirectory', { path });
 };
 
 export function writeFile(path: string, data: string): Promise<any> {
-    return request({
-        url: 'filesystem.writeFile',
-        type: RequestType.POST,
-        data: {
-            path,
-            data
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.writeFile', { path, data });
 };
 
 export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<any> {
@@ -41,38 +19,19 @@ export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<any> {
         asciiStr += String.fromCharCode(byte);
     }
     
-    return request({
-        url: 'filesystem.writeBinaryFile',
-        type: RequestType.POST,
-        data: {
-            path,
-            data: window.btoa(asciiStr)
-        },
-        isNativeMethod: true
+    return sendMessage('filesystem.writeBinaryFile', {
+        path,
+        data: window.btoa(asciiStr)
     });
 };
 
 export function readFile(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.readFile',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.readFile', { path });
 };
 
 export function readBinaryFile(path: string): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        request({
-            url: 'filesystem.readBinaryFile',
-            type: RequestType.POST,
-            data: {
-                path
-            },
-            isNativeMethod: true
-        })
+        sendMessage('filesystem.readBinaryFile', { path })
         .then((base64Data: string) => {
             let binaryData: string = window.atob(base64Data);
             let len: number = binaryData.length;
@@ -89,58 +48,21 @@ export function readBinaryFile(path: string): Promise<any> {
 };
 
 export function removeFile(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.removeFile',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.removeFile', { path });
 };
 
 export function readDirectory(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.readDirectory',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.readDirectory', { path });
 };
 
 export function copyFile(source: string, destination: string): Promise<any> {
-    return request({
-        url: 'filesystem.copyFile',
-        type: RequestType.POST,
-        data: {
-            source,
-            destination
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.copyFile', { source, destination } );
 };
 
 export function moveFile(source: string, destination: string): Promise<any> {
-    return request({
-        url: 'filesystem.moveFile',
-        type: RequestType.POST,
-        data: {
-            source,
-            destination
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.moveFile', { source, destination });
 };
 
 export function getStats(path: string): Promise<any> {
-    return request({
-        url: 'filesystem.getStats',
-        type: RequestType.POST,
-        data: {
-            path
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('filesystem.getStats', { path });
 };

@@ -1,4 +1,4 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export interface ExecCommandOptions {
     shouldRunInBackground: boolean;
@@ -48,118 +48,42 @@ export enum MessageBoxChoice {
 };
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<any> {
-    return request({
-        url: 'os.execCommand',
-        type: RequestType.POST,
-        data: {
-            command,
-            ...options
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.execCommand', { command, ...options });
 };
 
 export function getEnv(key: string): Promise<any> {
-    return request({
-        url: 'os.getEnv',
-        type: RequestType.POST,
-        data: {
-            key
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.getEnv', { key });
 };
 
 export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<any> {
-    return request({
-        url: 'os.showOpenDialog',
-        type: RequestType.POST,
-        data: {
-            title,
-            ...options
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.showOpenDialog', { title, ...options });
 };
 
 export function showFolderDialog(title?: string): Promise<any> {
-    return request({
-        url: 'os.showFolderDialog',
-        type: RequestType.POST,
-        data: {
-            title
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.showFolderDialog', { title });
 };
 
 export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<any> {
-    return request({
-        url: 'os.showSaveDialog',
-        type: RequestType.POST,
-        data: {
-            title,
-            ...options
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.showSaveDialog', { title, ...options });
 };
 
 export function showNotification(title: string, content: string, icon?: Icon): Promise<any> {
-    return request({
-        url: 'os.showNotification',
-        type: RequestType.POST,
-        data: {
-            title,
-            content,
-            icon
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.showNotification', { title, content, icon });
 };
 
 export function showMessageBox(title: string, content: string, 
                 choice?: MessageBoxChoice, icon?: Icon): Promise<any> {
-    return request({
-        url: 'os.showMessageBox',
-        type: RequestType.POST,
-        data: {
-            title,
-            content,
-            choice,
-            icon
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.showMessageBox', { title, content, choice, icon });
 };
 
 export function setTray(options: TrayOptions): Promise<any> {
-    return request({
-        url: 'os.setTray',
-        type: RequestType.POST,
-        data: options,
-        isNativeMethod: true
-    });
+    return sendMessage('os.setTray', options);
 };
 
 export function open(url: string): Promise<any> {
-    return request({
-        url: 'os.open',
-        type: RequestType.POST,
-        data: {
-            url
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.open', { url });
 };
 
 export function getPath(name: string): Promise<any> {
-    return request({
-        url: 'os.getPath',
-        type: RequestType.POST,
-        data: {
-            name
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('os.getPath', { name });
 };

@@ -1,26 +1,10 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export function setData(key: string, data: string): Promise<any> {
-    return request({
-        url: 'storage.setData',
-        type: RequestType.POST,
-        data: {
-            key,
-            data
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('storage.setData', { key, data });
 
 };
 
 export function getData(key: string): Promise<any> {
-    return request({
-        url: 'storage.getData',
-        type: RequestType.POST,
-        data: {
-            key
-        },
-        isNativeMethod: true
-    });
-
+    return sendMessage('storage.getData', { key });
 };
