@@ -1,4 +1,4 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export enum LoggerType {
   WARNING = 'WARNING',
@@ -6,15 +6,6 @@ export enum LoggerType {
   INFO = 'INFO'
 };
 
-export function log(message: string, type: LoggerType): Promise<any> {
-    return request({
-        url: 'debug.log',
-        type: RequestType.POST,
-        data: {
-            message,
-            type
-        },
-        isNativeMethod: true
-    });
-
+export function log(message: string, type?: LoggerType): Promise<any> {
+    return sendMessage('debug.log', { message, type });
 };

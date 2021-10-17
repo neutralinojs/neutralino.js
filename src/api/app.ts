@@ -1,4 +1,4 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export interface OpenActionOptions {
     url: string;
@@ -9,22 +9,11 @@ export interface RestartOptions {
 }
 
 export function exit(code?: number): Promise<any> {
-    return request({
-        url: 'app.exit',
-        type: RequestType.POST,
-        data: {
-            code
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('app.exit', { code });
 };
 
 export function killProcess(): Promise<any> {
-    return request({
-        url: 'app.killProcess',
-        type: RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('app.killProcess');
 };
 
 export function restartProcess(options: RestartOptions): Promise<any> {
@@ -45,17 +34,9 @@ export function restartProcess(options: RestartOptions): Promise<any> {
 };
 
 export function keepAlive(): Promise<any> {
-    return request({
-        url: 'app.keepAlive',
-        type: RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('app.keepAlive');
 };
 
 export function getConfig(): Promise<any> {
-    return request({
-        url: 'app.getConfig',
-        type: RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('app.getConfig');
 };

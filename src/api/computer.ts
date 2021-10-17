@@ -1,9 +1,5 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export function getMemoryInfo(): Promise<any> {
-    return request({
-        url: 'computer.getMemoryInfo',
-        type: RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('computer.getMemoryInfo');
 };

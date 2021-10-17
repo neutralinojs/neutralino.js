@@ -1,4 +1,4 @@
-import { request, RequestType } from '../http/request';
+import { sendMessage } from '../ws/websocket';
 
 export interface WindowOptions extends WindowSizeOptions {
   title?: string;
@@ -24,124 +24,59 @@ export interface WindowSizeOptions {
 }
 
 export function setTitle(title: string): Promise<any> {
-    return request({
-        url : 'window.setTitle',
-        type : RequestType.POST,
-        data : {
-            title
-        },
-        isNativeMethod: true
-    });
+    return sendMessage('window.setTitle', { title });
 };
 
 export function maximize(): Promise<any> {
-    return request({
-        url : 'window.maximize',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.maximize');
 };
 
 export function unmaximize(): Promise<any> {
-    return request({
-        url : 'window.unmaximize',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.unmaximize');
 };
 
 export function isMaximized(): Promise<boolean> {
-    return request({
-        url : 'window.isMaximized',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.isMaximized');
 };
 
 export function minimize(): Promise<any> {
-    return request({
-        url : 'window.minimize',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.minimize');
 };
 
 export function setFullScreen(): Promise<any> {
-    return request({
-        url : 'window.setFullScreen',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.setFullScreen');
 };
 
 export function exitFullScreen(): Promise<any> {
-    return request({
-        url : 'window.exitFullScreen',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.exitFullScreen');
 };
 
 export function isFullScreen(): Promise<boolean> {
-    return request({
-        url : 'window.isFullScreen',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.isFullScreen');
 };
 
 export function show(): Promise<any> {
-    return request({
-        url : 'window.show',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.show');
 };
 
 export function hide(): Promise<any> {
-    return request({
-        url : 'window.hide',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.hide');
 };
 
 export function isVisible(): Promise<boolean> {
-    return request({
-        url : 'window.isVisible',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.isVisible');
 };
 
 export function focus(): Promise<any> {
-    return request({
-        url : 'window.focus',
-        type : RequestType.GET,
-        isNativeMethod: true
-    });
+    return sendMessage('window.focus');
 };
 
 export function setIcon(icon: string): Promise<any> {
-    return request({
-        url : 'window.setIcon',
-        type : RequestType.POST,
-        isNativeMethod: true,
-        data: {
-            icon
-        }
-    });
+    return sendMessage('window.setIcon', { icon });
 };
 
 export function move(x: number, y: number): Promise<any> {
-    return request({
-        url : 'window.move',
-        type : RequestType.POST,
-        isNativeMethod: true,
-        data: {
-            x, y
-        }
-    });
+    return sendMessage('window.move', { x, y });
 };
 
 export function setDraggableRegion(domId: string): Promise<any> {
@@ -177,12 +112,7 @@ export function setDraggableRegion(domId: string): Promise<any> {
 };
 
 export function setSize(options: WindowSizeOptions): Promise<any> {
-    return request({
-        url : 'window.setSize',
-        type : RequestType.POST,
-        isNativeMethod: true,
-        data: options
-    });
+    return sendMessage('window.setSize', options);
 };
 
 export function create(url: string, options?: WindowOptions): Promise<any> {
