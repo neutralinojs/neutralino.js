@@ -90,8 +90,8 @@ rollup ({
     console.log (
         '\n' + err +
         // RollupLogProps, https://github.com/rollup/rollup/blob/master/src/rollup/types.d.ts#L24
-        (typeof err.loc === 'object' ? err.loc.file + ':' + err.loc.line : '') +
-        (typeof err.frame === 'string' ? err.frame : '')
+        (typeof err.loc   === 'object' ? '\n' + err.loc.file + ':' + err.loc.line : '') +
+        (typeof err.frame === 'string' ? '\n' + err.frame : '')
     )
 })
 
