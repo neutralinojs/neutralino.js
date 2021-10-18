@@ -85,6 +85,14 @@ rollup ({
     console.log ('write', filepath)
     writeDts (filepath, dts.substring (0, dts.lastIndexOf ("export")))
 })
+.catch (err =>
+{
+    console.log (
+        '\n' + err +
+        (typeof err.loc === 'object' ? err.loc.file + ':' + err.loc.line : '') +
+        (typeof err.frame === 'string' ? err.frame : '')
+    )
+})
 
 const logError = (err) => { if (err) console.error (''+err) }
 
