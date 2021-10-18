@@ -25,6 +25,10 @@ export function init() {
             events.dispatch(message.event, message.data);
         }
     });
+    
+    ws.addEventListener('open', (event) => {
+        events.dispatch('ready');
+    });
 }
 
 export function sendMessage(method: string, data?: any): Promise<any> {
