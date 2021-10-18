@@ -1,6 +1,6 @@
 # neutralino.js
 
-JavaScript API for [Neutralinojs server](https://github.com/neutralinojs/neutralinojs). See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/introduction) for more details.
+JavaScript API for [Neutralinojs](https://github.com/neutralinojs/neutralinojs). See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/introduction) for more details.
 
 ## Developer's FAQ
 
