@@ -10,12 +10,12 @@ export function init() {
 
         if(message.id && message.id in nativeCalls) {
             // Native call response
-            if(message.data.error) {
+            if(message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
             }
-            else if(message.data.success) {
+            else if(message.data?.success) {
                 nativeCalls[message.id]
-                    .resolve(message.data.returnValue ? message.data.returnValue 
+                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue 
                         : message.data);
             }
             delete nativeCalls[message.id];
