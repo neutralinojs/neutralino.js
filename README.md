@@ -9,6 +9,7 @@ How to build `neutralino.js` from this repository?
 ```bash
 git clone https://github.com/neutralinojs/neutralino.js.git
 cd neutralino.js
+npm install
 npm run build
 ```
 
