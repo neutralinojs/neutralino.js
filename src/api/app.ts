@@ -16,14 +16,14 @@ export function killProcess(): Promise<any> {
     return sendMessage('app.killProcess');
 };
 
-export function restartProcess(options: RestartOptions): Promise<any> {
+export function restartProcess(options?: RestartOptions): Promise<any> {
     return new Promise(async (resolve: any, reject: any) => {
         let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
             acc += ' ' + arg;
             return acc;
         }, '');
         
-        if(options.args) {
+        if(options?.args) {
             command += ' ' + options.args;
         }
         
