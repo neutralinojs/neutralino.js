@@ -2,11 +2,11 @@
 /*/
     This script generates the files `neutralino.js` and `neutralino.d.ts`.
     For a development version, use: `node ./build.mjs --dev`
-    this will produce an unminified `neutralino.js` file and the neutralino.d.ts.map file.
+    this will produce an unminified `neutralino.js` file and the neutralino.js.map file.
+    neutralino.js.map can be moved without the source code.
 
     ISSUE:
-        I don't understand why the source map (`neutralino.js.map`) is not generated.
-        https://github.com/wessberg/rollup-plugin-ts#ignoredoverridden-typescript-options
+        rollup-plugin-ts produce an empty `neutralino.d.ts.map`
 /*/
 
 // @ts-check
@@ -34,7 +34,11 @@ rollup ({
     plugins: [
         Json (),
         Ts ({
-            tsconfig: devmode ? config => ({ ...config, declarationMap: true }) : 'tsconfig.json'
+            tsconfig: config => ({ 
+                ...config, 
+                // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
+                // declarationMap: devmode
+            })
         }),
         devmode ? cleanup({comments: 'none'}) : Minify ({ format: { comments: false } })
     ]
@@ -46,7 +50,7 @@ rollup ({
         file      : 'neutralino.js',
         format    : "iife",
         name      : "Neutralino",
-        sourcemap : true
+        sourcemap : devmode
     })
 })
 .then (({ output }) => 
@@ -63,13 +67,18 @@ rollup ({
 
         if (entry.type === 'chunk')
         {
-            console.log ('write', filepath)
-            writeFile (filepath, entry.code, { encoding: 'utf8' }, logError)
+            // rollup-plugin-ts does not move the map in individual chunk
+            if (entry.map) {
+                write (filepath + '.map', entry.map.toString ())
+                var code = entry.code + '\n//# sourceMappingURL=neutralino.js.map'
+            } else {
+                var code = entry.code
+            }
+            write (filepath, code)
         }
         else if (entry.fileName !== 'neutralino.d.ts')
         {
-            console.log ('write', filepath)
-            writeFile (filepath, entry.source, { encoding: 'utf8' }, logError)
+            write (filepath, entry.source)
         }
         else
         {
@@ -81,9 +90,8 @@ rollup ({
 })
 .then (dts => 
 {
-    const filepath = joinPath (outdir, 'neutralino.d.ts')
-    console.log ('write', filepath)
-    writeDts (filepath, dts.substring (0, dts.lastIndexOf ("export")))
+    if (dts)
+        writeDts (joinPath (outdir, 'neutralino.d.ts'), dts.substring (0, dts.lastIndexOf ("export")))
 })
 .catch (err =>
 {
@@ -95,9 +103,17 @@ rollup ({
     )
 })
 
-const logError = (err) => { if (err) console.error (''+err) }
+function write (filepath, content)
+{
+    console.log ('write', filepath)
+    writeFile (filepath, content, { encoding: 'utf8' }, (err) =>
+    {
+        if (err)
+            console.error (''+err)
+    })
+}
 
-const writeDts = (filepath, definitions) => writeFile (filepath, 
+const writeDts = (filepath, definitions) => write (filepath, 
 `// Type definitions for Neutralino ${version}
 // Project: https://github.com/neutralinojs
 // Definitions project: https://github.com/neutralinojs/neutralino.js
@@ -140,4 +156,8 @@ declare const NL_ARGS: string[];
 /** Current process's identifier */
 declare const NL_PID: number
 
-`/*dtsTemplate*/, { encoding: 'utf8' }, logError)
+${
+    // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
+    // devmode ? '//# sourceMappingURL=neutralino.d.ts.map' : ''
+    ''
+}`/*dtsTemplate*/)
