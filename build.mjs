@@ -55,15 +55,9 @@ rollup ({
 })
 .then (({ output }) => 
 {
-    /** @type {string} */
-    var dts = null
-
-    /** @type {string} */
-    var filepath
-    
     for (var entry of output)
     {
-        filepath = joinPath (outdir, entry.fileName)
+        var filepath = joinPath (outdir, entry.fileName)
 
         if (entry.type === 'chunk')
         {
@@ -76,26 +70,20 @@ rollup ({
             }
             write (filepath, code)
         }
-        else if (entry.fileName !== 'neutralino.d.ts')
+        else if (entry.fileName === 'neutralino.d.ts')
         {
-            write (filepath, entry.source)
+            var code = entry.source.toString ()
+            writeDts (joinPath (outdir, 'neutralino.d.ts'), code.substring (0, code.lastIndexOf ("export")))
         }
         else
         {
-            dts = entry.source.toString ()
+            write (filepath, entry.source)
         }
     }
-
-    return dts
-})
-.then (dts => 
-{
-    if (dts)
-        writeDts (joinPath (outdir, 'neutralino.d.ts'), dts.substring (0, dts.lastIndexOf ("export")))
 })
 .catch (err =>
 {
-    console.log (
+    console.error (
         '\n' + err +
         // RollupLogProps, https://github.com/rollup/rollup/blob/master/src/rollup/types.d.ts#L24
         (typeof err.loc   === 'object' ? '\n' + err.loc.file + ':' + err.loc.line : '') +
