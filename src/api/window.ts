@@ -1,5 +1,7 @@
 import { sendMessage } from '../ws/websocket';
 
+const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
+
 export interface WindowOptions extends WindowSizeOptions {
   title?: string;
   icon?: string;
@@ -79,33 +81,28 @@ export function move(x: number, y: number): Promise<any> {
     return sendMessage('window.move', { x, y });
 };
 
-
-const draggableRegions = new WeakMap();
-
 export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        const draggableRegion: HTMLElement = domElementOrId instanceof Element ? domElementOrId : document.getElementById(domElementOrId);
+        const draggableRegion: HTMLElement = domElementOrId instanceof Element ? 
+                                                    domElementOrId : document.getElementById(domElementOrId);
         let initialClientX: number = 0;
         let initialClientY: number = 0;
 
-        if(!draggableRegion)
-            reject(`Unable to find dom element: #${domElementOrId}`);
-        if (draggableRegions.has(draggableRegion))
-            reject(`Dom element is alredy a draggable region`);
-
-        function startPointerCapturing(evt: PointerEvent) {
-            if (evt.button !== 0) return;
-            initialClientX = evt.clientX;
-            initialClientY = evt.clientY;
-            draggableRegion.addEventListener('pointermove', onPointerMove);
-            draggableRegion.setPointerCapture(evt.pointerId);
+        if (!draggableRegion) {
+            return reject({
+                code: 'NE_WD_DOMNOTF',
+                message: 'Unable to find DOM element'
+            });
         }
+
+        if (draggableRegions.has(draggableRegion)) {
+            return reject({
+                code: 'NE_WD_ALRDREL',
+                message: 'This DOM element is already an active draggable region'
+            });
+        }
+
         draggableRegion.addEventListener('pointerdown', startPointerCapturing);
-
-        function endPointerCapturing(evt: PointerEvent) {
-            draggableRegion.removeEventListener('pointermove', onPointerMove);
-            draggableRegion.releasePointerCapture(evt.pointerId);
-        }
         draggableRegion.addEventListener('pointerup', endPointerCapturing);
 
         draggableRegions.set(draggableRegion, { pointerdown: startPointerCapturing, pointerup: endPointerCapturing });
@@ -116,26 +113,54 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
                 evt.screenY - initialClientY
             );
         }
+        
+        function startPointerCapturing(evt: PointerEvent) {
+            if (evt.button !== 0) return;
+            initialClientX = evt.clientX;
+            initialClientY = evt.clientY;
+            draggableRegion.addEventListener('pointermove', onPointerMove);
+            draggableRegion.setPointerCapture(evt.pointerId);
+        }
+        
+        function endPointerCapturing(evt: PointerEvent) {
+            draggableRegion.removeEventListener('pointermove', onPointerMove);
+            draggableRegion.releasePointerCapture(evt.pointerId);
+        }
 
-        resolve();
+        resolve({
+            success: true,
+            message: 'Draggable region was activated'
+        });
     });
 };
 
 export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
   return new Promise((resolve: any, reject: any) => {
-      const draggableRegion: HTMLElement = domElementOrId instanceof Element ? domElementOrId : document.getElementById(domElementOrId);
+        const draggableRegion: HTMLElement = domElementOrId instanceof Element ? 
+                                                domElementOrId : document.getElementById(domElementOrId);
 
-      if (!draggableRegion)
-          reject(`Unable to find dom element: #${domElementOrId}`);
-      if (!draggableRegions.has(draggableRegion))
-          reject(`Dom element is not a draggable region`);
+        if (!draggableRegion) {
+            return reject({
+                code: 'NE_WD_DOMNOTF',
+                message: 'Unable to find DOM element'
+            });
+        }
+        if (!draggableRegions.has(draggableRegion)) {
+            return reject({
+                code: 'NE_WD_NOTDRRE',
+                message: 'DOM element is not an active draggable region'
+            });
+        }
 
-      const { pointerdown, pointerup } = draggableRegions.get(draggableRegion);
-      draggableRegion.removeEventListener('pointerdown', pointerdown);
-      draggableRegion.removeEventListener('pointerup', pointerup);
-      draggableRegions.delete(draggableRegion);
-
-      resolve();
+        const { pointerdown, pointerup } = draggableRegions.get(draggableRegion);
+        draggableRegion.removeEventListener('pointerdown', pointerdown);
+        draggableRegion.removeEventListener('pointerup', pointerup);
+        draggableRegions.delete(draggableRegion);
+        
+        resolve({
+            success: true,
+            message: 'Draggable region was deactivated'
+        });
   });
 }
 
@@ -181,7 +206,10 @@ export function create(url: string, options?: WindowOptions): Promise<any> {
         
         Neutralino.os.execCommand(command, { shouldRunInBackground: true })
             .then(() => {
-                resolve();
+                resolve({
+                    success: true,
+                    message: 'New window instance created'
+                });
             })
             .catch((error: any) => {
                 reject(error);
