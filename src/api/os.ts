@@ -1,7 +1,8 @@
 import { sendMessage } from '../ws/websocket';
 
 export interface ExecCommandOptions {
-    shouldRunInBackground: boolean;
+    stdIn?: string;
+    background?: boolean;
 }
 
 export interface OpenDialogOptions {

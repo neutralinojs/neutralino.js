@@ -204,7 +204,7 @@ export function create(url: string, options?: WindowOptions): Promise<any> {
         if(options && options.processArgs)
             command += " " + options.processArgs;
         
-        Neutralino.os.execCommand(command, { shouldRunInBackground: true })
+        Neutralino.os.execCommand(command, { background: true })
             .then(() => {
                 resolve({
                     success: true,
