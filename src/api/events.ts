@@ -1,21 +1,7 @@
-export function on(event: string, handler: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        window.addEventListener(event, handler);
-        resolve();
-    });
-};
+import { sendMessage } from '../ws/websocket';
 
-export function off(event: string, handler: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        window.removeEventListener(event, handler);
-        resolve();
-    });
-};
+export * from '../browser/events';
 
-export function dispatch(event: string, data?: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        let customEvent = new CustomEvent(event, {detail: data});
-        window.dispatchEvent(customEvent);
-        resolve();
-    });
+export function broadcast(event: string, data?: any): Promise<any> {
+    return sendMessage('events.broadcast', {event, data});
 };

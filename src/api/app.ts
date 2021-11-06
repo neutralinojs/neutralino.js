@@ -22,11 +22,11 @@ export function restartProcess(options?: RestartOptions): Promise<any> {
             acc += ' ' + arg;
             return acc;
         }, '');
-        
+
         if(options?.args) {
             command += ' ' + options.args;
         }
-        
+
         await Neutralino.os.execCommand(command, {shouldRunInBackground: true});
         Neutralino.app.exit();
         resolve();
@@ -39,4 +39,8 @@ export function keepAlive(): Promise<any> {
 
 export function getConfig(): Promise<any> {
     return sendMessage('app.getConfig');
+};
+
+export function broadcast(event: string, data?: any): Promise<any> {
+    return sendMessage('app.broadcast', {event, data});
 };

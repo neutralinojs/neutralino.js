@@ -1,4 +1,4 @@
-import * as events from '../api/events';
+import * as events from '../browser/events';
 
 let nativeCalls = {};
 let ws;
@@ -15,7 +15,7 @@ export function init() {
             }
             else if(message.data?.success) {
                 nativeCalls[message.id]
-                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue 
+                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue
                         : message.data);
             }
             delete nativeCalls[message.id];
@@ -25,7 +25,7 @@ export function init() {
             events.dispatch(message.event, message.data);
         }
     });
-    
+
     ws.addEventListener('open', (event) => {
         events.dispatch('ready');
     });
@@ -33,7 +33,7 @@ export function init() {
 
 export function sendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        
+
         if(ws.readyState != WebSocket.OPEN) {
             let error = {
                 code: 'NE_CL_NSEROFF',
@@ -42,12 +42,12 @@ export function sendMessage(method: string, data?: any): Promise<any> {
             events.dispatch('serverOffline', error);
             return reject(error);
         }
-    
+
         const id: string = uuidv4();
         const accessToken: string = window.NL_TOKEN;
-        
+
         nativeCalls[id] = {resolve, reject};
-        
+
         ws.send(JSON.stringify({
             id,
             method,

@@ -8,5 +8,6 @@ export * as debug from './api/debug';
 export * as app from './api/app';
 export * as window from './api/window';
 export * as events from './api/events';
+export * as extensions from './api/extensions';
 
 export { init } from './api/init';
