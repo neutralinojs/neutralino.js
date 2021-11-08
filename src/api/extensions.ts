@@ -7,3 +7,7 @@ export function dispatch(extensionId: string, event: string, data?: any): Promis
 export function broadcast(event: string, data?: any): Promise<any> {
     return sendMessage('extensions.broadcast', {event, data});
 };
+
+export function getStats(): Promise<any> {
+    return sendMessage('extensions.getStats');
+};
