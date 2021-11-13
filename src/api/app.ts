@@ -33,10 +33,6 @@ export function restartProcess(options?: RestartOptions): Promise<any> {
     });
 };
 
-export function keepAlive(): Promise<any> {
-    return sendMessage('app.keepAlive');
-};
-
 export function getConfig(): Promise<any> {
     return sendMessage('app.getConfig');
 };
