@@ -1,21 +1,15 @@
 export function on(event: string, handler: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        window.addEventListener(event, handler);
-        resolve();
-    });
+    window.addEventListener(event, handler);
+    return Promise.resolve();
 };
 
 export function off(event: string, handler: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        window.removeEventListener(event, handler);
-        resolve();
-    });
+    window.removeEventListener(event, handler);
+    return Promise.resolve();
 };
 
 export function dispatch(event: string, data?: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-        let customEvent = new CustomEvent(event, {detail: data});
-        window.dispatchEvent(customEvent);
-        resolve();
-    });
+    let customEvent = new CustomEvent(event, {detail: data});
+    window.dispatchEvent(customEvent);
+    return Promise.resolve();
 };
