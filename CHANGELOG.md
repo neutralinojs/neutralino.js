@@ -16,7 +16,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 - Newly introduced method to remove draggable region handlers from an element.
 
 ### Improvements
-- Make return values of `events`namespace functions consistent.
+- Make return values of `events` namespace functions consistent.
 
 ### Core: Ping on browsers
 - Polling action to the server was removed and replaced by server process's internal idle check. `app.keepAlive` was removed.
