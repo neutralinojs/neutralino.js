@@ -19,7 +19,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 - Make return values of `events` namespace functions consistent.
 
 ### Core: Ping on browsers
-- Polling action to the server was removed and replaced by server process's internal idle check. `app.keepAlive` was removed.
+- Polling action to the server was removed and replaced by the server process's internal idle check. `app.keepAlive` was removed.
 
 ### Events
 - Client-side implementaion of `extensionReady`.
