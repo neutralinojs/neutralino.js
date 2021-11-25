@@ -21,7 +21,7 @@ export interface WindowSizeOptions {
   minWidth?: number;
   minHeight?: number;
   maxWidth?: number;
-  maxHeight?: number; 
+  maxHeight?: number;
   resizable?: boolean;
 }
 
@@ -83,7 +83,7 @@ export function move(x: number, y: number): Promise<any> {
 
 export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        const draggableRegion: HTMLElement = domElementOrId instanceof Element ? 
+        const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                     domElementOrId : document.getElementById(domElementOrId);
         let initialClientX: number = 0;
         let initialClientY: number = 0;
@@ -113,7 +113,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
                 evt.screenY - initialClientY
             );
         }
-        
+
         function startPointerCapturing(evt: PointerEvent) {
             if (evt.button !== 0) return;
             initialClientX = evt.clientX;
@@ -121,7 +121,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
             draggableRegion.addEventListener('pointermove', onPointerMove);
             draggableRegion.setPointerCapture(evt.pointerId);
         }
-        
+
         function endPointerCapturing(evt: PointerEvent) {
             draggableRegion.removeEventListener('pointermove', onPointerMove);
             draggableRegion.releasePointerCapture(evt.pointerId);
@@ -136,7 +136,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
 
 export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
   return new Promise((resolve: any, reject: any) => {
-        const draggableRegion: HTMLElement = domElementOrId instanceof Element ? 
+        const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                 domElementOrId : document.getElementById(domElementOrId);
 
         if (!draggableRegion) {
@@ -156,7 +156,7 @@ export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Prom
         draggableRegion.removeEventListener('pointerdown', pointerdown);
         draggableRegion.removeEventListener('pointerup', pointerup);
         draggableRegions.delete(draggableRegion);
-        
+
         resolve({
             success: true,
             message: 'Draggable region was deactivated'
@@ -171,7 +171,7 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
 
 export function create(url: string, options?: WindowOptions): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-        
+
         function normalize(arg: any) {
             if(typeof arg != "string")
                 return arg;
@@ -181,7 +181,7 @@ export function create(url: string, options?: WindowOptions): Promise<any> {
             }
             return arg;
         }
-    
+
         let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
             if(arg.includes("--path=") || arg.includes("--debug-mode") ||
                 arg.includes("--load-dir-res") || index == 0) {
@@ -191,25 +191,22 @@ export function create(url: string, options?: WindowOptions): Promise<any> {
         }, "");
 
         command += " --url=" + normalize(url);
-        
+
         for(let key in options) {
-            if(key == "processArgs") 
+            if(key == "processArgs")
                 continue;
 
             let cliKey: string = key.replace(/[A-Z]|^[a-z]/g, (token: string) => (
-               "-" + token.toLowerCase() 
+               "-" + token.toLowerCase()
             ));
             command += ` --window${cliKey}=${normalize(options[key])}`
         }
         if(options && options.processArgs)
             command += " " + options.processArgs;
-        
+
         Neutralino.os.execCommand(command, { background: true })
-            .then(() => {
-                resolve({
-                    success: true,
-                    message: 'New window instance created'
-                });
+            .then((processInfo: any) => {
+                resolve(processInfo);
             })
             .catch((error: any) => {
                 reject(error);

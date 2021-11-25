@@ -7,7 +7,7 @@ export function startAsync() {
                 location.reload();
             }
         }
-        catch(e: any) {
+        catch(err: any) {
             console.error('Unable to communicate with neu devServer');
         }
     }, 1000);

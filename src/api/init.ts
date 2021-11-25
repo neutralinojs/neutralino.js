@@ -5,15 +5,16 @@ import { version } from '../../package.json';
 export function init() {
 
     // Notify about already connect extensions and newly connected extensions
-    Neutralino.events.on("ready", async () => {
+    Neutralino.events.on('ready', async () => {
         let stats = await Neutralino.extensions.getStats();
-        for(let extension of stats.connected) {
-            await Neutralino.events.dispatch("extensionReady", extension);
-        }
 
-        Neutralino.events.on("extClientConnect", async (evt) => {
-            await Neutralino.events.dispatch("extensionReady", evt.detail);
+        Neutralino.events.on('extClientConnect', async (evt) => {
+            await Neutralino.events.dispatch('extensionReady', evt.detail);
         });
+
+        for(let extension of stats.connected) {
+            await Neutralino.events.dispatch('extensionReady', extension);
+        }
     });
 
     websocket.init();
