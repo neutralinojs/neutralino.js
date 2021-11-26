@@ -4,6 +4,7 @@ declare interface Window {
     NL_ARGS: string[];
     NL_TOKEN: string;
     NL_CVERSION: string;
+    NL_APPINIT: boolean;
 }
 
 declare let Neutralino: any;

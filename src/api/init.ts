@@ -3,6 +3,9 @@ import * as devClient from '../debug/devclient';
 import { version } from '../../package.json';
 
 export function init() {
+    if(window.NL_APPINIT) {
+        return;
+    }
 
     // Notify about already connect extensions and newly connected extensions
     Neutralino.events.on('ready', async () => {
@@ -24,4 +27,5 @@ export function init() {
     }
 
     window.NL_CVERSION = version;
+    window.NL_APPINIT = true;
 }

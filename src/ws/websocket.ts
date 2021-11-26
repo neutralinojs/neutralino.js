@@ -1,6 +1,7 @@
 import * as events from '../browser/events';
 
 let nativeCalls = {};
+let offlineMessageQueue = [];
 let ws;
 
 export function init() {
@@ -26,21 +27,35 @@ export function init() {
         }
     });
 
-    ws.addEventListener('open', (event) => {
+    ws.addEventListener('open', async (event) => {
         events.dispatch('ready');
+        while(offlineMessageQueue.length > 0) {
+            let offlineMessage = offlineMessageQueue.shift();
+            try {
+                let response = await sendMessage(offlineMessage.method, offlineMessage.data);
+                offlineMessage.resolve(response);
+            }
+            catch(err: any) {
+                offlineMessage.reject(err);
+            }
+        }
+    });
+
+    ws.addEventListener('close', async (event) => {
+        let error = {
+            code: 'NE_CL_NSEROFF',
+            message: 'Neutralino server is offline. Try restarting the application'
+        };
+        events.dispatch('serverOffline', error);
     });
 }
 
 export function sendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
 
-        if(ws.readyState != WebSocket.OPEN) {
-            let error = {
-                code: 'NE_CL_NSEROFF',
-                message: 'Neutralino server is offline. Try restarting the application'
-            };
-            events.dispatch('serverOffline', error);
-            return reject(error);
+        if(ws?.readyState != WebSocket.OPEN) {
+            offlineMessageQueue.push({method, data, resolve, reject});
+            return;
         }
 
         const id: string = uuidv4();
