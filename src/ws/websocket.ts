@@ -53,12 +53,12 @@ function registerLibraryEvents() {
 
         let stats = await Neutralino.extensions.getStats();
         for(let extension of stats.connected) {
-            await Neutralino.events.dispatch('extensionReady', extension);
+            events.dispatch('extensionReady', extension);
         }
     });
 
-    Neutralino.events.on('extClientConnect', async (evt) => {
-        await Neutralino.events.dispatch('extensionReady', evt.detail);
+    Neutralino.events.on('extClientConnect', (evt) => {
+        events.dispatch('extensionReady', evt.detail);
     });
 
     Neutralino.events.on('extensionReady', async (evt) => {
