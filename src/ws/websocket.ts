@@ -1,11 +1,74 @@
 import * as events from '../browser/events';
 
+let ws;
 let nativeCalls = {};
 let offlineMessageQueue = [];
-let ws;
+let extensionMessageQueue = {}
 
 export function init() {
     ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}`);
+    registerLibraryEvents();
+    registerSocketEvents();
+}
+
+export function sendMessage(method: string, data?: any): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+
+        if(ws?.readyState != WebSocket.OPEN) {
+            sendWhenReady({method, data, resolve, reject});
+            return;
+        }
+
+        const id: string = uuidv4();
+        const accessToken: string = window.NL_TOKEN;
+
+        nativeCalls[id] = {resolve, reject};
+
+        ws.send(JSON.stringify({
+            id,
+            method,
+            data,
+            accessToken
+        }));
+
+    });
+}
+
+export function sendWhenReady(message: any) {
+    offlineMessageQueue.push(message);
+}
+
+export function sendWhenExtReady(extensionId: string, message: any) {
+    if(extensionId in extensionMessageQueue) {
+        extensionMessageQueue[extensionId].push(message);
+    }
+    else {
+        extensionMessageQueue[extensionId] = [message];
+    }
+}
+
+function registerLibraryEvents() {
+    Neutralino.events.on('ready', async () => {
+        await processQueue(offlineMessageQueue);
+
+        let stats = await Neutralino.extensions.getStats();
+        for(let extension of stats.connected) {
+            await Neutralino.events.dispatch('extensionReady', extension);
+        }
+    });
+
+    Neutralino.events.on('extClientConnect', async (evt) => {
+        await Neutralino.events.dispatch('extensionReady', evt.detail);
+    });
+
+    Neutralino.events.on('extensionReady', async (evt) => {
+        if(evt.detail in extensionMessageQueue) {
+            await processQueue(extensionMessageQueue[evt.detail]);
+        }
+    });
+}
+
+function registerSocketEvents() {
     ws.addEventListener('message', (event) => {
         const message = JSON.parse(event.data);
 
@@ -29,16 +92,6 @@ export function init() {
 
     ws.addEventListener('open', async (event) => {
         events.dispatch('ready');
-        while(offlineMessageQueue.length > 0) {
-            let offlineMessage = offlineMessageQueue.shift();
-            try {
-                let response = await sendMessage(offlineMessage.method, offlineMessage.data);
-                offlineMessage.resolve(response);
-            }
-            catch(err: any) {
-                offlineMessage.reject(err);
-            }
-        }
     });
 
     ws.addEventListener('close', async (event) => {
@@ -50,27 +103,17 @@ export function init() {
     });
 }
 
-export function sendMessage(method: string, data?: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
-
-        if(ws?.readyState != WebSocket.OPEN) {
-            offlineMessageQueue.push({method, data, resolve, reject});
-            return;
+async function processQueue(messageQueue: any[]) {
+    while(messageQueue.length > 0) {
+        let message = messageQueue.shift();
+        try {
+            let response = await sendMessage(message.method, message.data);
+            message.resolve(response);
         }
-
-        const id: string = uuidv4();
-        const accessToken: string = window.NL_TOKEN;
-
-        nativeCalls[id] = {resolve, reject};
-
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
-
-    });
+        catch(err: any) {
+            message.reject(err);
+        }
+    }
 }
 
 // From: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
