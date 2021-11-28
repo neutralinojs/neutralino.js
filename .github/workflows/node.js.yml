@@ -27,6 +27,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
-    - run: npm test
     - run: |
         if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
