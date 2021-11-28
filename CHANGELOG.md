@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### Core: Extensions
+- Queue messages dispatched to extensions and send when the extension is ready.
+
 ### API: window.create
 - Return process information with the promise.
 
