@@ -64,6 +64,7 @@ function registerLibraryEvents() {
     Neutralino.events.on('extensionReady', async (evt) => {
         if(evt.detail in extensionMessageQueue) {
             await processQueue(extensionMessageQueue[evt.detail]);
+            delete extensionMessageQueue[evt.detail];
         }
     });
 }
