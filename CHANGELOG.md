@@ -23,3 +23,4 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### Events
 - Client-side implementaion of `extensionReady`.
+- Allow developers to call native APIs without depending on the `ready` event (it's not removed becuase of the internal usage). 
