@@ -27,7 +27,7 @@ export function restartProcess(options?: RestartOptions): Promise<any> {
             command += ' ' + options.args;
         }
 
-        await Neutralino.os.execCommand(command, {shouldRunInBackground: true});
+        await Neutralino.os.execCommand(command, {background: true});
         Neutralino.app.exit();
         resolve();
     });
