@@ -1,6 +1,6 @@
 let manifest = null;
 
-export function checkForUpdate(url: string): Promise<any> {
+export function checkForUpdates(url: string): Promise<any> {
     function isValidManifest(manifest: any) {
         if(manifest.applicationId && manifest.applicationId == window.NL_APPID
             && manifest.version && manifest.resourcesURL) {
@@ -40,7 +40,7 @@ export function checkForUpdate(url: string): Promise<any> {
     });
 };
 
-export function installUpdate(url: string): Promise<any> {
+export function install(url: string): Promise<any> {
     return new Promise(async (resolve: any, reject: any) => {
         if(!manifest) {
             return reject({
