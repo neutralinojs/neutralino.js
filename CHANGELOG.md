@@ -23,10 +23,11 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### Improvements
 - Make return values of `events` namespace functions consistent.
+- Rename `res.neu` to `resources.neu`.
 
 ### Core: Ping on browsers
 - Polling action to the server was removed and replaced by the server process's internal idle check. `app.keepAlive` was removed.
 
 ### Events
 - Client-side implementaion of `extensionReady`.
-- Allow developers to call native APIs without depending on the `ready` event (it's not removed becuase of the internal usage). 
+- Allow developers to call native APIs without depending on the `ready` event (it's not removed becuase of the internal usage).
