@@ -51,7 +51,7 @@ export function install(url: string): Promise<any> {
         try {
             let response = await fetch(manifest.resourcesURL);
             let resourcesBuffer = await response.arrayBuffer();
-            await Neutralino.filesystem.writeBinaryFile(window.NL_PATH + "/res.neu", resourcesBuffer);
+            await Neutralino.filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
             resolve({
                 success: true,
