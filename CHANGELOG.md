@@ -7,7 +7,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## Unreleased
 
 ### Core: Extensions
-- Queue messages dispatched to extensions and send when the extension is ready.
+- Extension API functions. Queue messages dispatched to extensions and send when the extension is ready.
 
 ### API: window.create
 - Return process information with the promise.
@@ -17,6 +17,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### API: window.unsetDraggableRegion
 - Newly introduced method to remove draggable region handlers from an element.
+
+### API: Updater
+- Updater API functions.
 
 ### Improvements
 - Make return values of `events` namespace functions consistent.
