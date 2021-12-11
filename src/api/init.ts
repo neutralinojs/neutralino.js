@@ -10,8 +10,8 @@ export function init() {
 
     websocket.init();
 
-    if(window.NL_ARGS.find((arg) => arg == '--dev-cli-auto-reload')) {
-        Neutralino.events.on('devEvent_reloadApp', async () => {
+    if(window.NL_ARGS.find((arg) => arg == '--neudev-cli-auto-reload')) {
+        Neutralino.events.on('neuDev_reloadApp', async () => {
             await Neutralino.debug.log('Reloading the application...');
             location.reload();
         });
