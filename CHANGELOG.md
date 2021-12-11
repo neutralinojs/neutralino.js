@@ -6,6 +6,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+- ...
+
+## v3.0.0
+
 ### Core: Extensions
 - Extension API functions. Queue messages dispatched to extensions and send when the extension is ready.
 
