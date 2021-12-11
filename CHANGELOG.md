@@ -9,6 +9,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ### Core: Extensions
 - Extension API functions. Queue messages dispatched to extensions and send when the extension is ready.
 
+### Core: Init
+- Reload app based on `--dev-cli-auto-reload` (`--debug-mode` removed) with the `devEvent_reloadApp` event.
+
 ### API: window.create
 - Return process information with the promise.
 
