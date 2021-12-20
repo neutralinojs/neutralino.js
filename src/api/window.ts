@@ -29,6 +29,10 @@ export function setTitle(title: string): Promise<any> {
     return sendMessage('window.setTitle', { title });
 };
 
+export function getTitle(): Promise<any> {
+    return sendMessage('window.getTitle');
+};
+
 export function maximize(): Promise<any> {
     return sendMessage('window.maximize');
 };
