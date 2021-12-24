@@ -16,7 +16,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Install and Build
-    - run: |
+      run: |
         npm ci
         npm run build
         if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
