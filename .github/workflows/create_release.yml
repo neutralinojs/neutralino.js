@@ -66,7 +66,6 @@ jobs:
           name: Neutralino.js v${{github.event.inputs.version}} released!
           bodyFile: ./.tmprz/release_notes.md
           artifacts: 'dist/*.*'
-          draft: true
           
     - name: Clean Release Notes
       run: |
