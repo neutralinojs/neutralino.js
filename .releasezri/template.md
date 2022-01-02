@@ -1,7 +1,7 @@
 ## What's new
 {RZ_CHANGELOG}
 
-Update the `cli.clientVersion` in the config file and enter `neu update` to fetch this version.
+Update `cli.clientVersion` in the config file and enter `neu update` to fetch this version.
 
 Get started: https://neutralino.js.org/docs
 
