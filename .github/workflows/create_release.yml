@@ -77,5 +77,5 @@ jobs:
       uses: Ilshidur/action-discord@master
       with:
         args: |
-          Neutralino.js CLI v${{github.event.inputs.version}} released 🚀
+          Neutralino.js v${{github.event.inputs.version}} released 🚀
           Changelog: https://github.com/neutralinojs/neutralino.js/releases/tag/v${{github.event.inputs.version}}
