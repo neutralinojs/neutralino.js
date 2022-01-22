@@ -6,7 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
-- ...
+### API: clipboard
+- `clipboard.readText` and `clipboard.writeText` functions added.
 
 ## v3.0.0
 
