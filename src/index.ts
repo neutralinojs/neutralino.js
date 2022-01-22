@@ -10,5 +10,6 @@ export * as window from './api/window';
 export * as events from './api/events';
 export * as extensions from './api/extensions';
 export * as updater from './api/updater';
+export * as clipboard from './api/clipboard';
 
 export { init } from './api/init';
