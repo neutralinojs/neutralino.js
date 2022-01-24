@@ -18,7 +18,7 @@ How to test with the Neutralinojs server?
 ```bash
 cd ../neutralinojs
 bash ./bin/script_update_client.sh
-./bin/neutralino-{platform}
+./bin/neutralino-{platform} --load-dir-res
 ```
 
 
