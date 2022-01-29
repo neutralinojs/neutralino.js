@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: Init
+- Store `NL_TOKEN` in sessionStorage and handle native API calls after page reload.
+
 ## v3.1.0
 
 ### API: clipboard
