@@ -6,6 +6,7 @@ let offlineMessageQueue = [];
 let extensionMessageQueue = {}
 
 export function init() {
+    initAuth();
     ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}`);
     registerLibraryEvents();
     registerSocketEvents();
@@ -20,7 +21,7 @@ export function sendMessage(method: string, data?: any): Promise<any> {
         }
 
         const id: string = uuidv4();
-        const accessToken: string = window.NL_TOKEN;
+        const accessToken: string = getAuthToken();
 
         nativeCalls[id] = {resolve, reject};
 
@@ -85,6 +86,12 @@ function registerSocketEvents() {
             // Native call response
             if(message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
+                if(message.data.error.code == 'NE_RT_INVTOKN') {
+                    // critical auth error
+                    // Perhaps, someone tried to open app from anoher client,
+                    // with 'one-time' token mode
+                    handleAuthError();
+                }
             }
             else if(message.data?.success) {
                 nativeCalls[message.id]
@@ -123,6 +130,22 @@ async function processQueue(messageQueue: any[]) {
             message.reject(err);
         }
     }
+}
+
+function handleAuthError() {
+    ws.close();
+    document.body.innerText = '';
+    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application configuration' +
+                                    ' prevents accepting native calls from this client.');
+}
+
+function initAuth() {
+    if (window.NL_TOKEN) {
+        sessionStorage.setItem('NL_TOKEN', window.NL_TOKEN);
+    }
+}
+function getAuthToken() {
+    return window.NL_TOKEN || sessionStorage.getItem('NL_TOKEN') || '';
 }
 
 // From: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
