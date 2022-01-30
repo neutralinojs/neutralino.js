@@ -8,6 +8,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### API: Init
 - Store `NL_TOKEN` in sessionStorage and handle native API calls after page reload.
+- Show a message to the user via HTML if `NL_TOKEN` is not valid (Eg: when the user tries to open the app from another client with `one-time` token). 
 
 ## v3.1.0
 
