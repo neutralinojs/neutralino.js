@@ -7,6 +7,7 @@ declare interface Window {
     NL_APPID: string;
     NL_APPVERSION: string;
     NL_PATH: string;
+    NL_EXTENABLED: boolean;
 }
 
 declare let Neutralino: any;

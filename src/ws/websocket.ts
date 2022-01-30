@@ -51,6 +51,10 @@ function registerLibraryEvents() {
     Neutralino.events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
+        if(!window.NL_EXTENABLED) {
+            return;
+        }
+
         let stats = await Neutralino.extensions.getStats();
         for(let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
@@ -60,6 +64,10 @@ function registerLibraryEvents() {
     Neutralino.events.on('extClientConnect', (evt) => {
         events.dispatch('extensionReady', evt.detail);
     });
+
+    if(!window.NL_EXTENABLED) {
+        return;
+    }
 
     Neutralino.events.on('extensionReady', async (evt) => {
         if(evt.detail in extensionMessageQueue) {
