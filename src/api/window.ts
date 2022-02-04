@@ -170,7 +170,27 @@ export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Prom
 
 
 export function setSize(options: WindowSizeOptions): Promise<any> {
-    return sendMessage('window.setSize', options);
+    return new Promise(async (resolve: any, reject: any) => {
+        let sizeOptions = await Neutralino.window.getSize();
+
+        options = {...sizeOptions, ...options}; // merge prioritizing options arg
+
+        sendMessage('window.setSize', options)
+            .then((response: any) => {
+                resolve(response);
+            })
+            .catch((error: any) => {
+                reject(error);
+            });
+    });
+};
+
+export function getSize(): Promise<any> {
+    return sendMessage('window.getSize');
+};
+
+export function setAlwaysOnTop(onTop: boolean): Promise<any> {
+    return sendMessage('window.setAlwaysOnTop', { onTop });
 };
 
 export function create(url: string, options?: WindowOptions): Promise<any> {
