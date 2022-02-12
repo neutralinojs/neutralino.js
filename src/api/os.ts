@@ -5,6 +5,13 @@ export interface ExecCommandOptions {
     background?: boolean;
 }
 
+export interface ExecCommandResult {
+    pid: number;
+    stdOut: string;
+    stdErr: string;
+    exitCode: number;
+}
+
 export interface OpenDialogOptions {
     multiSelections?: boolean;
     filters?: Filter[];
@@ -25,7 +32,7 @@ export interface TrayOptions {
     menu?: TrayMenuItem[];
 }
 
-interface TrayMenuItem {
+export interface TrayMenuItem {
     id?: string;
     text: string;
     isDisabled?: boolean;
@@ -48,43 +55,55 @@ export enum MessageBoxChoice {
     ABORT_RETRY_IGNORE = 'ABORT_RETRY_IGNORE'
 };
 
-export function execCommand(command: string, options?: ExecCommandOptions): Promise<any> {
+export type KnownPath =
+    'config' |
+    'data' |
+    'cache' |
+    'documents' |
+    'pictures' |
+    'music' |
+    'video' |
+    'downloads' |
+    'savedGames1' |
+    'savedGames2'
+
+export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
     return sendMessage('os.execCommand', { command, ...options });
 };
 
-export function getEnv(key: string): Promise<any> {
+export function getEnv(key: string): Promise<string> {
     return sendMessage('os.getEnv', { key });
 };
 
-export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<any> {
+export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]> {
     return sendMessage('os.showOpenDialog', { title, ...options });
 };
 
-export function showFolderDialog(title?: string): Promise<any> {
+export function showFolderDialog(title?: string): Promise<string> {
     return sendMessage('os.showFolderDialog', { title });
 };
 
-export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<any> {
+export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string> {
     return sendMessage('os.showSaveDialog', { title, ...options });
 };
 
-export function showNotification(title: string, content: string, icon?: Icon): Promise<any> {
+export function showNotification(title: string, content: string, icon?: Icon): Promise<void> {
     return sendMessage('os.showNotification', { title, content, icon });
 };
 
 export function showMessageBox(title: string, content: string, 
-                choice?: MessageBoxChoice, icon?: Icon): Promise<any> {
+                choice?: MessageBoxChoice, icon?: Icon): Promise<string> {
     return sendMessage('os.showMessageBox', { title, content, choice, icon });
 };
 
-export function setTray(options: TrayOptions): Promise<any> {
+export function setTray(options: TrayOptions): Promise<void> {
     return sendMessage('os.setTray', options);
 };
 
-export function open(url: string): Promise<any> {
+export function open(url: string): Promise<void> {
     return sendMessage('os.open', { url });
 };
 
-export function getPath(name: string): Promise<any> {
+export function getPath(name: KnownPath): Promise<string> {
     return sendMessage('os.getPath', { name });
 };
