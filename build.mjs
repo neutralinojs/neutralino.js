@@ -101,7 +101,11 @@ function write (filepath, content)
     })
 }
 
-const writeDts = (filepath, definitions) => write (filepath, 
+const writeDts = (filepath, definitions) => {
+    // A 'declare' modifier cannot be used in an already ambient context.
+    definitions = definitions.replaceAll ('declare namespace', 'namespace')
+    definitions = definitions.replaceAll ('declare function', 'function')
+    write (filepath, 
 `// Type definitions for Neutralino ${version}
 // Project: https://github.com/neutralinojs
 // Definitions project: https://github.com/neutralinojs/neutralino.js
@@ -149,3 +153,4 @@ ${
     // devmode ? '//# sourceMappingURL=neutralino.d.ts.map' : ''
     ''
 }`/*dtsTemplate*/)
+}
