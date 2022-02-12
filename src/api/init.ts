@@ -3,7 +3,7 @@ import { version } from '../../package.json';
 
 let initialized = false;
 
-export function init() {
+export function init(): void {
     if(initialized) {
         return;
     }

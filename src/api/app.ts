@@ -8,17 +8,17 @@ export interface RestartOptions {
     args: string;
 }
 
-export function exit(code?: number): Promise<any> {
+export function exit(code?: number): Promise<void> {
     return sendMessage('app.exit', { code });
 };
 
-export function killProcess(): Promise<any> {
+export function killProcess(): Promise<void> {
     return sendMessage('app.killProcess');
 };
 
-export function restartProcess(options?: RestartOptions): Promise<any> {
-    return new Promise(async (resolve: any, reject: any) => {
-        let command = window.NL_ARGS.reduce((acc: string, arg: string, index: number) => {
+export function restartProcess(options?: RestartOptions): Promise<void> {
+    return new Promise(async (resolve: () => void) => {
+        let command = window.NL_ARGS.reduce((acc: string, arg: string) => {
             acc += ' ' + arg;
             return acc;
         }, '');
@@ -37,6 +37,6 @@ export function getConfig(): Promise<any> {
     return sendMessage('app.getConfig');
 };
 
-export function broadcast(event: string, data?: any): Promise<any> {
+export function broadcast(event: string, data?: any): Promise<void> {
     return sendMessage('app.broadcast', {event, data});
 };
