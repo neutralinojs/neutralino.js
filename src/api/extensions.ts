@@ -1,6 +1,11 @@
 import * as websocket from '../ws/websocket';
 
-export function dispatch(extensionId: string, event: string, data?: any): Promise<any> {
+export interface ExtensionStats {
+    loaded: string[];
+    connected: string[];
+}
+
+export function dispatch(extensionId: string, event: string, data?: any): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
         let stats = await Neutralino.extensions.getStats();
         if(!stats.loaded.includes(extensionId)) {
@@ -28,10 +33,10 @@ export function dispatch(extensionId: string, event: string, data?: any): Promis
     });
 };
 
-export function broadcast(event: string, data?: any): Promise<any> {
+export function broadcast(event: string, data?: any): Promise<void> {
     return websocket.sendMessage('extensions.broadcast', {event, data});
 };
 
-export function getStats(): Promise<any> {
+export function getStats(): Promise<ExtensionStats> {
     return websocket.sendMessage('extensions.getStats');
 };

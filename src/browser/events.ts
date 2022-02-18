@@ -1,4 +1,23 @@
-export function on(event: string, handler: any): Promise<any> {
+export interface Response {
+  success: boolean;
+  message: string;
+}
+
+export type Builtin =
+    'ready' |
+    'trayMenuItemClicked' |
+    'windowClose' |
+    'serverOffline' |
+    'clientConnect' |
+    'clientDisconnect' |
+    'appClientConnect' |
+    'appClientDisconnect' |
+    'extClientConnect' |
+    'extClientDisconnect' |
+    'extensionReady' |
+    'neuDev_reloadApp'
+
+export function on(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.addEventListener(event, handler);
     return Promise.resolve({
         success: true,
@@ -6,7 +25,7 @@ export function on(event: string, handler: any): Promise<any> {
     });
 };
 
-export function off(event: string, handler: any): Promise<any> {
+export function off(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.removeEventListener(event, handler);
     return Promise.resolve({
         success: true,
@@ -14,7 +33,7 @@ export function off(event: string, handler: any): Promise<any> {
     });
 };
 
-export function dispatch(event: string, data?: any): Promise<any> {
+export function dispatch(event: string, data?: any): Promise<Response> {
     let customEvent = new CustomEvent(event, {detail: data});
     window.dispatchEvent(customEvent);
     return Promise.resolve({

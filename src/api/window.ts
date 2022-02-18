@@ -25,19 +25,19 @@ export interface WindowSizeOptions {
   resizable?: boolean;
 }
 
-export function setTitle(title: string): Promise<any> {
+export function setTitle(title: string): Promise<void> {
     return sendMessage('window.setTitle', { title });
 };
 
-export function getTitle(): Promise<any> {
+export function getTitle(): Promise<string> {
     return sendMessage('window.getTitle');
 };
 
-export function maximize(): Promise<any> {
+export function maximize(): Promise<void> {
     return sendMessage('window.maximize');
 };
 
-export function unmaximize(): Promise<any> {
+export function unmaximize(): Promise<void> {
     return sendMessage('window.unmaximize');
 };
 
@@ -45,15 +45,15 @@ export function isMaximized(): Promise<boolean> {
     return sendMessage('window.isMaximized');
 };
 
-export function minimize(): Promise<any> {
+export function minimize(): Promise<void> {
     return sendMessage('window.minimize');
 };
 
-export function setFullScreen(): Promise<any> {
+export function setFullScreen(): Promise<void> {
     return sendMessage('window.setFullScreen');
 };
 
-export function exitFullScreen(): Promise<any> {
+export function exitFullScreen(): Promise<void> {
     return sendMessage('window.exitFullScreen');
 };
 
@@ -61,11 +61,11 @@ export function isFullScreen(): Promise<boolean> {
     return sendMessage('window.isFullScreen');
 };
 
-export function show(): Promise<any> {
+export function show(): Promise<void> {
     return sendMessage('window.show');
 };
 
-export function hide(): Promise<any> {
+export function hide(): Promise<void> {
     return sendMessage('window.hide');
 };
 
@@ -73,19 +73,19 @@ export function isVisible(): Promise<boolean> {
     return sendMessage('window.isVisible');
 };
 
-export function focus(): Promise<any> {
+export function focus(): Promise<void> {
     return sendMessage('window.focus');
 };
 
-export function setIcon(icon: string): Promise<any> {
+export function setIcon(icon: string): Promise<void> {
     return sendMessage('window.setIcon', { icon });
 };
 
-export function move(x: number, y: number): Promise<any> {
+export function move(x: number, y: number): Promise<void> {
     return sendMessage('window.move', { x, y });
 };
 
-export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
+export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
         const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                     domElementOrId : document.getElementById(domElementOrId);
@@ -138,7 +138,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
     });
 };
 
-export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<any> {
+export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<void> {
   return new Promise((resolve: any, reject: any) => {
         const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                 domElementOrId : document.getElementById(domElementOrId);
@@ -168,8 +168,7 @@ export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Prom
   });
 }
 
-
-export function setSize(options: WindowSizeOptions): Promise<any> {
+export function setSize(options: WindowSizeOptions): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
         let sizeOptions = await Neutralino.window.getSize();
 
@@ -185,15 +184,15 @@ export function setSize(options: WindowSizeOptions): Promise<any> {
     });
 };
 
-export function getSize(): Promise<any> {
+export function getSize(): Promise<WindowSizeOptions> {
     return sendMessage('window.getSize');
 };
 
-export function setAlwaysOnTop(onTop: boolean): Promise<any> {
+export function setAlwaysOnTop(onTop: boolean): Promise<void> {
     return sendMessage('window.setAlwaysOnTop', { onTop });
 };
 
-export function create(url: string, options?: WindowOptions): Promise<any> {
+export function create(url: string, options?: WindowOptions): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
 
         function normalize(arg: any) {

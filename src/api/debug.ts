@@ -6,6 +6,6 @@ export enum LoggerType {
   INFO = 'INFO'
 };
 
-export function log(message: string, type?: LoggerType): Promise<any> {
+export function log(message: string, type?: LoggerType): Promise<void> {
     return sendMessage('debug.log', { message, type });
 };

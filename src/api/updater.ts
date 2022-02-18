@@ -1,7 +1,15 @@
-let manifest = null;
+import { Error } from './protocol';
 
-export function checkForUpdates(url: string): Promise<any> {
-    function isValidManifest(manifest: any) {
+export interface Manifest {
+    applicationId: string;
+    version: string;
+    resourcesURL: string;
+}
+
+let manifest: Manifest = null;
+
+export function checkForUpdates(url: string): Promise<Manifest> {
+    function isValidManifest(manifest: any): manifest is Manifest {
         if(manifest.applicationId && manifest.applicationId == window.NL_APPID
             && manifest.version && manifest.resourcesURL) {
             return true;
@@ -9,7 +17,7 @@ export function checkForUpdates(url: string): Promise<any> {
         return false;
     }
 
-    return new Promise(async (resolve: any, reject: any) => {
+    return new Promise(async (resolve: (m: Manifest) => void, reject: (e: Error) => void) => {
         if(!url) {
             return reject({
                 code: 'NE_RT_NATRTER',
@@ -40,7 +48,7 @@ export function checkForUpdates(url: string): Promise<any> {
     });
 };
 
-export function install(url: string): Promise<any> {
+export function install(): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
         if(!manifest) {
             return reject({
