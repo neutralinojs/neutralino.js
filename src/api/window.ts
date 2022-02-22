@@ -25,6 +25,11 @@ export interface WindowSizeOptions {
   resizable?: boolean;
 }
 
+export interface WindowPosOptions {
+  x: number;
+  y: number;
+}
+
 export function setTitle(title: string): Promise<void> {
     return sendMessage('window.setTitle', { title });
 };
@@ -186,6 +191,10 @@ export function setSize(options: WindowSizeOptions): Promise<void> {
 
 export function getSize(): Promise<WindowSizeOptions> {
     return sendMessage('window.getSize');
+};
+
+export function getPosition(): Promise<WindowPosOptions> {
+    return sendMessage('window.getPosition');
 };
 
 export function setAlwaysOnTop(onTop: boolean): Promise<void> {
