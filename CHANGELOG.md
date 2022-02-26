@@ -6,6 +6,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: window
+
+- Add `window.getPosition` to get the current window coordinates.
+
 ## v3.2.0
 
 ### API: init
