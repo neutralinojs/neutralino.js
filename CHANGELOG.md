@@ -10,6 +10,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 - Add `window.getPosition` to get the current window coordinates.
 
+### API: filesystem
+- Add `filesystem.appendFile` to append text content to a file. Thrown errors are similar to the `filesystem.writeFile` function.
+- Add `filesystem.appendBinaryFile` to append binary content to a file. Thrown errors are similar to the `filesystem.writeBinaryFile` function.
+
 ## v3.2.0
 
 ### API: init
