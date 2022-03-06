@@ -23,16 +23,21 @@ export function writeFile(path: string, data: string): Promise<void> {
     return sendMessage('filesystem.writeFile', { path, data });
 };
 
+export function appendFile(path: string, data: string): Promise<void> {
+    return sendMessage('filesystem.appendFile', { path, data });
+};
+
 export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
-    let bytes: Uint8Array = new Uint8Array(data);
-    let asciiStr: string = '';
-    for(let byte of bytes) {
-        asciiStr += String.fromCharCode(byte);
-    }
-    
     return sendMessage('filesystem.writeBinaryFile', {
         path,
-        data: window.btoa(asciiStr)
+        data: arrayBufferToBase64(data)
+    });
+};
+
+export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+    return sendMessage('filesystem.appendBinaryFile', {
+        path,
+        data: arrayBufferToBase64(data)
     });
 };
 
@@ -50,7 +55,7 @@ export function readBinaryFile(path: string): Promise<ArrayBuffer> {
             for (let i = 0; i < len; i++) {
                 bytes[i] = binaryData.charCodeAt(i);
             }
-            resolve(bytes.buffer);     
+            resolve(bytes.buffer);
         })
         .catch((error: any) => {
             reject(error);
@@ -77,3 +82,16 @@ export function moveFile(source: string, destination: string): Promise<void> {
 export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
+
+function arrayBufferToBase64(data: ArrayBuffer): string {
+    let bytes: Uint8Array = new Uint8Array(data);
+    let asciiStr: string = '';
+
+    for(let byte of bytes) {
+        asciiStr += String.fromCharCode(byte);
+    }
+
+    return window.btoa(asciiStr);
+};
+
+
