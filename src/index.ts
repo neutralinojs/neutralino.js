@@ -12,5 +12,5 @@ export * as extensions from './api/extensions';
 export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
 
-export { init } from './api/init';
+export { init, isInitialized } from './api/init';
 export { Error, ErrorCode } from './api/protocol';
