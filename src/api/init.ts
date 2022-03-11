@@ -20,3 +20,7 @@ export function init(): void {
     window.NL_CVERSION = version;
     initialized = true;
 }
+
+export function isInitialized(): boolean {
+    return initialized;
+}
