@@ -29,6 +29,13 @@ jobs:
     - name: Checkout 
       uses: actions/checkout@v2
       
+    - name: Delete nightly tag
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        tag_name: nightly
+      env:
+        GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
+      
     - name: Download build artifacts 
       uses: actions/download-artifact@v2
       with:
