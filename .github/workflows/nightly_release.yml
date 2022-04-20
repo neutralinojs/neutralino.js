@@ -1,0 +1,55 @@
+name: Nightly release
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install and Build
+      run: |
+        npm ci
+        npm run build
+        if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: lib_dist
+        path: ./dist/
+        
+  update-nightly-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout 
+      uses: actions/checkout@v2
+      
+    - name: Download build artifacts 
+      uses: actions/download-artifact@v2
+      with:
+        name: lib_dist
+        path: ./dist/
+        
+    - name: Create Release Notes
+      run: |
+        chmod +x ./scripts/rz.py
+        ./scripts/rz.py create nightly
+        
+    - name: Update nightly GitHub release
+      uses: ncipollo/release-action@v1
+      with:
+          name: Neutralinojs nightly release
+          bodyFile: ./.tmprz/release_notes.md
+          artifacts: dist/*.*
+          prerelease: true
+          allowUpdates: true
+          tag: nightly
+          
+    - name: Clean Release Notes
+      run: |
+        ./scripts/rz.py cleanup
