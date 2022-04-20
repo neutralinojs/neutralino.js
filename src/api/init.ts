@@ -18,5 +18,6 @@ export function init(): void {
     }
 
     window.NL_CVERSION = version;
+    window.NL_CCOMMIT = '<git_commit_hash_latest>'; // only the build server will update this
     initialized = true;
 }

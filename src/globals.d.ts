@@ -27,6 +27,8 @@ declare interface Window {
     NL_PID: string;
     /** Source of application resources: bundle or directory */
     NL_RESMODE: string;
+    /** Release commit of the client library */
+    NL_CCOMMIT: string;
 }
 
 declare let Neutralino: any;

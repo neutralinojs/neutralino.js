@@ -11,7 +11,8 @@
 
 // @ts-check
 
-import { readFileSync, writeFile, mkdirSync, existsSync } from 'fs'
+import { readFileSync, writeFile, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { exec } from 'child_process'
 import { join as joinPath } from 'path'
 import { rollup } from 'rollup'
 import Ts   from 'rollup-plugin-ts'
@@ -24,8 +25,14 @@ const { version } = JSON.parse (readFileSync ('./package.json', { encoding: 'utf
 const outdir  = 'dist'
 const devmode = process.argv.includes ('--dev')
 
+let commitHash = null
+
 if (existsSync (outdir) === false)
     mkdirSync (outdir, { recursive: true })
+
+
+console.log ('Preprocessing files...')
+addCommitHash ()
 
 console.log ('import src/index.ts')
 
@@ -34,8 +41,8 @@ rollup ({
     plugins: [
         Json (),
         Ts ({
-            tsconfig: config => ({ 
-                ...config, 
+            tsconfig: config => ({
+                ...config,
                 // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
                 // declarationMap: devmode
             })
@@ -48,12 +55,12 @@ rollup ({
     console.log ('generate dist/neutralino.js')
     return build.generate ({
         file      : 'neutralino.js',
-        format    : "iife",
-        name      : "Neutralino",
+        format    : 'iife',
+        name      : 'Neutralino',
         sourcemap : devmode
     })
 })
-.then (({ output }) => 
+.then (({ output }) =>
 {
     for (var entry of output)
     {
@@ -80,6 +87,7 @@ rollup ({
             write (filepath, entry.source)
         }
     }
+    resetCommitHash()
 })
 .catch (err =>
 {
@@ -101,11 +109,32 @@ function write (filepath, content)
     })
 }
 
+function patchInitFile (search, replace)
+{
+    let initSource = readFileSync ('./src/api/init.ts', { encoding: 'utf8' })
+    initSource = initSource.replace (search, replace)
+    writeFileSync ('./src/api/init.ts', initSource, { encoding: 'utf8' })
+}
+
+function addCommitHash ()
+{
+    exec ('git log -n 1 main --pretty=format:"%H"', (err, stdout) => {
+        let hash = stdout.trim()
+        patchInitFile ('<git_commit_hash_latest>', hash)
+        commitHash = hash
+    })
+}
+
+function resetCommitHash ()
+{
+    patchInitFile (commitHash, '<git_commit_hash_latest>')
+}
+
 const writeDts = (filepath, definitions) => {
     // A 'declare' modifier cannot be used in an already ambient context.
     definitions = definitions.replaceAll ('declare namespace', 'namespace')
     definitions = definitions.replaceAll ('declare function', 'function')
-    write (filepath, 
+    write (filepath,
 `// Type definitions for Neutralino ${version}
 // Project: https://github.com/neutralinojs
 // Definitions project: https://github.com/neutralinojs/neutralino.js
@@ -147,6 +176,9 @@ declare const NL_ARGS: string[];
 
 /** Current process's identifier */
 declare const NL_PID: number
+
+/** Release commit of the client library */
+declare const NL_CCOMMIT: string;
 
 ${
     // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
