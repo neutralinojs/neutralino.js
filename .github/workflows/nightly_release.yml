@@ -50,7 +50,7 @@ jobs:
     - name: Update nightly GitHub release
       uses: ncipollo/release-action@v1
       with:
-          name: Neutralinojs nightly release
+          name: Neutralino.js nightly release
           bodyFile: ./.tmprz/release_notes.md
           artifacts: dist/*.*
           prerelease: true
