@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.4.0
+
 ### DevOps
 - Add nightly builds support. Developers can download the nightly builds by setting `cli.clientVersion` to `nightly`.
 
