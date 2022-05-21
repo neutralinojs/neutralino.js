@@ -9,6 +9,8 @@ export interface Stats {
     size: number;
     isFile: boolean;
     isDirectory: boolean;
+    createdAt: number;
+    modifiedAt: number;
 }
 
 export function createDirectory(path: string): Promise<void> {
