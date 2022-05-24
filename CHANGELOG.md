@@ -9,6 +9,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ### API: filesystem
 - Expose `createdAt` and `modifiedAt` JavaScript timestamps with the `filesystem.getStats` function.
 
+### API: os
+- Add new functions for spawning processes. `spawnProcess`, `getSpawnedProcesses`, and `updateSpawnedProcess`.
+
 ## v3.4.0
 
 ### DevOps
