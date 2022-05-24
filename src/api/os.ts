@@ -12,6 +12,11 @@ export interface ExecCommandResult {
     exitCode: number;
 }
 
+export interface SpawnedProcess {
+    id: number;
+    pid: number;
+}
+
 export interface OpenDialogOptions {
     multiSelections?: boolean;
     filters?: Filter[];
@@ -71,6 +76,18 @@ export function execCommand(command: string, options?: ExecCommandOptions): Prom
     return sendMessage('os.execCommand', { command, ...options });
 };
 
+export function spawnProcess(command: string): Promise<SpawnedProcess> {
+    return sendMessage('os.spawnProcess', { command });
+};
+
+export function updateSpawnedProcess(id: number, event: string, data?:any): Promise<void> {
+    return sendMessage('os.updateSpawnedProcess', { id, event, data });
+};
+
+export function getSpawnedProcesses(): Promise<SpawnedProcess[]> {
+    return sendMessage('os.getSpawnedProcesses');
+};
+
 export function getEnv(key: string): Promise<string> {
     return sendMessage('os.getEnv', { key });
 };
@@ -91,7 +108,7 @@ export function showNotification(title: string, content: string, icon?: Icon): P
     return sendMessage('os.showNotification', { title, content, icon });
 };
 
-export function showMessageBox(title: string, content: string, 
+export function showMessageBox(title: string, content: string,
                 choice?: MessageBoxChoice, icon?: Icon): Promise<string> {
     return sendMessage('os.showMessageBox', { title, content, choice, icon });
 };
