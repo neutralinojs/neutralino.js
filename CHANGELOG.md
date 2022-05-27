@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.5.0
+
 ### API: filesystem
 - Expose `createdAt` and `modifiedAt` JavaScript timestamps with the `filesystem.getStats` function.
 
