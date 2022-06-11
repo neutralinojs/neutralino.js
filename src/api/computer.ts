@@ -8,3 +8,7 @@ export interface MemoryInfo {
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');
 };
+
+export function getArch(): Promise<string> {
+    return sendMessage('computer.getArch');
+};
