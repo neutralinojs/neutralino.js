@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: os
+- Add the `defaultPath` option to set the default file path for all file dialogs.
+
 ## v3.5.0
 
 ### API: filesystem
