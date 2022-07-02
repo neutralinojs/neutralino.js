@@ -20,11 +20,17 @@ export interface SpawnedProcess {
 export interface OpenDialogOptions {
     multiSelections?: boolean;
     filters?: Filter[];
+    defaultPath?: string;
+}
+
+export interface FolderDialogOptions {
+    defaultPath?: string;
 }
 
 export interface SaveDialogOptions {
     forceOverwrite?: boolean;
     filters?: Filter[];
+    defaultPath?: string;
 }
 
 export interface Filter {
@@ -96,8 +102,8 @@ export function showOpenDialog(title?: string, options?: OpenDialogOptions): Pro
     return sendMessage('os.showOpenDialog', { title, ...options });
 };
 
-export function showFolderDialog(title?: string): Promise<string> {
-    return sendMessage('os.showFolderDialog', { title });
+export function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string> {
+    return sendMessage('os.showFolderDialog', { title, ...options });
 };
 
 export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string> {
