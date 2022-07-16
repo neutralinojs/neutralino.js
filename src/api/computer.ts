@@ -16,6 +16,16 @@ export interface OSInfo {
     version: string;
 }
 
+export interface CPUInfo {
+    vendor: string;
+    model: string;
+    frequency: number;
+    architecture: string;
+    logicalThreads: number;
+    physicalCores: number;
+    physicalUnits: number;
+}
+
 export interface Display {
     id: number;
     resolution: Resolution;
@@ -43,6 +53,10 @@ export function getKernelInfo(): Promise<KernelInfo> {
 
 export function getOSInfo(): Promise<OSInfo> {
     return sendMessage('computer.getOSInfo');
+};
+
+export function getCPUInfo(): Promise<CPUInfo> {
+    return sendMessage('computer.getCPUInfo');
 };
 
 export function getDisplays(): Promise<Display[]> {
