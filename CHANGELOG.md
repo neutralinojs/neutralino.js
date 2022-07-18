@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: System information API
+- Expose the new system information API functions: `computer.getArch`, `computer.getKernelInfo`, `computer.getOSInfo`, `computer.getCPUInfo`, and `computer.getDisplays`.
+
 ### API: os
 - Add the `defaultPath` option to set the default file path for all file dialogs.
 
