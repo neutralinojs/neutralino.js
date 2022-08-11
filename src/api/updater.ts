@@ -1,3 +1,4 @@
+import * as filesystem from './filesystem';
 import { Error } from './protocol';
 
 export interface Manifest {
@@ -59,7 +60,7 @@ export function install(): Promise<void> {
         try {
             let response = await fetch(manifest.resourcesURL);
             let resourcesBuffer = await response.arrayBuffer();
-            await Neutralino.filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
+            await filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
             resolve({
                 success: true,

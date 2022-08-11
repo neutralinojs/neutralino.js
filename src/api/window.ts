@@ -1,4 +1,5 @@
 import { sendMessage } from '../ws/websocket';
+import * as os from './os';
 
 const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
 
@@ -117,7 +118,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
         draggableRegions.set(draggableRegion, { pointerdown: startPointerCapturing, pointerup: endPointerCapturing });
 
         async function onPointerMove(evt: PointerEvent) {
-            await Neutralino.window.move(
+            await move(
                 evt.screenX - initialClientX,
                 evt.screenY - initialClientY
             );
@@ -175,7 +176,7 @@ export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Prom
 
 export function setSize(options: WindowSizeOptions): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
-        let sizeOptions = await Neutralino.window.getSize();
+        let sizeOptions = await getSize();
 
         options = {...sizeOptions, ...options}; // merge prioritizing options arg
 
@@ -236,7 +237,7 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
         if(options && options.processArgs)
             command += " " + options.processArgs;
 
-        Neutralino.os.execCommand(command, { background: true })
+        os.execCommand(command, { background: true })
             .then((processInfo: any) => {
                 resolve(processInfo);
             })
