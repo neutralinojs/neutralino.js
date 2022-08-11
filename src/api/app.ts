@@ -1,5 +1,4 @@
 import { sendMessage } from '../ws/websocket';
-import * as app from './app';
 import * as os from './os';
 
 export interface OpenActionOptions {
@@ -30,7 +29,7 @@ export function restartProcess(options?: RestartOptions): Promise<void> {
         }
 
         await os.execCommand(command, {background: true});
-        app.exit();
+        exit();
         resolve();
     });
 };
