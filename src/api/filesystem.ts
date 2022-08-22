@@ -5,6 +5,11 @@ export interface DirectoryEntry {
     type: string;
 }
 
+export interface FileReaderOptions {
+    pos: number;
+    size: number;
+}
+
 export interface Stats {
     size: number;
     isFile: boolean;
@@ -43,13 +48,13 @@ export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void>
     });
 };
 
-export function readFile(path: string): Promise<string> {
-    return sendMessage('filesystem.readFile', { path });
+export function readFile(path: string, options?: FileReaderOptions): Promise<string> {
+    return sendMessage('filesystem.readFile', { path, ...options });
 };
 
-export function readBinaryFile(path: string): Promise<ArrayBuffer> {
+export function readBinaryFile(path: string, options?: FileReaderOptions): Promise<ArrayBuffer> {
     return new Promise((resolve: any, reject: any) => {
-        sendMessage('filesystem.readBinaryFile', { path })
+        sendMessage('filesystem.readBinaryFile', { path, ...options })
         .then((base64Data: string) => {
             let binaryData: string = window.atob(base64Data);
             let len: number = binaryData.length;

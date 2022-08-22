@@ -17,6 +17,10 @@ export interface SpawnedProcess {
     pid: number;
 }
 
+export interface Envs {
+    [key: string]: string;
+}
+
 export interface OpenDialogOptions {
     multiSelections?: boolean;
     filters?: Filter[];
@@ -96,6 +100,10 @@ export function getSpawnedProcesses(): Promise<SpawnedProcess[]> {
 
 export function getEnv(key: string): Promise<string> {
     return sendMessage('os.getEnv', { key });
+};
+
+export function getEnvs(): Promise<Envs> {
+    return sendMessage('os.getEnvs');
 };
 
 export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]> {
