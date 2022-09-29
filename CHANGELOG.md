@@ -10,7 +10,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### API: os, filesystem, storage, and computer
 
-- Expose new framework functions: `os.getEnvs`, `storage.getKeys`, and `computer.getMouseLocation`.
+- Expose new framework functions: `os.getEnvs`, `storage.getKeys`, and `computer.getMousePosition`.
 - Add `size` and `pos` options to `filesystem.readFile` and `filesystem.readBinaryFile` functions.
 
 ## v3.6.0
