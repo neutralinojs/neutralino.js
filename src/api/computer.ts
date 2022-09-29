@@ -39,6 +39,11 @@ interface Resolution {
     height: number;
 }
 
+interface MousePosition {
+    x: number;
+    y: number;
+}
+
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');
 };
@@ -61,4 +66,8 @@ export function getCPUInfo(): Promise<CPUInfo> {
 
 export function getDisplays(): Promise<Display[]> {
     return sendMessage('computer.getDisplays');
+};
+
+export function getMousePosition(): Promise<MousePosition> {
+    return sendMessage('computer.getMousePosition');
 };
