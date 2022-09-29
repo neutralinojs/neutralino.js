@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.7.0
+
 ### API: os, filesystem, storage, and computer
 
 - Expose new framework functions: `os.getEnvs`, `storage.getKeys`, and `computer.getMouseLocation`.
