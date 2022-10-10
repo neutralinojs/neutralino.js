@@ -29,6 +29,8 @@ declare interface Window {
     NL_RESMODE: string;
     /** Release commit of the client library */
     NL_CCOMMIT: string;
+    /** An array of custom methods */
+    NL_CMETHODS: string[];
 }
 
 declare let Neutralino: any;

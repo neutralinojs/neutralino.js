@@ -57,7 +57,9 @@ rollup ({
         file      : 'neutralino.js',
         format    : 'iife',
         name      : 'Neutralino',
-        sourcemap : devmode
+        sourcemap : devmode,
+        freeze    : false,
+        esModule  : false
     })
 })
 .then (({ output }) =>
@@ -179,6 +181,9 @@ declare const NL_PID: number
 
 /** Release commit of the client library */
 declare const NL_CCOMMIT: string;
+
+/** An array of custom methods */
+NL_CMETHODS: string[];
 
 ${
     // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
