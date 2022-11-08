@@ -90,7 +90,7 @@ export function spawnProcess(command: string): Promise<SpawnedProcess> {
     return sendMessage('os.spawnProcess', { command });
 };
 
-export function updateSpawnedProcess(id: number, event: string, data?:any): Promise<void> {
+export function updateSpawnedProcess(id: number, event: string, data?: any): Promise<void> {
     return sendMessage('os.updateSpawnedProcess', { id, event, data });
 };
 

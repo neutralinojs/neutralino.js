@@ -10,6 +10,13 @@ export interface FileReaderOptions {
     size: number;
 }
 
+export interface OpenedFile {
+    id: number;
+    eof: boolean;
+    pos: number;
+    lastRead: number;
+}
+
 export interface Stats {
     size: number;
     isFile: boolean;
@@ -68,6 +75,18 @@ export function readBinaryFile(path: string, options?: FileReaderOptions): Promi
             reject(error);
         });
     });
+};
+
+export function openFile(path: string): Promise<number> {
+    return sendMessage('filesystem.openFile', { path });
+};
+
+export function updateOpenedFile(id: number, event: string, data?: any): Promise<void> {
+    return sendMessage('filesystem.updateOpenedFile', { id, event, data });
+};
+
+export function getOpenedFileInfo(id: number): Promise<OpenedFile> {
+    return sendMessage('filesystem.getOpenedFileInfo', { id });
 };
 
 export function removeFile(path: string): Promise<void> {
