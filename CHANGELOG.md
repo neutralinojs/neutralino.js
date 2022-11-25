@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.8.0
+
 ### API: custom methods and file streams
 - Expose functions in framework's [custom methods](https://github.com/neutralinojs/neutralinojs/blob/main/CHANGELOG.md#api-custom-methods) and [file streams](https://github.com/neutralinojs/neutralinojs/blob/main/CHANGELOG.md#api-file-streams) implementations.
 
