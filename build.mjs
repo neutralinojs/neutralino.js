@@ -1,6 +1,6 @@
 
 /*/
-    This script generates the files `neutralino.js` and `neutralino.d.ts`.
+    This script generates the files `neutralino.js`, `neutralino.mjs`, and `neutralino.d.ts`.
     For a development version, use: `node ./build.mjs --dev`
     this will produce an unminified `neutralino.js` file and the neutralino.js.map file.
     neutralino.js.map can be moved without the source code.
@@ -52,14 +52,16 @@ rollup ({
 })
 .then (build =>
 {
-    console.log ('generate dist/neutralino.js')
+    console.log ('generate dist/neutralino.mjs')
 
     build.write ({
-        file      : joinPath (outdir, 'neutralino.module.js'),
+        file      : joinPath (outdir, 'neutralino.mjs'),
         format    : 'esm',
         name      : 'Neutralino',
         sourcemap : devmode
     })
+
+    console.log ('generate dist/neutralino.js')
 
     return build.generate ({
         file      : 'neutralino.js',
