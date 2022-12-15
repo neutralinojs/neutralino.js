@@ -7,7 +7,7 @@ export interface ExtensionStats {
 
 export function dispatch(extensionId: string, event: string, data?: any): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
-        let stats = await Neutralino.extensions.getStats();
+        let stats = await getStats();
         if(!stats.loaded.includes(extensionId)) {
             reject({
                 code: 'NE_EX_EXTNOTL',

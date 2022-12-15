@@ -1,4 +1,5 @@
 import { sendMessage } from '../ws/websocket';
+import * as os from './os';
 
 export interface OpenActionOptions {
     url: string;
@@ -27,8 +28,8 @@ export function restartProcess(options?: RestartOptions): Promise<void> {
             command += ' ' + options.args;
         }
 
-        await Neutralino.os.execCommand(command, {background: true});
-        Neutralino.app.exit();
+        await os.execCommand(command, {background: true});
+        exit();
         resolve();
     });
 };

@@ -1,5 +1,7 @@
-import * as websocket from '../ws/websocket';
 import { version } from '../../package.json';
+import * as websocket from '../ws/websocket';
+import * as debug from './debug';
+import * as events from './events';
 
 let initialized = false;
 
@@ -19,8 +21,8 @@ export function init(options: InitOptions = {}): void {
     websocket.init();
 
     if(window.NL_ARGS.find((arg) => arg == '--neu-dev-auto-reload')) {
-        Neutralino.events.on('neuDev_reloadApp', async () => {
-            await Neutralino.debug.log('Reloading the application...');
+        events.on('neuDev_reloadApp', async () => {
+            await debug.log('Reloading the application...');
             location.reload();
         });
     }

@@ -1,3 +1,4 @@
+import * as extensions from '../api/extensions';
 import * as events from '../browser/events';
 
 let ws;
@@ -49,20 +50,20 @@ export function sendWhenExtReady(extensionId: string, message: any) {
 }
 
 function registerLibraryEvents() {
-    Neutralino.events.on('ready', async () => {
+    events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
         if(!window.NL_EXTENABLED) {
             return;
         }
 
-        let stats = await Neutralino.extensions.getStats();
+        let stats = await extensions.getStats();
         for(let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });
 
-    Neutralino.events.on('extClientConnect', (evt) => {
+    events.on('extClientConnect', (evt) => {
         events.dispatch('extensionReady', evt.detail);
     });
 
@@ -70,7 +71,7 @@ function registerLibraryEvents() {
         return;
     }
 
-    Neutralino.events.on('extensionReady', async (evt) => {
+    events.on('extensionReady', async (evt) => {
         if(evt.detail in extensionMessageQueue) {
             await processQueue(extensionMessageQueue[evt.detail]);
             delete extensionMessageQueue[evt.detail];

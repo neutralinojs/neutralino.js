@@ -53,6 +53,14 @@ rollup ({
 .then (build =>
 {
     console.log ('generate dist/neutralino.js')
+
+    build.write ({
+        file      : joinPath (outdir, 'neutralino.module.js'),
+        format    : 'esm',
+        name      : 'Neutralino',
+        sourcemap : devmode
+    })
+
     return build.generate ({
         file      : 'neutralino.js',
         format    : 'iife',
