@@ -1,8 +1,11 @@
 {
-  "name": "neutralino-client-library",
-  "version": "3.8.0",
+  "name": "@neutralinojs/lib",
+  "version": "3.8.1",
   "description": "JavaScript API for Neutralinojs",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.mjs",

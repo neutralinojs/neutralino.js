@@ -61,6 +61,14 @@ rollup ({
         sourcemap : devmode
     })
 
+    console.log ('generate lib')
+
+    build.write ({
+        dir       : outdir,
+        format    : 'cjs',
+        sourcemap : devmode
+    })
+
     console.log ('generate dist/neutralino.js')
 
     return build.generate ({
