@@ -90,13 +90,14 @@ jobs:
         node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
         scope: '@neutralinojs'
+        
+    - name: Install dependencies
+      run: npm ci
 
     - name: Publish to NPM Registry
       run: |
-        vprefix=nightly-$(date +"%Y%m%d")
-        npm version prerelease --preid=$vprefix --commit-hooks=false --git-tag-version=false
         npm run build
-        npm publish --access=public --tag nightly
+        npm publish --access=public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     
