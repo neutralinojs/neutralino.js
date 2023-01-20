@@ -3,7 +3,19 @@
 ## What's new
 {RZ_CHANGELOG}
 
-Update the config file option `cli.clientVersion` with `{RZ_VERSION}` and enter `neu update` to fetch this version.
+## How to update
+
+### neu CLI
+neu CLI downloads the client library as a separate JavaScript file (`neutralino.js` or `neutralino.mjs`) and let the framework create a global object (`Neutralino`) or let developers use a module. Update the config file option `cli.clientVersion` with `{RZ_VERSION}` and enter `neu update` to fetch this version.
+
+### Node package managers
+Use the following commands if you bundle the client library into your app package:
+
+```
+npm install @neutralinojs/lib@{RZ_VERSION}
+# --- or ---
+yarn add @neutralinojs/lib@{RZ_VERSION}
+```
 
 Get started: https://neutralino.js.org/docs
 
