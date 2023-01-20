@@ -57,6 +57,14 @@ jobs:
           allowUpdates: true
           tag: nightly
           
+    - name: Publish to NPM Registry
+      run: |
+        npm version prerelease
+        npm run build
+        npm publish --access=public --tag nightly
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
     - name: Clean Release Notes
       run: |
         ./scripts/rz.py cleanup
