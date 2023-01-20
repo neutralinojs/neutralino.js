@@ -67,6 +67,13 @@ jobs:
           bodyFile: ./.tmprz/release_notes.md
           artifacts: 'dist/*.*'
           
+    - name: Publish to NPM Registry
+      run: |
+        npm run build
+        npm publish --access=public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
     - name: Clean Release Notes
       run: |
         ./scripts/rz.py cleanup
