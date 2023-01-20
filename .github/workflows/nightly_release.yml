@@ -73,8 +73,9 @@ jobs:
 
     - name: Publish to NPM Registry
       run: |
-        vprefix=nightly-$(date +"%Y%m%d")
-        npm version prerelease --preid=$vprefix --commit-hooks=false --git-tag-version=false
+        vend=nightly-$(date +"%Y%m%d")
+        v=$(npm pkg get version | tr -d '"')-$vend
+        npm version $v --commit-hooks=false --git-tag-version=false
         npm run build
         npm publish --access=public --tag nightly
       env:
