@@ -67,17 +67,26 @@ jobs:
           bodyFile: ./.tmprz/release_notes.md
           artifacts: 'dist/*.*'
           
-    - name: Publish to NPM Registry
-      run: |
-        npm run build
-        npm publish --access=public
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
     - name: Clean Release Notes
       run: |
         ./scripts/rz.py cleanup
         
+  publish-to-npm:
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout 
+      uses: actions/checkout@v2
+
+    - name: Publish to NPM Registry
+      run: |
+        vprefix=nightly-$(date +"%Y%m%d")
+        npm version prerelease --preid=$vprefix --commit-hooks=false --git-tag-version=false
+        npm run build
+        npm publish --access=public --tag nightly
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    
     - name: Send Discord Notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
