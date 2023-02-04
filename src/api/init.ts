@@ -10,9 +10,7 @@ export interface InitOptions {
 }
 
 export function init(options: InitOptions = {}): void {
-    options = {...{
-                    exportCustomMethods: true
-                } ,...options};
+    options = { exportCustomMethods: true ,...options };
 
     if(initialized) {
         return;
