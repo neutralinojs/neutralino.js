@@ -87,6 +87,7 @@ jobs:
     - name: Check changelogs before NPM release
       id: check_changelog
       run: |
+        chmod +x ./scripts/rz.py
         out=$(./scripts/rz.py check)
         if [[ $out == *"ST_HAS_CHANGES"* ]]; then
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
