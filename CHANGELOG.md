@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### DevOps
+- Publish to NPM only if there are unreleased changes in changelog.
+
 ## v3.8.2
 
 ### NPM/ESM support
