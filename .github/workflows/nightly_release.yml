@@ -83,8 +83,17 @@ jobs:
       
     - name: Install dependencies
       run: npm ci
+      
+    - name: Check changelogs before NPM release
+      id: check_changelog
+      run: |
+        out=$(./scripts/rz.py check)
+        if [[ $out == *"ST_HAS_CHANGES"* ]]; then
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Publish to NPM Registry
+      if: ${{ steps.check_changelog.outputs.has_changes == 'true' }}
       run: |
         vend=nightly-$(date +"%Y%m%d")
         v=$(npm pkg get version | tr -d '"')-$vend
