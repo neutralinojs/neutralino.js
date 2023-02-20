@@ -123,5 +123,11 @@ if __name__ == '__main__':
     elif command == 'cleanup':
         cleanup()
 
+    elif command == 'check':
+        if parse_release_note().strip() == '':
+            print('ST_NO_CHANGES')
+        else:
+            print('ST_HAS_CHANGES')
+
     else:
         print('ERROR: Invalid command!')
