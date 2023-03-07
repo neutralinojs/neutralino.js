@@ -17,7 +17,7 @@ export type Builtin =
     'extensionReady' |
     'neuDev_reloadApp'
 
-export function on(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
+export function on(event: Builtin, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.addEventListener(event, handler);
     return Promise.resolve({
         success: true,
