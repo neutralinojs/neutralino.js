@@ -1,6 +1,14 @@
 # neutralino.js
 
-JavaScript API for [Neutralinojs](https://github.com/neutralinojs/neutralinojs). See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details.
+The official JavaScript client for [Neutralinojs](https://github.com/neutralinojs/neutralinojs). Neutralinojs CLI automatically downloads a minified version of `neutralino.js` and lets you use the Neutralinojs native API via the global `Neutralino` JavaScript object (aka `window.Neutralino`). Also, you can download this client from the NPM registry via a Node package manager and bundle with your application:
+
+```bash
+npm install @neutralinojs/lib
+# --- or ---
+yarn add @neutralinojs/lib
+```
+
+See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details.
 
 ## Developer's FAQ
 
