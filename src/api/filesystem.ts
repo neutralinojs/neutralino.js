@@ -81,6 +81,14 @@ export function openFile(path: string): Promise<number> {
     return sendMessage('filesystem.openFile', { path });
 };
 
+export function createWatcher(path: string): Promise<number> {
+    return sendMessage('filesystem.createWatcher', { path });
+};
+
+export function removeWatcher(id: number): Promise<number> {
+    return sendMessage('filesystem.removeWatcher', { id });
+};
+
 export function updateOpenedFile(id: number, event: string, data?: any): Promise<void> {
     return sendMessage('filesystem.updateOpenedFile', { id, event, data });
 };
