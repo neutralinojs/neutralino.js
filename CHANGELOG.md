@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: file watchers
+- Export `filesystem.createWatcher` and `filesystem.removeWatcher` functions.
+
 ### DevOps
 - Publish to NPM only if there are unreleased changes in changelog.
 
