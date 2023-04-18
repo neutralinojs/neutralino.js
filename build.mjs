@@ -201,7 +201,7 @@ declare const NL_PID: number
 declare const NL_CCOMMIT: string;
 
 /** An array of custom methods */
-NL_CMETHODS: string[];
+declare const NL_CMETHODS: string[];
 
 ${
     // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
