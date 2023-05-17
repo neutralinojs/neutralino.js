@@ -91,6 +91,10 @@ export function move(x: number, y: number): Promise<void> {
     return sendMessage('window.move', { x, y });
 };
 
+export function center(): Promise<void> {
+    return sendMessage('window.center');
+};
+
 export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
         const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
