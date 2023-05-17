@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: window
+- Export the `window.center` function
+
 ## v3.9.0
 
 ### API: file watchers
