@@ -14,7 +14,7 @@ npm install @neutralinojs/lib
 yarn add @neutralinojs/lib
 ```
 
-See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details.
+See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details. Release notes are available at [this page](https://neutralino.js.org/docs/release-notes/client-library/).
 
 ## Developer's FAQ
 
