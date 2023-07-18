@@ -13,6 +13,7 @@ export interface WindowOptions extends WindowSizeOptions {
   maximize?: boolean;
   hidden?: boolean;
   maximizable?: boolean;
+  useSavedState?: boolean;
   processArgs?: string;
 }
 
@@ -209,6 +210,9 @@ export function setAlwaysOnTop(onTop: boolean): Promise<void> {
 export function create(url: string, options?: WindowOptions): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
 
+        options = { ...options, useSavedState: false };
+        // useSavedState: false -> Child windows won't save their states
+
         function normalize(arg: any) {
             if(typeof arg != "string")
                 return arg;
@@ -238,6 +242,7 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
             ));
             command += ` --window${cliKey}=${normalize(options[key])}`
         }
+
         if(options && options.processArgs)
             command += " " + options.processArgs;
 
