@@ -3,7 +3,7 @@ import * as os from './os';
 
 const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
 
-export interface WindowOptions extends WindowSizeOptions {
+export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
   title?: string;
   icon?: string;
   fullScreen?: boolean;
