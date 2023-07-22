@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.11.0
+
 ### API: window
 - Avoid saving the window state for child windows in the `window.create` function by using the `--window-use-saved-state=false` internal CLI argument.
 
