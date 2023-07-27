@@ -44,7 +44,7 @@ export interface Filter {
 
 export interface TrayOptions {
     icon?: string;
-    menu?: TrayMenuItem[];
+    menuItems?: TrayMenuItem[];
 }
 
 export interface TrayMenuItem {
