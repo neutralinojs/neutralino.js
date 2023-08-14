@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: window
+- Improved the performance of the draggable regions API by throttling Neutralino framework function calls.
+
 ## v3.11.0
 
 ### API: window
