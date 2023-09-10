@@ -25,6 +25,11 @@ export interface Stats {
     modifiedAt: number;
 }
 
+export interface Watcher {
+    id: number;
+    path: string;
+}
+
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
 };
@@ -87,6 +92,10 @@ export function createWatcher(path: string): Promise<number> {
 
 export function removeWatcher(id: number): Promise<number> {
     return sendMessage('filesystem.removeWatcher', { id });
+};
+
+export function getWatchers(): Promise<Watcher[]> {
+    return sendMessage('filesystem.getWatchers');
 };
 
 export function updateOpenedFile(id: number, event: string, data?: any): Promise<void> {
