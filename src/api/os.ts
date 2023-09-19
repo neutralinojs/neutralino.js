@@ -3,6 +3,7 @@ import { sendMessage } from '../ws/websocket';
 export interface ExecCommandOptions {
     stdIn?: string;
     background?: boolean;
+    cwd?: string;
 }
 
 export interface ExecCommandResult {
@@ -86,8 +87,8 @@ export function execCommand(command: string, options?: ExecCommandOptions): Prom
     return sendMessage('os.execCommand', { command, ...options });
 };
 
-export function spawnProcess(command: string): Promise<SpawnedProcess> {
-    return sendMessage('os.spawnProcess', { command });
+export function spawnProcess(command: string, cwd?: string): Promise<SpawnedProcess> {
+    return sendMessage('os.spawnProcess', { command, cwd });
 };
 
 export function updateSpawnedProcess(id: number, event: string, data?: any): Promise<void> {
