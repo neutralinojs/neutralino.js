@@ -1,5 +1,6 @@
 import * as extensions from '../api/extensions';
 import * as events from '../browser/events';
+import { base64ToBytesArray } from '../helpers';
 
 let ws;
 let nativeCalls = {};
@@ -103,6 +104,9 @@ function registerSocketEvents() {
         }
         else if(message.event) {
             // Event from process
+            if(message.event == 'openedFile' && message?.data?.action == 'dataBinary') {
+                message.data.data = base64ToBytesArray(message.data.data);
+            }
             events.dispatch(message.event, message.data);
         }
     });

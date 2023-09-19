@@ -1,4 +1,5 @@
 import { sendMessage } from '../ws/websocket';
+import { base64ToBytesArray } from '../helpers';
 
 export interface DirectoryEntry {
     entry: string;
@@ -68,13 +69,7 @@ export function readBinaryFile(path: string, options?: FileReaderOptions): Promi
     return new Promise((resolve: any, reject: any) => {
         sendMessage('filesystem.readBinaryFile', { path, ...options })
         .then((base64Data: string) => {
-            let binaryData: string = window.atob(base64Data);
-            let len: number = binaryData.length;
-            let bytes: Uint8Array = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryData.charCodeAt(i);
-            }
-            resolve(bytes.buffer);
+            resolve(base64ToBytesArray(base64Data));
         })
         .catch((error: any) => {
             reject(error);
