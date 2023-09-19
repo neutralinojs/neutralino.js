@@ -20,6 +20,9 @@ export function killProcess(): Promise<void> {
 export function restartProcess(options?: RestartOptions): Promise<void> {
     return new Promise(async (resolve: () => void) => {
         let command = window.NL_ARGS.reduce((acc: string, arg: string) => {
+            if(arg.includes(' ')) {
+                arg = `"${arg}"`
+            }
             acc += ' ' + arg;
             return acc;
         }, '');
