@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.12.0
+
 ### Improvements/bugfixes
 - Improved the performance of the draggable regions API by throttling Neutralino framework function calls.
 - Fix the restarting issue that happens when the app path contains spaces.
