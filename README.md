@@ -14,7 +14,7 @@ npm install @neutralinojs/lib
 yarn add @neutralinojs/lib
 ```
 
-See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details. Release notes are available at [this page](https://neutralino.js.org/docs/release-notes/client-library/).
+See Neutralinojs JavaScript API [documentation](https://neutralino.js.org/docs/api/overview) for more details. Release notes are available at [this page](https://neutralino.js.org/docs/release-notes/client-library/). This repository doesn't host the entire Neutralinojs codebase — this is the JavaScript client that Neutralinojs C++ server codebase loads. Browse the Neutralinojs server source code from [this repository](https://github.com/neutralinojs/neutralinojs).
 
 ## Developer's FAQ
 
