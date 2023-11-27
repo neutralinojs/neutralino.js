@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v3.13.0
+
 ### API: window
 - Add `extendUserAgentWith` and `exitProcessOnClose` options to `window.create` TypeScript definition.
 
