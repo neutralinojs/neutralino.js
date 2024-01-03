@@ -44,3 +44,15 @@ export function getConfig(): Promise<any> {
 export function broadcast(event: string, data?: any): Promise<void> {
     return sendMessage('app.broadcast', {event, data});
 };
+
+export function readProcessInput(readAll?: boolean): Promise<string> {
+    return sendMessage('app.readProcessInput', { readAll });
+};
+
+export function writeProcessOutput(data: string): Promise<void> {
+    return sendMessage('app.writeProcessOutput', { data });
+};
+
+export function writeProcessError(data: string): Promise<void> {
+    return sendMessage('app.writeProcessError', { data });
+};
