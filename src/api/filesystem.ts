@@ -113,6 +113,10 @@ export function copyFile(source: string, destination: string): Promise<void> {
     return sendMessage('filesystem.copyFile', { source, destination } );
 };
 
+export function copy(source: string, destination: string): Promise<void> {
+    return sendMessage('filesystem.copy', { source, destination } );
+};
+
 export function moveFile(source: string, destination: string): Promise<void> {
     return sendMessage('filesystem.moveFile', { source, destination });
 };
