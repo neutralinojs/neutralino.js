@@ -36,8 +36,8 @@ export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
 };
 
-export function removeDirectory(path: string): Promise<void> {
-    return sendMessage('filesystem.removeDirectory', { path });
+export function remove(path: string): Promise<void> {
+    return sendMessage('filesystem.remove', { path });
 };
 
 export function writeFile(path: string, data: string): Promise<void> {
@@ -102,24 +102,16 @@ export function getOpenedFileInfo(id: number): Promise<OpenedFile> {
     return sendMessage('filesystem.getOpenedFileInfo', { id });
 };
 
-export function removeFile(path: string): Promise<void> {
-    return sendMessage('filesystem.removeFile', { path });
-};
-
 export function readDirectory(path: string): Promise<DirectoryEntry[]> {
     return sendMessage('filesystem.readDirectory', { path });
-};
-
-export function copyFile(source: string, destination: string): Promise<void> {
-    return sendMessage('filesystem.copyFile', { source, destination } );
 };
 
 export function copy(source: string, destination: string): Promise<void> {
     return sendMessage('filesystem.copy', { source, destination } );
 };
 
-export function moveFile(source: string, destination: string): Promise<void> {
-    return sendMessage('filesystem.moveFile', { source, destination });
+export function move(source: string, destination: string): Promise<void> {
+    return sendMessage('filesystem.move', { source, destination });
 };
 
 export function getStats(path: string): Promise<Stats> {
