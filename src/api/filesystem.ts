@@ -3,6 +3,7 @@ import { base64ToBytesArray } from '../helpers';
 
 export interface DirectoryEntry {
     entry: string;
+    path: string;
     type: string;
 }
 
