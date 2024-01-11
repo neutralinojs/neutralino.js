@@ -17,8 +17,10 @@ declare interface Window {
     NL_PATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
-    /** Operating system name: Linux, Windows, or Darwin */
+    /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
     NL_OS: string;
+    /** CPU architecture: x64, arm, itanium, ia32, or unknown */
+    NL_ARCH: string;
     /** Neutralinojs server version */
     NL_VERSION: string;
     /** Current working directory */
