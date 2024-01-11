@@ -12,6 +12,10 @@ export interface FileReaderOptions {
     size: number;
 }
 
+export interface DirectoryReaderOptions {
+    recursive: boolean;
+}
+
 export interface OpenedFile {
     id: number;
     eof: boolean;
@@ -102,8 +106,8 @@ export function getOpenedFileInfo(id: number): Promise<OpenedFile> {
     return sendMessage('filesystem.getOpenedFileInfo', { id });
 };
 
-export function readDirectory(path: string): Promise<DirectoryEntry[]> {
-    return sendMessage('filesystem.readDirectory', { path });
+export function readDirectory(path: string, options?: DirectoryReaderOptions): Promise<DirectoryEntry[]> {
+    return sendMessage('filesystem.readDirectory', { path, ...options });
 };
 
 export function copy(source: string, destination: string): Promise<void> {
