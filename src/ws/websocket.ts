@@ -9,7 +9,8 @@ let extensionMessageQueue = {}
 
 export function init() {
     initAuth();
-    ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}`);
+    const connectToken: string = getAuthToken().split('.')[1];
+    ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
 }
@@ -89,10 +90,8 @@ function registerSocketEvents() {
             if(message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
                 if(message.data.error.code == 'NE_RT_INVTOKN') {
-                    // critical auth error
-                    // Perhaps, someone tried to open app from anoher client,
-                    // with 'one-time' token mode
-                    handleAuthError();
+                    // Invalid native method token
+                    handleNativeMethodTokenError();
                 }
             }
             else if(message.data?.success) {
@@ -122,6 +121,10 @@ function registerSocketEvents() {
         };
         events.dispatch('serverOffline', error);
     });
+
+    ws.addEventListener('error', async (event) => {
+        handleConnectError();
+    });
 }
 
 async function processQueue(messageQueue: any[]) {
@@ -137,11 +140,17 @@ async function processQueue(messageQueue: any[]) {
     }
 }
 
-function handleAuthError() {
+function handleNativeMethodTokenError() {
     ws.close();
     document.body.innerText = '';
-    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application configuration' +
-                                    ' prevents accepting native calls from this client.');
+    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
+                                    ' execute native methods since <code>NL_TOKEN</code> is invalid.');
+}
+
+function handleConnectError() {
+    document.body.innerText = '';
+    document.write('<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
+                                    ' connect with the framework core using <code>NL_TOKEN</code>.');
 }
 
 function initAuth() {
