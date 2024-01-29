@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.0.0
+
 ### API: filesystem
 - Expose `app.readProcessInput(readAll=false)`, `app.writeProcessOutput()`, and `app.writeProcessError()` functions
 
