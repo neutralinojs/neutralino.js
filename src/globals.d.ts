@@ -12,7 +12,7 @@ declare interface Window {
     /** Application identifier */
     NL_APPID: string;
     /** Application version */
-    NL_APPVERSION: string;
+    NL_APPVERSION?: string;
     /** Application path */
     NL_PATH: string;
     /** Returns true if extensions are enabled */
