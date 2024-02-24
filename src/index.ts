@@ -1,5 +1,6 @@
 declare global {
 interface Window {
+    // --- globals ---
     /** Mode of the application: window, browser, cloud, or chrome */
     NL_MODE: string;
     /** Application port */
@@ -13,7 +14,7 @@ interface Window {
     /** Application identifier */
     NL_APPID: string;
     /** Application version */
-    NL_APPVERSION?: string;
+    NL_APPVERSION: string;
     /** Application path */
     NL_PATH: string;
     /** Returns true if extensions are enabled */
@@ -34,6 +35,7 @@ interface Window {
     NL_CCOMMIT: string;
     /** An array of custom methods */
     NL_CMETHODS: string[];
+    // --- globals ---
 }
      /** Neutralino global object for custom methods **/
     const Neutralino: any;
