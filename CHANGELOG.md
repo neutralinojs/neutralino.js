@@ -7,7 +7,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## Unreleased
 
 ### TypeScript
-- Fix type declaration issues with the `window` global object. Now, `window.NL_VERSION`, etc., won't display errors on code editors.
+- Fix type declaration issues with the `window` global object. Now, `window.NL_VERSION`, etc. won't display errors on code editors or with the TypeScript compiler.
 
 ## v5.0.0
 
