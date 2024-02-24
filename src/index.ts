@@ -1,8 +1,10 @@
+import { MODE, OS, ARCH } from './enums';
+
 declare global {
 interface Window {
     // --- globals ---
     /** Mode of the application: window, browser, cloud, or chrome */
-    NL_MODE: string;
+    NL_MODE: MODE;
     /** Application port */
     NL_PORT: number;
     /** Command-line arguments */
@@ -20,9 +22,9 @@ interface Window {
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
     /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Unknown */
-    NL_OS: string;
+    NL_OS: OS;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */
-    NL_ARCH: string;
+    NL_ARCH: ARCH;
     /** Neutralinojs server version */
     NL_VERSION: string;
     /** Current working directory */
