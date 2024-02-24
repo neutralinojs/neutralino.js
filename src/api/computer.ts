@@ -1,73 +1,73 @@
 import { sendMessage } from '../ws/websocket';
 
 export interface MemoryInfo {
-    total: number;
-    available: number;
+  total: number;
+  available: number;
 }
 
 export interface KernelInfo {
-    variant: string;
-    version: string;
+  variant: string;
+  version: string;
 }
 
 export interface OSInfo {
-    name: string;
-    description: string;
-    version: string;
+  name: string;
+  description: string;
+  version: string;
 }
 
 export interface CPUInfo {
-    vendor: string;
-    model: string;
-    frequency: number;
-    architecture: string;
-    logicalThreads: number;
-    physicalCores: number;
-    physicalUnits: number;
+  vendor: string;
+  model: string;
+  frequency: number;
+  architecture: string;
+  logicalThreads: number;
+  physicalCores: number;
+  physicalUnits: number;
 }
 
 export interface Display {
-    id: number;
-    resolution: Resolution;
-    dpi: number;
-    bpp: number;
-    refreshRate: number;
+  id: number;
+  resolution: Resolution;
+  dpi: number;
+  bpp: number;
+  refreshRate: number;
 }
 
 interface Resolution {
-    width: number;
-    height: number;
+  width: number;
+  height: number;
 }
 
 interface MousePosition {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 }
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
-    return sendMessage('computer.getMemoryInfo');
-};
+  return sendMessage('computer.getMemoryInfo');
+}
 
 export function getArch(): Promise<string> {
-    return sendMessage('computer.getArch');
-};
+  return sendMessage('computer.getArch');
+}
 
 export function getKernelInfo(): Promise<KernelInfo> {
-    return sendMessage('computer.getKernelInfo');
-};
+  return sendMessage('computer.getKernelInfo');
+}
 
 export function getOSInfo(): Promise<OSInfo> {
-    return sendMessage('computer.getOSInfo');
-};
+  return sendMessage('computer.getOSInfo');
+}
 
 export function getCPUInfo(): Promise<CPUInfo> {
-    return sendMessage('computer.getCPUInfo');
-};
+  return sendMessage('computer.getCPUInfo');
+}
 
 export function getDisplays(): Promise<Display[]> {
-    return sendMessage('computer.getDisplays');
-};
+  return sendMessage('computer.getDisplays');
+}
 
 export function getMousePosition(): Promise<MousePosition> {
-    return sendMessage('computer.getMousePosition');
-};
+  return sendMessage('computer.getMousePosition');
+}
