@@ -100,7 +100,8 @@ rollup ({
         else if (entry.fileName === 'neutralino.d.ts')
         {
             var code = entry.source.toString ()
-            writeDts (joinPath (outdir, 'neutralino.d.ts'), code.substring (0, code.lastIndexOf ("export")))
+            writeDts (joinPath (outdir, 'neutralino.d.ts'),
+                    code.substring (code.indexOf("declare namespace"), code.lastIndexOf ("export")))
         }
         else
         {
