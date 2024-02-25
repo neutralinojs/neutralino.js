@@ -1,8 +1,8 @@
 export enum MODE {
-    Window,
-    Browser,
-    Cloud,
-    Chrome
+    window,
+    browser,
+    cloud,
+    chrome
 }
 
 export enum OS {
@@ -15,8 +15,8 @@ export enum OS {
 
 export enum ARCH {
     x64,
-    Arm,
-    Itanium,
+    arm,
+    itanium,
     ia32,
-    Unknown
+    unknown
 }
