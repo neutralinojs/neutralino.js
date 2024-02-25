@@ -1,8 +1,10 @@
+import * as NL_CONSTANTS from './types/enums';
+
 declare global {
 interface Window {
     // --- globals ---
     /** Mode of the application: window, browser, cloud, or chrome */
-    NL_MODE: string;
+    NL_MODE: NL_CONSTANTS.MODE;
     /** Application port */
     NL_PORT: number;
     /** Command-line arguments */
@@ -20,9 +22,9 @@ interface Window {
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
     /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
-    NL_OS: string;
+    NL_OS: NL_CONSTANTS.OS;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */
-    NL_ARCH: string;
+    NL_ARCH: NL_CONSTANTS.ARCH;
     /** Neutralinojs server version */
     NL_VERSION: string;
     /** Current working directory */
