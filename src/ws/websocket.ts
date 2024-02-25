@@ -1,5 +1,6 @@
 import * as extensions from '../api/extensions';
 import * as events from '../browser/events';
+import { logError } from '../errors';
 import { base64ToBytesArray } from '../helpers';
 
 let ws;
@@ -15,27 +16,31 @@ export function init() {
     registerSocketEvents();
 }
 
-export function sendMessage(method: string, data?: any): Promise<any> {
-    return new Promise((resolve: any, reject: any) => {
+export async function sendMessage(method: string, data?: any): Promise<any> {
+    try {
+        return await new Promise((resolve: any, reject: any) => {
 
-        if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
-            return;
-        }
+            if(ws?.readyState != WebSocket.OPEN) {
+                sendWhenReady({method, data, resolve, reject});
+                return;
+            }
 
-        const id: string = uuidv4();
-        const accessToken: string = getAuthToken();
+            const id: string = uuidv4();
+            const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+            nativeCalls[id] = {resolve, reject};
 
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
+            ws.send(JSON.stringify({
+                id,
+                method,
+                data,
+                accessToken
+            }));
 
-    });
+        });
+    } catch (e) {
+        logError(e);
+    }
 }
 
 export function sendWhenReady(message: any) {
