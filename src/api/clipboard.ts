@@ -8,3 +8,7 @@ export function readText(key: string, data: string): Promise<void> {
 export function writeText(data: string): Promise<string> {
     return sendMessage('clipboard.writeText', { data });
 };
+
+export function clear(): Promise<void> {
+    return sendMessage('clipboard.clear');
+};
