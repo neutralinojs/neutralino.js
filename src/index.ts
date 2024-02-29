@@ -19,7 +19,7 @@ interface Window {
     NL_PATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
-    /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
+    /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Unknown */
     NL_OS: string;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */
     NL_ARCH: string;
