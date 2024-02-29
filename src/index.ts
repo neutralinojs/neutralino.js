@@ -1,10 +1,31 @@
-import * as NL_CONSTANTS from './types/enums';
+export enum Mode {
+    window,
+    browser,
+    cloud,
+    chrome
+}
+
+export enum OperatingSystem {
+    Linux,
+    Windows,
+    Darwin,
+    FreeBSD,
+    Unknown
+}
+
+export enum Architecture {
+    x64,
+    arm,
+    itanium,
+    ia32,
+    unknown
+}
 
 declare global {
 interface Window {
     // --- globals ---
     /** Mode of the application: window, browser, cloud, or chrome */
-    NL_MODE: NL_CONSTANTS.MODE;
+    NL_MODE: Mode;
     /** Application port */
     NL_PORT: number;
     /** Command-line arguments */
@@ -22,9 +43,9 @@ interface Window {
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
     /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
-    NL_OS: NL_CONSTANTS.OS;
+    NL_OS: OperatingSystem;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */
-    NL_ARCH: NL_CONSTANTS.ARCH;
+    NL_ARCH: Architecture;
     /** Neutralinojs server version */
     NL_VERSION: string;
     /** Current working directory */
