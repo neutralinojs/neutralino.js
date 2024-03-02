@@ -1,8 +1,14 @@
 import { sendMessage } from '../ws/websocket';
 
 export interface MemoryInfo {
-    total: number;
-    available: number;
+    physical: {
+        total: number;
+        available: number;
+    },
+    virtual: {
+        total: number;
+        available: number;
+    }
 }
 
 export interface KernelInfo {
