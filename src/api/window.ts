@@ -1,38 +1,8 @@
 import { sendMessage } from '../ws/websocket';
 import * as os from './os';
+import { WindowOptions, WindowPosOptions, WindowSizeOptions } from '../../types/api/window';
 
 const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
-
-export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
-  title?: string;
-  icon?: string;
-  fullScreen?: boolean;
-  alwaysOnTop?: boolean;
-  enableInspector?: boolean;
-  borderless?: boolean;
-  maximize?: boolean;
-  hidden?: boolean;
-  maximizable?: boolean;
-  useSavedState?: boolean;
-  exitProcessOnClose?: boolean;
-  extendUserAgentWith?: string;
-  processArgs?: string;
-}
-
-export interface WindowSizeOptions {
-  width?: number;
-  height?: number;
-  minWidth?: number;
-  minHeight?: number;
-  maxWidth?: number;
-  maxHeight?: number;
-  resizable?: boolean;
-}
-
-export interface WindowPosOptions {
-  x: number;
-  y: number;
-}
 
 export function setTitle(title: string): Promise<void> {
     return sendMessage('window.setTitle', { title });

@@ -1,40 +1,6 @@
 import { sendMessage } from '../ws/websocket';
 import { base64ToBytesArray } from '../helpers';
-
-export interface DirectoryEntry {
-    entry: string;
-    path: string;
-    type: string;
-}
-
-export interface FileReaderOptions {
-    pos: number;
-    size: number;
-}
-
-export interface DirectoryReaderOptions {
-    recursive: boolean;
-}
-
-export interface OpenedFile {
-    id: number;
-    eof: boolean;
-    pos: number;
-    lastRead: number;
-}
-
-export interface Stats {
-    size: number;
-    isFile: boolean;
-    isDirectory: boolean;
-    createdAt: number;
-    modifiedAt: number;
-}
-
-export interface Watcher {
-    id: number;
-    path: string;
-}
+import type {DirectoryEntry, DirectoryReaderOptions, FileReaderOptions, OpenedFile, Stats, Watcher } from '../../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });

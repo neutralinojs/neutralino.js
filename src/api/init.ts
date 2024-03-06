@@ -2,12 +2,9 @@ import { version } from '../../package.json';
 import * as websocket from '../ws/websocket';
 import * as debug from './debug';
 import * as events from './events';
+import type { InitOptions } from '../../types/api/init';
 
 let initialized = false;
-
-export interface InitOptions {
-    exportCustomMethods?: boolean;
-}
 
 export function init(options: InitOptions = {}): void {
     options = { exportCustomMethods: true ,...options };

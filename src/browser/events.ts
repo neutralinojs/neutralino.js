@@ -1,21 +1,4 @@
-export interface Response {
-  success: boolean;
-  message: string;
-}
-
-export type Builtin =
-    'ready' |
-    'trayMenuItemClicked' |
-    'windowClose' |
-    'serverOffline' |
-    'clientConnect' |
-    'clientDisconnect' |
-    'appClientConnect' |
-    'appClientDisconnect' |
-    'extClientConnect' |
-    'extClientDisconnect' |
-    'extensionReady' |
-    'neuDev_reloadApp'
+import type { Response } from '../../types/events';
 
 export function on(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.addEventListener(event, handler);
