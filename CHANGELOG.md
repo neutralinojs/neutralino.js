@@ -6,6 +6,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### TypeScript
+- Separate type definitions into a new directory to improve project structure and provide better type import
+support for TypeScript-based app developers.
+
 ## v5.0.1
 
 ### TypeScript
@@ -51,7 +55,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## v3.8.2
 
 ### NPM/ESM support
-- Add ESM support for the client library via `neutralino.mjs`. 
+- Add ESM support for the client library via `neutralino.mjs`.
 - Publish (and automate) the client library as an NPM package,`@neutralinojs/lib`.
 
 ## v3.8.0
@@ -104,7 +108,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### API: init
 - Store `NL_TOKEN` in sessionStorage and handle native API calls after page reload.
-- Show a message to the user via HTML if `NL_TOKEN` is not valid (Eg: when the user tries to open the app from another client with `one-time` token). 
+- Show a message to the user via HTML if `NL_TOKEN` is not valid (Eg: when the user tries to open the app from another client with `one-time` token).
 
 ### API: window
 - Add `window.setAlwaysOnTop(bool)`.
