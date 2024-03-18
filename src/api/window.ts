@@ -1,6 +1,10 @@
 import { sendMessage } from '../ws/websocket';
 import * as os from './os';
-import { WindowOptions, WindowPosOptions, WindowSizeOptions } from '../../types/api/window';
+import {
+    WindowOptions,
+    WindowPosOptions,
+    WindowSizeOptions
+} from '../types/api/window';
 
 const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
 

@@ -1,4 +1,4 @@
-import type { Response } from '../../types/events';
+import type { Response } from '../types/events';
 
 export function on(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.addEventListener(event, handler);

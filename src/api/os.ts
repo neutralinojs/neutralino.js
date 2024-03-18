@@ -1,6 +1,16 @@
 import { sendMessage } from '../ws/websocket';
-import type { MessageBoxChoice, Icon } from '../../types/enums';
-import type { Envs, ExecCommandOptions, ExecCommandResult, FolderDialogOptions, KnownPath, OpenDialogOptions, SaveDialogOptions, SpawnedProcess, TrayOptions } from '../../types/api/os';
+import type { MessageBoxChoice, Icon } from '../types/enums';
+import type {
+    Envs,
+    ExecCommandOptions,
+    ExecCommandResult,
+    FolderDialogOptions,
+    KnownPath,
+    OpenDialogOptions,
+    SaveDialogOptions,
+    SpawnedProcess,
+    TrayOptions
+} from '../types/api/os';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
     return sendMessage('os.execCommand', { command, ...options });

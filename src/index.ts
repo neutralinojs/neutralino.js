@@ -1,4 +1,4 @@
-import { Architecture, Mode, OperatingSystem } from '../types/enums';
+import type { Architecture, Mode, OperatingSystem } from './types/enums';
 
 declare global {
 interface Window {
@@ -57,4 +57,15 @@ export * as clipboard from './api/clipboard';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
-export { Error, ErrorCode } from '../types/api/protocol';
+
+export type * from './types/api/protocol';
+export type * from './types/api/app';
+export type * from './types/api/computer';
+export type * from './types/api/extensions';
+export type * from './types/api/filesystem';
+export type * from './types/api/init';
+export type * from './types/api/os';
+export type * from './types/api/updater';
+export type * from './types/api/window';
+export type * from './types/enums';
+export type * from './types/events';

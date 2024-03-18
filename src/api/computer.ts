@@ -1,5 +1,12 @@
 import { sendMessage } from '../ws/websocket';
-import type { MemoryInfo, KernelInfo, OSInfo, CPUInfo, Display, MousePosition} from '../../types/api/computer';
+import type {
+    MemoryInfo,
+    KernelInfo,
+    OSInfo,
+    CPUInfo,
+    Display,
+    MousePosition
+} from '../types/api/computer';
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');

@@ -1,6 +1,13 @@
 import { sendMessage } from '../ws/websocket';
 import { base64ToBytesArray } from '../helpers';
-import type {DirectoryEntry, DirectoryReaderOptions, FileReaderOptions, OpenedFile, Stats, Watcher } from '../../types/api/filesystem';
+import type {
+    DirectoryEntry,
+    DirectoryReaderOptions,
+    FileReaderOptions,
+    OpenedFile,
+    Stats,
+    Watcher
+} from '../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });

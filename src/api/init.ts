@@ -2,7 +2,7 @@ import { version } from '../../package.json';
 import * as websocket from '../ws/websocket';
 import * as debug from './debug';
 import * as events from './events';
-import type { InitOptions } from '../../types/api/init';
+import type { InitOptions } from '../types/api/init';
 
 let initialized = false;
 
@@ -40,6 +40,6 @@ export function init(options: InitOptions = {}): void {
     }
 
     window.NL_CVERSION = version;
-    window.NL_CCOMMIT = '<git_commit_hash_latest>'; // only the build server will update this
+    window.NL_CCOMMIT = '425c526c318342e0e5d0f17caceef2a53049eda4'; // only the build server will update this
     initialized = true;
 }

@@ -1,6 +1,6 @@
 import * as filesystem from './filesystem';
-import { Error } from '../../types/api/protocol';
-import { Manifest } from '../../types/api/updater';
+import { Error } from '../types/api/protocol';
+import { Manifest } from '../types/api/updater';
 
 let manifest: Manifest = null;
 

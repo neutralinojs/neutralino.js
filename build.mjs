@@ -152,12 +152,12 @@ function resetCommitHash ()
     patchInitFile (commitHash, '<git_commit_hash_latest>')
 }
 
-// Function to fetch all .d.ts files from the typings directory
+// Function to fetch all .ts files from the typings directory
 const getTypeDefinitionFiles = () => {
-    const typingsDir = './types'; // Path to your typings directory
+    const typingsDir = './src/types'; // Path to your typings directory
     try {
         const files = readdirSync(typingsDir);
-        return files.filter(file => file.endsWith('.d.ts'));
+        return files.filter(file => file.endsWith('.ts'));
     } catch (error) {
         console.error('Error reading typings directory:', error);
         return [];

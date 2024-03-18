@@ -1,5 +1,5 @@
 import * as websocket from '../ws/websocket';
-import type { ExtensionStats } from '../../types/api/extensions';
+import type { ExtensionStats } from '../types/api/extensions';
 
 export function dispatch(extensionId: string, event: string, data?: any): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
