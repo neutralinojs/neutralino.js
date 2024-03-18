@@ -1,25 +1,4 @@
-export enum Mode {
-    window,
-    browser,
-    cloud,
-    chrome
-}
-
-export enum OperatingSystem {
-    Linux,
-    Windows,
-    Darwin,
-    FreeBSD,
-    Unknown
-}
-
-export enum Architecture {
-    x64,
-    arm,
-    itanium,
-    ia32,
-    unknown
-}
+import { Architecture, Mode, OperatingSystem } from '../types/enums';
 
 declare global {
 interface Window {
@@ -78,4 +57,4 @@ export * as clipboard from './api/clipboard';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
-export { Error, ErrorCode } from './api/protocol';
+export { Error, ErrorCode } from '../types/api/protocol';

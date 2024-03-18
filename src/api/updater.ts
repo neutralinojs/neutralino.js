@@ -1,11 +1,6 @@
 import * as filesystem from './filesystem';
-import { Error } from './protocol';
-
-export interface Manifest {
-    applicationId: string;
-    version: string;
-    resourcesURL: string;
-}
+import { Error } from '../../types/api/protocol';
+import { Manifest } from '../../types/api/updater';
 
 let manifest: Manifest = null;
 

@@ -11,7 +11,7 @@
 
 // @ts-check
 
-import { readFileSync, writeFile, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { readFileSync, writeFile, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs'
 import { exec } from 'child_process'
 import { join as joinPath } from 'path'
 import { rollup } from 'rollup'
@@ -45,6 +45,7 @@ rollup ({
                 ...config,
                 // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
                 // declarationMap: devmode
+                include: ['src/**/*.ts', 'types/**/*.d.ts']
             })
         }),
         devmode ? cleanup({comments: 'none'}) : Minify ({ format: { comments: false } })
@@ -151,10 +152,32 @@ function resetCommitHash ()
     patchInitFile (commitHash, '<git_commit_hash_latest>')
 }
 
+// Function to fetch all .d.ts files from the typings directory
+const getTypeDefinitionFiles = () => {
+    const typingsDir = './types'; // Path to your typings directory
+    try {
+        const files = readdirSync(typingsDir);
+        return files.filter(file => file.endsWith('.d.ts'));
+    } catch (error) {
+        console.error('Error reading typings directory:', error);
+        return [];
+    }
+};
+
+// Fetch all .d.ts files from the typings directory
+const typeFiles = getTypeDefinitionFiles();
+
 const writeDts = (filepath, definitions) => {
     // A 'declare' modifier cannot be used in an already ambient context.
     definitions = definitions.replaceAll ('declare namespace', 'namespace')
     definitions = definitions.replaceAll ('declare function', 'function')
+
+    // Read the type definition files
+    let typesSource = ''
+    typeFiles.forEach(file => {
+        typesSource += readFileSync (`./types/${file}`, { encoding: 'utf8' }) + '\n\n';
+    });
+
     let globalsSource = readFileSync ('./src/index.ts', { encoding: 'utf8' })
     let globals = globalsSource.substring(globalsSource.indexOf('// --- globals ---'),
                         globalsSource.lastIndexOf('// --- globals ---'))
@@ -174,6 +197,7 @@ declare namespace Neutralino {
 ${definitions}
 }
 
+${typesSource}
 ${globals}
 
 ${

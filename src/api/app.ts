@@ -1,13 +1,6 @@
 import { sendMessage } from '../ws/websocket';
 import * as os from './os';
-
-export interface OpenActionOptions {
-    url: string;
-}
-
-export interface RestartOptions {
-    args: string;
-}
+import type { RestartOptions } from "../../types/api/app"
 
 export function exit(code?: number): Promise<void> {
     return sendMessage('app.exit', { code });
