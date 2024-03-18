@@ -17,7 +17,7 @@ import { join as joinPath } from 'path'
 import { rollup } from 'rollup'
 import Ts   from 'rollup-plugin-ts'
 import Json from '@rollup/plugin-json'
-import { terser as Minify } from 'rollup-plugin-terser'
+import Minify from '@rollup/plugin-terser'
 import cleanup from 'rollup-plugin-cleanup';
 
 // JSON modules is experimental https://nodejs.org/api/esm.html#esm_experimental_json_modules
