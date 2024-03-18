@@ -175,7 +175,7 @@ const writeDts = (filepath, definitions) => {
     // Read the type definition files
     let typesSource = ''
     typeFiles.forEach(file => {
-        typesSource += readFileSync (`./types/${file}`, { encoding: 'utf8' }) + '\n\n';
+        typesSource += readFileSync (`./src/types/${file}`, { encoding: 'utf8' }) + '\n\n';
     });
 
     let globalsSource = readFileSync ('./src/index.ts', { encoding: 'utf8' })
