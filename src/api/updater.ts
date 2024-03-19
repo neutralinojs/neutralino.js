@@ -1,6 +1,6 @@
 import * as filesystem from './filesystem';
 import { Error } from '../types/api/protocol';
-import { InstallResponse, Manifest } from '../types/api/updater';
+import { Manifest } from '../types/api/updater';
 
 let manifest: Manifest = null;
 
@@ -44,8 +44,8 @@ export function checkForUpdates(url: string): Promise<Manifest> {
     });
 };
 
-export function install(): Promise<InstallResponse> {
-    return new Promise(async (resolve: (m: InstallResponse) => void, reject: (e: Error) => void) => {
+export function install(): Promise<void> {
+    return new Promise(async (resolve: any, reject: any) => {
         if(!manifest) {
             return reject({
                 code: 'NE_UP_UPDNOUF',
