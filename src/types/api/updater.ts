@@ -3,8 +3,3 @@ export interface Manifest {
     version: string;
     resourcesURL: string;
 }
-
-export interface InstallResponse {
-    success: boolean,
-    message: string,
-}
