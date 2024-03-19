@@ -5,7 +5,7 @@ import { Manifest } from '../types/api/updater';
 let manifest: Manifest = null;
 
 export function checkForUpdates(url: string): Promise<Manifest> {
-    function isValidManifest(manifest: any): manifest is Manifest {
+    function isValidManifest(manifest: Manifest): manifest is Manifest {
         if(manifest.applicationId && manifest.applicationId == window.NL_APPID
             && manifest.version && manifest.resourcesURL) {
             return true;
@@ -21,7 +21,7 @@ export function checkForUpdates(url: string): Promise<Manifest> {
             });
         }
         try {
-            let response = await fetch(url);
+            const response = await fetch(url);
             manifest = JSON.parse(await response.text());
 
             if(isValidManifest(manifest)) {
@@ -53,8 +53,8 @@ export function install(): Promise<void> {
             });
         }
         try {
-            let response = await fetch(manifest.resourcesURL);
-            let resourcesBuffer = await response.arrayBuffer();
+            const response = await fetch(manifest.resourcesURL);
+            const resourcesBuffer = await response.arrayBuffer();
             await filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
             resolve({

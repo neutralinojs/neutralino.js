@@ -96,10 +96,10 @@ export function getStats(path: string): Promise<Stats> {
 };
 
 function arrayBufferToBase64(data: ArrayBuffer): string {
-    let bytes: Uint8Array = new Uint8Array(data);
+    const bytes: Uint8Array = new Uint8Array(data);
     let asciiStr: string = '';
 
-    for(let byte of bytes) {
+    for(const byte of bytes) {
         asciiStr += String.fromCharCode(byte);
     }
 

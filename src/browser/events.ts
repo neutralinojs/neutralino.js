@@ -17,7 +17,7 @@ export function off(event: string, handler: (ev: CustomEvent) => void): Promise<
 };
 
 export function dispatch(event: string, data?: any): Promise<Response> {
-    let customEvent = new CustomEvent(event, {detail: data});
+    const customEvent = new CustomEvent(event, {detail: data});
     window.dispatchEvent(customEvent);
     return Promise.resolve({
         success: true,
