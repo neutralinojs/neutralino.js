@@ -6,9 +6,12 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: clipboard
+- Export new framework functions: `clipboard.getFormat()`, `clipboard.readImage()`, and `clipboard.writeImage(image)`.
+
 ### TypeScript
-- Separate type definitions into a new directory to improve project structure and provide better type import
-support for TypeScript-based app developers.
+- Separate type definitions into a new directory to improve project structure.
+- Add missing type definitions.
 
 ## v5.0.1
 
