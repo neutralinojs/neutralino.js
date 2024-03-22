@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.1.0
+
 ### API: clipboard
 - Export new framework functions: `clipboard.getFormat()`, `clipboard.readImage()`, and `clipboard.writeImage(image)`.
 
