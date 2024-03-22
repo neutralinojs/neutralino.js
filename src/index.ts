@@ -61,6 +61,7 @@ export { init } from './api/init';
 export type * from './types/api/protocol';
 export type * from './types/api/app';
 export type * from './types/api/computer';
+export type * from './types/api/clipboard';
 export type * from './types/api/extensions';
 export type * from './types/api/filesystem';
 export type * from './types/api/init';

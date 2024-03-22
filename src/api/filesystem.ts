@@ -1,5 +1,5 @@
 import { sendMessage } from '../ws/websocket';
-import { base64ToBytesArray } from '../helpers';
+import { base64ToBytesArray, arrayBufferToBase64 } from '../helpers';
 import type {
     DirectoryEntry,
     DirectoryReaderOptions,
@@ -93,17 +93,6 @@ export function move(source: string, destination: string): Promise<void> {
 
 export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
-};
-
-function arrayBufferToBase64(data: ArrayBuffer): string {
-    let bytes: Uint8Array = new Uint8Array(data);
-    let asciiStr: string = '';
-
-    for(let byte of bytes) {
-        asciiStr += String.fromCharCode(byte);
-    }
-
-    return window.btoa(asciiStr);
 };
 
 

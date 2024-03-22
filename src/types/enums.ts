@@ -1,11 +1,11 @@
-//debug
+// debug
 export enum LoggerType {
     WARNING = 'WARNING',
     ERROR = 'ERROR',
     INFO = 'INFO'
   }
 
-//OS
+// os
 export enum Icon {
     WARNING = 'WARNING',
     ERROR = 'ERROR',
@@ -22,7 +22,14 @@ export enum MessageBoxChoice {
     ABORT_RETRY_IGNORE = 'ABORT_RETRY_IGNORE'
 }
 
-//NL_GLOBALS
+//clipboard
+export enum ClipboardFormat {
+    unknown,
+    text,
+    image
+}
+
+// NL_GLOBALS
 export enum Mode {
     window,
     browser,
