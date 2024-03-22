@@ -95,4 +95,3 @@ export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
 
-
