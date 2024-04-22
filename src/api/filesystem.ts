@@ -4,6 +4,7 @@ import type {
     DirectoryEntry,
     DirectoryReaderOptions,
     FileReaderOptions,
+    CopyOptions,
     OpenedFile,
     Stats,
     Watcher
@@ -83,8 +84,8 @@ export function readDirectory(path: string, options?: DirectoryReaderOptions): P
     return sendMessage('filesystem.readDirectory', { path, ...options });
 };
 
-export function copy(source: string, destination: string): Promise<void> {
-    return sendMessage('filesystem.copy', { source, destination } );
+export function copy(source: string, destination: string, options?: CopyOptions ): Promise<void> {
+    return sendMessage('filesystem.copy', { source, destination, ...options } );
 };
 
 export function move(source: string, destination: string): Promise<void> {

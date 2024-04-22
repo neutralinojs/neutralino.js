@@ -32,3 +32,9 @@ export interface Watcher {
     id: number;
     path: string;
 }
+
+export interface CopyOptions {
+    recursive: boolean;
+    overwrite: boolean;
+    skip: boolean;
+}
