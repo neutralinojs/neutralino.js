@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### NPM
+- Fix the npm package import issue.
+
 ## v5.1.0
 
 ### API: clipboard
