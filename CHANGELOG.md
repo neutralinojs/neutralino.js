@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.1.1
+
 ### NPM
 - Fix the NPM package import issue.
 
