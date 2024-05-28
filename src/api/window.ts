@@ -241,9 +241,7 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
             if(key == "processArgs")
                 continue;
 
-            let cliKey: string = key.replace(/[A-Z]|^[a-z]/g, (token: string) => (
-               "-" + token.toLowerCase()
-            ));
+            let cliKey: string = '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
             command += ` --window${cliKey}=${normalize(options[key])}`
         }
 
