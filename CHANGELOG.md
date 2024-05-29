@@ -6,6 +6,12 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: filesystem
+- Accept `overwrite`, `skip`, and `recursive` options for the `filesystem.copy()` function.
+
+### Bugfixes/improvements
+- Improve the `window.create()` functions option-to-CLI argument mapping logic to support `enableNativeAPI` -> `--enable-native-api` transformation.
+
 ## v5.1.1
 
 ### NPM
