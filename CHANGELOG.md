@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.2.0
+
 ### API: filesystem
 - Accept `overwrite`, `skip`, and `recursive` options for the `filesystem.copy()` function.
 
