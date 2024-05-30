@@ -10,7 +10,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 - Accept `overwrite`, `skip`, and `recursive` options for the `filesystem.copy()` function.
 
 ### Bugfixes/improvements
-- Improve the `window.create()` functions option-to-CLI argument mapping logic to support `enableNativeAPI` -> `--enable-native-api` transformation.
+- Improve the `window.create()` function's option-to-CLI argument mapping logic.
 
 ## v5.1.1
 
