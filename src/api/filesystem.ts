@@ -96,3 +96,6 @@ export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
 
+export function getAbsPath(path: string): Promise<string> {
+    return sendMessage('filesystem.getAbsPath', { path });
+};

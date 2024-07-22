@@ -63,4 +63,5 @@ export type KnownPath =
     'video' |
     'downloads' |
     'savedGames1' |
-    'savedGames2'
+    'savedGames2' | 
+    'temp'
