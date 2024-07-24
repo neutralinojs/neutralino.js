@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: filesystem
+- Expose the `filesystem.getAbsPath(path)` function.
+
 ## v5.2.0
 
 ### API: filesystem
