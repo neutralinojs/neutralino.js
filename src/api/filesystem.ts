@@ -7,7 +7,8 @@ import type {
     CopyOptions,
     OpenedFile,
     Stats,
-    Watcher
+    Watcher,
+    PathParts,
 } from '../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
@@ -96,6 +97,14 @@ export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
 
-export function getAbsPath(path: string): Promise<string> {
-    return sendMessage('filesystem.getAbsPath', { path });
+export function getAbsolutePath(path: string): Promise<string> {
+    return sendMessage('filesystem.getAbsolutePath', { path });
+};
+
+export function getRelativePath(path: string, base?: string): Promise<string> {
+    return sendMessage('filesystem.getRelativePath', { path, base });
+};
+
+export function getPathParts(path: string): Promise<PathParts> {
+    return sendMessage('filesystem.getPathParts', { path });
 };

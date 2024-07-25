@@ -38,3 +38,14 @@ export interface CopyOptions {
     overwrite: boolean;
     skip: boolean;
 }
+
+export interface PathParts {
+    rootName: string;
+    rootDirectory: string;
+    rootPath: string;
+    relativePath: string;
+    parentPath: string;
+    filename: string;
+    stem: string;
+    extension: string;
+}
