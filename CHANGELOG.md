@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.3.0
+
 ### API: filesystem
 - Expose `filesystem.getAbsolutePath(path)`, `filesystem.getRelativePath(path, ?base)`, and `filesystem.getPathParts(path)` functions.
 
