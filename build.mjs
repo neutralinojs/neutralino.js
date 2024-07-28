@@ -175,7 +175,10 @@ const writeDts = (filepath, definitions) => {
     // Read the type definition files
     let typesSource = ''
     typeFiles.forEach(file => {
-        typesSource += readFileSync (`./src/types/${file}`, { encoding: 'utf8' }) + '\n\n';
+        let source = readFileSync (`./src/types/${file}`, { encoding: 'utf8' }) + '\n\n';
+        // Remove export keyword in the ambient declaration file
+        source = source.replaceAll ('export ', '');
+        typesSource += source;
     });
 
     let globalsSource = readFileSync ('./src/index.ts', { encoding: 'utf8' })
