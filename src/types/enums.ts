@@ -24,31 +24,31 @@ export enum MessageBoxChoice {
 
 //clipboard
 export enum ClipboardFormat {
-    unknown,
-    text,
-    image
+    unknown = 'unknown',
+    text = 'text',
+    image = 'image'
 }
 
 // NL_GLOBALS
 export enum Mode {
-    window,
-    browser,
-    cloud,
-    chrome
+    window = 'window',
+    browser = 'browser',
+    cloud = 'cloud',
+    chrome = 'chrome'
 }
 
 export enum OperatingSystem {
-    Linux,
-    Windows,
-    Darwin,
-    FreeBSD,
-    Unknown
+    Linux = 'Linux',
+    Windows = 'Windows',
+    Darwin = 'Darwin',
+    FreeBSD = 'FreeBSD',
+    Unknown = 'Unknown'
 }
 
 export enum Architecture {
-    x64,
-    arm,
-    itanium,
-    ia32,
-    unknown
+    x64 = 'x64',
+    arm = 'arm',
+    itanium = 'itanium',
+    ia32 = 'ia32',
+    unknown = 'unknown'
 }
