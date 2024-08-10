@@ -6,7 +6,10 @@ import {
     WindowSizeOptions
 } from '../types/api/window';
 
-const draggableRegions: WeakMap<HTMLElement, any> = new WeakMap();
+const draggableRegions: WeakMap<HTMLElement, {
+    pointerdown: (e: PointerEvent) => void;
+    pointerup: (e: PointerEvent) => void;
+}> = new WeakMap();
 
 export function setTitle(title: string): Promise<void> {
     return sendMessage('window.setTitle', { title });
@@ -72,8 +75,27 @@ export function center(): Promise<void> {
     return sendMessage('window.center');
 };
 
-export function setDraggableRegion(domElementOrId: string | HTMLElement): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
+export type DraggableRegionOptions = {
+    /**
+     * If set to `true`, the region will always capture the pointer,
+     * ensuring dragging doesn't break on fast pointer movement.
+     * Note that it prevents child elements from receiving any pointer events.
+     * Defaults to `false`.
+     */
+    alwaysCapture?: boolean;
+    /**
+     * Minimum distance between cursor's starting and current position
+     * after which dragging is started. This helps prevent accidental dragging
+     * while interacting with child elements.
+     * Defaults to `10`. (In pixels.)
+     */
+    dragMinDistance?: number;
+}
+export function setDraggableRegion(domElementOrId: string | HTMLElement, options: DraggableRegionOptions = {}): Promise<{
+    success: true,
+    message: string
+}> {
+    return new Promise<Awaited<ReturnType<typeof setDraggableRegion>>>((resolve, reject) => {
         const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                     domElementOrId : document.getElementById(domElementOrId);
         let initialClientX: number = 0;
@@ -81,6 +103,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
         let absDragMovementDistance: number = 0;
         let shouldReposition = false;
         let lastMoveTimestamp = performance.now();
+        let isPointerCaptured = options.alwaysCapture;
 
         if (!draggableRegion) {
             return reject({
@@ -98,6 +121,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
 
         draggableRegion.addEventListener('pointerdown', startPointerCapturing);
         draggableRegion.addEventListener('pointerup', endPointerCapturing);
+        draggableRegion.addEventListener('pointercancel', endPointerCapturing);
 
         draggableRegions.set(draggableRegion, { pointerdown: startPointerCapturing, pointerup: endPointerCapturing });
 
@@ -108,8 +132,12 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
             absDragMovementDistance = Math.sqrt(dx * dx + dy * dy);
             // Only start pointer capturing when the user dragged more than a certain amount of distance
             // This ensures that the user can also click on the dragable area, e.g. if the area is menu / navbar
-            if (absDragMovementDistance >= 10) { // TODO: introduce constant instead of magic number?
+            if (absDragMovementDistance >= (options.dragMinDistance ?? 10)) {
                 shouldReposition = true;
+                if (!isPointerCaptured) {
+                    draggableRegion.setPointerCapture(evt.pointerId);
+                    isPointerCaptured = true;
+                }
             }
 
             if (shouldReposition) {
@@ -139,7 +167,9 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
             initialClientX = evt.clientX;
             initialClientY = evt.clientY;
             draggableRegion.addEventListener('pointermove', onPointerMove);
-            draggableRegion.setPointerCapture(evt.pointerId);
+            if (options.alwaysCapture) {
+                draggableRegion.setPointerCapture(evt.pointerId);
+            }
         }
 
         function endPointerCapturing(evt: PointerEvent) {
@@ -154,8 +184,11 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
     });
 };
 
-export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<void> {
-  return new Promise((resolve: any, reject: any) => {
+export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Promise<{
+    success: true,
+    message: string
+}> {
+  return new Promise<Awaited<ReturnType<typeof unsetDraggableRegion>>>((resolve, reject) => {
         const draggableRegion: HTMLElement = domElementOrId instanceof Element ?
                                                 domElementOrId : document.getElementById(domElementOrId);
 
@@ -175,6 +208,7 @@ export function unsetDraggableRegion(domElementOrId: string | HTMLElement): Prom
         const { pointerdown, pointerup } = draggableRegions.get(draggableRegion);
         draggableRegion.removeEventListener('pointerdown', pointerdown);
         draggableRegion.removeEventListener('pointerup', pointerup);
+        draggableRegion.removeEventListener('pointercancel', pointerup);
         draggableRegions.delete(draggableRegion);
 
         resolve({
