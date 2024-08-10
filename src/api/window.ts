@@ -79,7 +79,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
         let initialClientX: number = 0;
         let initialClientY: number = 0;
         let absDragMovementDistance: number = 0;
-        let isPointerCaptured = false;
+        let shouldReposition = false;
         let lastMoveTimestamp = performance.now();
 
         if (!draggableRegion) {
@@ -102,8 +102,17 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
         draggableRegions.set(draggableRegion, { pointerdown: startPointerCapturing, pointerup: endPointerCapturing });
 
         async function onPointerMove(evt: PointerEvent) {
+            // Get absolute drag distance from the starting point
+            const dx = evt.clientX - initialClientX,
+                  dy = evt.clientY - initialClientY;
+            absDragMovementDistance = Math.sqrt(dx * dx + dy * dy);
+            // Only start pointer capturing when the user dragged more than a certain amount of distance
+            // This ensures that the user can also click on the dragable area, e.g. if the area is menu / navbar
+            if (absDragMovementDistance >= 10) { // TODO: introduce constant instead of magic number?
+                shouldReposition = true;
+            }
 
-            if (isPointerCaptured) {
+            if (shouldReposition) {
 
                 const currentMilliseconds = performance.now();
                 const timeTillLastMove = currentMilliseconds - lastMoveTimestamp;
@@ -123,15 +132,6 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
 
                 return;
             }
-
-            // Add absolute drag distance
-            absDragMovementDistance = Math.sqrt(evt.movementX * evt.movementX + evt.movementY * evt.movementY);
-            // Only start pointer capturing when the user dragged more than a certain amount of distance
-            // This ensures that the user can also click on the dragable area, e.g. if the area is menu / navbar
-            if (absDragMovementDistance >= 10) { // TODO: introduce constant instead of magic number?
-                isPointerCaptured = true;
-                draggableRegion.setPointerCapture(evt.pointerId);
-            }
         }
 
         function startPointerCapturing(evt: PointerEvent) {
@@ -139,6 +139,7 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement): Promis
             initialClientX = evt.clientX;
             initialClientY = evt.clientY;
             draggableRegion.addEventListener('pointermove', onPointerMove);
+            draggableRegion.setPointerCapture(evt.pointerId);
         }
 
         function endPointerCapturing(evt: PointerEvent) {
