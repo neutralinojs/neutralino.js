@@ -54,6 +54,7 @@ export * as events from './api/events';
 export * as extensions from './api/extensions';
 export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
+export * as resources from './api/resources';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
