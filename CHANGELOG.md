@@ -7,10 +7,14 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## Unreleased
 
 ### API: resources
-Export `getFiles()`, `extractFile(path, dest)`, `readFile(path)`, and `readBinaryFile(path)` functions.
+- Export `getFiles()`, `extractFile(path, dest)`, `readFile(path)`, and `readBinaryFile(path)` functions.
 
 ### API: window
-Export `minimize()`, `unminimize()`, and `isMinimized()` functions.
+- Export `minimize()`, `unminimize()`, and `isMinimized()` functions.
+- Add `alwaysCapture` and `dragMinDistance` options to the `window.setDraggableRegion()` function and improve the performance of the overall draggable window implementation.
+
+### Bugfixes/improvements
+- Fix several issues with TypeScript exports and definitions.
 
 ## v5.3.0
 
