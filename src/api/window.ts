@@ -35,6 +35,10 @@ export function minimize(): Promise<void> {
     return sendMessage('window.minimize');
 };
 
+export function unminimize(): Promise<void> {
+    return sendMessage('window.unminimize');
+};
+
 export function setFullScreen(): Promise<void> {
     return sendMessage('window.setFullScreen');
 };
