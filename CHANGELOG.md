@@ -6,6 +6,12 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: resources
+Export `getFiles()`, `extractFile(path, dest)`, `readFile(path)`, and `readBinaryFile(path)` functions.
+
+### API: window
+Export `minimize()`, `unminimize()`, and `isMinimized()` functions.
+
 ## v5.3.0
 
 ### API: filesystem
