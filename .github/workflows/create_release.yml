@@ -28,7 +28,7 @@ jobs:
         npm run build
         if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4.4.0
       with:
         name: lib_dist
         path: ./dist/
