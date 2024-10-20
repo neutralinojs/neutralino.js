@@ -49,6 +49,7 @@ export function readImage(format: string = ''): Promise < ClipboardImage | null 
 							}
 							image.data = bytes;
 							resolve(image);
+							return;
 					}
 					bytes = new Uint8Array(len);
 					let isLittleEndian: boolean = new Uint8Array(new Uint32Array([0x000000ff]).buffer)[0] == 0xff;
