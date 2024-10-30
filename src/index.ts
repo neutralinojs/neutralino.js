@@ -21,6 +21,10 @@ interface Window {
     NL_PATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
+    /** Returns true if the client library is injected */
+    NL_GINJECTED: boolean;
+    /** Returns true if globals are injected */
+    NL_CINJECTED: boolean;
     /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
     NL_OS: OperatingSystem;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */

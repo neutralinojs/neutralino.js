@@ -11,6 +11,8 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     useSavedState?: boolean;
     exitProcessOnClose?: boolean;
     extendUserAgentWith?: string;
+    injectGlobals?: boolean;
+    injectClientLibrary?: boolean;
     processArgs?: string;
   }
   

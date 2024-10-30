@@ -10,7 +10,9 @@ const extensionMessageQueue = {}
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
+    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
+                            'localhost' : window.location.hostname;
+    ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
 }
