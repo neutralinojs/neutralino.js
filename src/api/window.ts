@@ -11,7 +11,7 @@ const draggableRegions: WeakMap<HTMLElement, {
     pointerup: (e: PointerEvent) => void;
 }> = new WeakMap();
 
-export function setTitle(title: string): Promise<void> {
+export function setTitle(title: string = ''): Promise<void> {
     return sendMessage('window.setTitle', { title });
 };
 
