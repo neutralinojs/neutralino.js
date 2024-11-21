@@ -35,6 +35,9 @@ export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void> 
 };
 
 export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+    if(!(data instanceof ArrayBuffer)){
+        throw new TypeError("Input data not of type ArrayBuffer")
+    }
     return sendMessage('filesystem.appendBinaryFile', {
         path,
         data: arrayBufferToBase64(data)
