@@ -19,6 +19,8 @@ interface Window {
     NL_APPVERSION: string;
     /** Application path */
     NL_PATH: string;
+    /** Application data path */
+    NL_DATAPATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
     /** Returns true if the client library is injected */
