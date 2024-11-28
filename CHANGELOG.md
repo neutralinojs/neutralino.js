@@ -6,6 +6,12 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### Core: initialization
+- Support client library source injection
+
+### TypeScript
+- Fix some missing type details.
+
 ## v5.4.0
 
 ### API: resources
