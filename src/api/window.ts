@@ -151,6 +151,8 @@ export function setDraggableRegion(domElementOrId: string | HTMLElement, options
             if (shouldReposition) {
 
                 const currentMilliseconds = performance.now();
+                if(typeof currentMilliseconds != "number" || typeof lastMoveTimestamp != "number")
+                    return;
                 const timeTillLastMove = currentMilliseconds - lastMoveTimestamp;
                 // Limit move calls to 1 per every 5ms - TODO: introduce constant instead of magic number?
                 if (timeTillLastMove < 5) {
