@@ -5,6 +5,7 @@ import {
     WindowPosOptions,
     WindowSizeOptions
 } from '../types/api/window';
+import { getSystemErrorMap } from 'util';
 
 const draggableRegions: WeakMap<HTMLElement, {
     pointerdown: (e: PointerEvent) => void;
@@ -16,8 +17,19 @@ export function setTitle(title: string): Promise<void> {
 };
 
 export function getTitle(): Promise<string> {
-    return sendMessage('window.getTitle');
-};
+    return sendMessage('window.getTitle').then(response => {
+
+        if (!response) {
+            console.error('Empty response for window.getTitle');
+            return 'Untitled';  // Return a default title if empty
+        }
+        
+        return response;
+    }).catch(error => {
+        console.error('Error getting window title:', error); 
+        return error;
+    });
+}
 
 export function maximize(): Promise<void> {
     return sendMessage('window.maximize');
