@@ -30,7 +30,7 @@ export function sendMessage(method: string, data?: any): Promise<any> {
 
         nativeCalls[id] = {resolve, reject};
 
-        ws.send(JSON.stringify({
+         ws.send(JSON.stringify({
             id,
             method,
             data,
