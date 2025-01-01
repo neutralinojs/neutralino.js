@@ -15,7 +15,7 @@ import { readFileSync, writeFile, writeFileSync, mkdirSync, existsSync, readdirS
 import { exec } from 'child_process'
 import { join as joinPath } from 'path'
 import { rollup } from 'rollup'
-import Ts   from 'rollup-plugin-ts'
+import Ts   from '@rollup/plugin-typescript'
 import Json from '@rollup/plugin-json'
 import Minify from '@rollup/plugin-terser'
 import cleanup from 'rollup-plugin-cleanup';
@@ -41,12 +41,7 @@ rollup ({
     plugins: [
         Json (),
         Ts ({
-            tsconfig: config => ({
-                ...config,
-                // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
-                // declarationMap: devmode
-                include: ['src/**/*.ts', 'types/**/*.d.ts']
-            })
+            tsconfig: "./tsconfig.json",
         }),
         devmode ? cleanup({comments: 'none'}) : Minify ({ format: { comments: false } })
     ]
