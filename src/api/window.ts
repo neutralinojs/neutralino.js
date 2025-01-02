@@ -301,6 +301,6 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
     });
 };
 
-export function captureScreen(outputFile: string): Promise<void> {
-    return sendMessage('window.captureScreen', { outputFile });
+export function snapshot(path: string): Promise<void> {
+    return sendMessage('window.snapshot', { path });
 }
