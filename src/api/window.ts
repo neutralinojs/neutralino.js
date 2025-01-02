@@ -300,3 +300,7 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
             });
     });
 };
+
+export function snapshot(path: string): Promise<void> {
+    return sendMessage('window.snapshot', { path });
+}
