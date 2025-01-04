@@ -38,6 +38,14 @@ export function broadcast(event: string, data?: any): Promise<void> {
     return sendMessage('app.broadcast', {event, data});
 };
 
+export function mount(mountPath: string, targetPath: string): Promise<void> {
+    return sendMessage('app.mount', { mountPath, targetPath });
+}
+
+export function unmount(mountPath: string): Promise<void> {
+    return sendMessage('app.unmount', { mountPath });
+}
+
 export function readProcessInput(readAll?: boolean): Promise<string> {
     return sendMessage('app.readProcessInput', { readAll });
 };
