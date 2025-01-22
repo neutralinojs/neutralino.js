@@ -11,3 +11,7 @@ export function unmount(path: string): Promise<void> {
 export function getMounts(): Promise<void> {
     return sendMessage('server.getMounts');
 }
+
+export function setVDocRoot(path: string): Promise<void> {
+    return sendMessage('server.setVDocRoot', { path });
+}
