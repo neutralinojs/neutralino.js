@@ -11,6 +11,15 @@ export function readText(): Promise<string> {
     return sendMessage('clipboard.readText');
 };
 
+export function readHTML(): Promise<string> {
+	return sendMessage('clipboard.readHTML');
+}
+
+export function writeHTML(data: string): Promise<void> {
+	return sendMessage('clipboard.writeHTML', { data });
+}	
+
+
 export function readImage(format: string = ''): Promise < ClipboardImage | null > {
 	return new Promise((resolve: any, reject: any) => {
 		sendMessage('clipboard.readImage')
