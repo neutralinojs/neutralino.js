@@ -9,6 +9,10 @@ export function extractFile(path: string, destination: string): Promise<void> {
     return sendMessage('resources.extractFile', { path, destination });
 };
 
+export function extractDirectory(path: string, destination: string): Promise<void> {
+    return sendMessage('resources.extractDirectory', { path, destination });
+};
+
 export function readFile(path: string): Promise<string> {
     return sendMessage('resources.readFile', { path });
 };
