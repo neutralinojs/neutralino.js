@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.6.0
+
 ### API: server
 - Export `server.mount()`, `server.unmount()`, and `server.getMounts()` functions.
 
