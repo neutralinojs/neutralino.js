@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "rootDir": "./src/",
     "noImplicitAny": false,
     "module": "es6", // Rollup needs esm inputs
     "target": "es6",
