@@ -11,6 +11,88 @@ const draggableRegions: WeakMap<HTMLElement, {
     pointerup: (e: PointerEvent) => void;
 }> = new WeakMap();
 
+class WindowStateManager {
+    private static instance: WindowStateManager;
+    private isMaximizedState: boolean = false;
+    private isFullScreenState: boolean = false;
+    private stateCheckInterval: number | null = null;
+    private readonly STATE_CHECK_DELAY = 100; // ms
+
+    private constructor() {
+        this.initStateVerification();
+    }
+
+    public static getInstance(): WindowStateManager {
+        if (!WindowStateManager.instance) {
+            WindowStateManager.instance = new WindowStateManager();
+        }
+        return WindowStateManager.instance;
+    }
+
+    private async initStateVerification() {
+        await this.verifyStates();
+        
+        if (!this.stateCheckInterval) {
+            this.stateCheckInterval = window.setInterval(
+                () => this.verifyStates(),
+                this.STATE_CHECK_DELAY
+            );
+        }
+    }
+
+    private async verifyStates() {
+        try {
+            const size = await sendMessage('window.getSize');
+            const position = await sendMessage('window.getPosition');
+            const display = await sendMessage('window.getDisplay');
+
+            const isMaximized = this.checkIfMaximized(size, position, display);
+            if (isMaximized !== this.isMaximizedState) {
+                this.isMaximizedState = isMaximized;
+            }
+
+            const isFullScreen = this.checkIfFullScreen(size, display);
+            if (isFullScreen !== this.isFullScreenState) {
+                this.isFullScreenState = isFullScreen;
+            }
+        } catch (error) {
+            console.error('Failed to verify window states:', error);
+        }
+    }
+
+    private checkIfMaximized(size: WindowSizeOptions, position: WindowPosOptions, display: any): boolean {
+        const tolerance = 5;
+        return Math.abs(size.width - display.workAreaWidth) <= tolerance &&
+               Math.abs(size.height - display.workAreaHeight) <= tolerance &&
+               Math.abs(position.x - display.workAreaLeft) <= tolerance &&
+               Math.abs(position.y - display.workAreaTop) <= tolerance;
+    }
+
+    private checkIfFullScreen(size: WindowSizeOptions, display: any): boolean {
+        const tolerance = 5;
+        return Math.abs(size.width - display.width) <= tolerance &&
+               Math.abs(size.height - display.height) <= tolerance;
+    }
+
+    public async maximize(): Promise<void> {
+        await sendMessage('window.maximize');
+        await new Promise(resolve => setTimeout(resolve, this.STATE_CHECK_DELAY * 2));
+    }
+
+    public async setFullScreen(): Promise<void> {
+        await sendMessage('window.setFullScreen');
+        await new Promise(resolve => setTimeout(resolve, this.STATE_CHECK_DELAY * 2));
+    }
+
+    public isMaximized(): boolean {
+        return this.isMaximizedState;
+    }
+
+    public isFullScreen(): boolean {
+        return this.isFullScreenState;
+    }
+}
+
 export function setTitle(title: string): Promise<void> {
     return sendMessage('window.setTitle', { title });
 };
@@ -19,17 +101,17 @@ export function getTitle(): Promise<string> {
     return sendMessage('window.getTitle');
 };
 
-export function maximize(): Promise<void> {
-    return sendMessage('window.maximize');
-};
+export async function maximize(): Promise<void> {
+    await WindowStateManager.getInstance().maximize();
+}
 
 export function unmaximize(): Promise<void> {
     return sendMessage('window.unmaximize');
 };
 
-export function isMaximized(): Promise<boolean> {
-    return sendMessage('window.isMaximized');
-};
+export async function isMaximized(): Promise<boolean> {
+    return WindowStateManager.getInstance().isMaximized();
+}
 
 export function minimize(): Promise<void> {
     return sendMessage('window.minimize');
@@ -43,17 +125,17 @@ export function isMinimized(): Promise<boolean> {
     return sendMessage('window.isMinimized');
 };
 
-export function setFullScreen(): Promise<void> {
-    return sendMessage('window.setFullScreen');
-};
+export async function setFullScreen(): Promise<void> {
+    await WindowStateManager.getInstance().setFullScreen();
+}
 
 export function exitFullScreen(): Promise<void> {
     return sendMessage('window.exitFullScreen');
 };
 
-export function isFullScreen(): Promise<boolean> {
-    return sendMessage('window.isFullScreen');
-};
+export async function isFullScreen(): Promise<boolean> {
+    return WindowStateManager.getInstance().isFullScreen();
+}
 
 export function show(): Promise<void> {
     return sendMessage('window.show');
