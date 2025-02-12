@@ -9,15 +9,16 @@ import type {
     OpenDialogOptions,
     SaveDialogOptions,
     SpawnedProcess,
-    TrayOptions
+    TrayOptions,
+    SpawnedProcessOptions,
 } from '../types/api/os';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
     return sendMessage('os.execCommand', { command, ...options });
 };
 
-export function spawnProcess(command: string, cwd?: string): Promise<SpawnedProcess> {
-    return sendMessage('os.spawnProcess', { command, cwd });
+export function spawnProcess(command: string, options?: SpawnedProcessOptions): Promise<SpawnedProcess> {
+    return sendMessage('os.spawnProcess', { command, ...options });
 };
 
 export function updateSpawnedProcess(id: number, event: string, data?: any): Promise<void> {

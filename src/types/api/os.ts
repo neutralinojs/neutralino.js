@@ -16,6 +16,11 @@ export interface SpawnedProcess {
     pid: number;
 }
 
+export interface SpawnedProcessOptions {
+    cwd?: string;
+    envs?: Record<string, string>;
+}
+
 export interface Envs {
     [key: string]: string;
 }
