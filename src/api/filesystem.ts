@@ -108,3 +108,15 @@ export function getRelativePath(path: string, base?: string): Promise<string> {
 export function getPathParts(path: string): Promise<PathParts> {
     return sendMessage('filesystem.getPathParts', { path });
 };
+
+export function access(path: string, mode: string): Promise<void> {
+    return sendMessage('filesystem.access', { path, mode });
+};
+
+export function chmod(path: string, mode: number): Promise<void> {
+    return sendMessage('filesystem.chmod', { path, mode });
+};
+
+export function chown(path: string, uid: number, gid: number): Promise<void> {
+    return sendMessage('filesystem.chown', { path, uid, gid });
+};
