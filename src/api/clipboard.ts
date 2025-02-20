@@ -11,15 +11,6 @@ export function readText(): Promise<string> {
     return sendMessage('clipboard.readText');
 };
 
-export function readHTML(): Promise<string> {
-	return sendMessage('clipboard.readHTML');
-}
-
-export function writeHTML(data: string): Promise<void> {
-	return sendMessage('clipboard.writeHTML', { data });
-}	
-
-
 export function readImage(format: string = ''): Promise < ClipboardImage | null > {
 	return new Promise((resolve: any, reject: any) => {
 		sendMessage('clipboard.readImage')
@@ -102,6 +93,14 @@ export function writeImage(image: ClipboardImage): Promise<void> {
         props.data = arrayBufferToBase64(image.data);
     }
     return sendMessage('clipboard.writeImage', props);
+};
+
+export function readHTML(): Promise<string> {
+	return sendMessage('clipboard.readHTML');
+};
+
+export function writeHTML(data: string): Promise<void> {
+	return sendMessage('clipboard.writeHTML', { data });
 };
 
 export function clear(): Promise<void> {
