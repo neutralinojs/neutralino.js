@@ -1,4 +1,3 @@
-import * as extensions from '../api/extensions';
 import * as events from '../browser/events';
 import { base64ToBytesArray } from '../helpers';
 
@@ -11,7 +10,7 @@ export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
     const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
-                            'localhost' : window.location.hostname;
+                            '127.0.0.1' : window.location.hostname;
     ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
@@ -61,8 +60,8 @@ function registerLibraryEvents() {
             return;
         }
 
-        const stats = await extensions.getStats();
-        for(const extension of stats.connected) {
+        let stats = await sendMessage('extensions.getStats');
+        for(let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });

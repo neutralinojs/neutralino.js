@@ -19,6 +19,8 @@ interface Window {
     NL_APPVERSION: string;
     /** Application path */
     NL_PATH: string;
+    /** Application data path */
+    NL_DATAPATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
     /** Returns true if the client library is injected */
@@ -59,6 +61,7 @@ export * as extensions from './api/extensions';
 export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
 export * as resources from './api/resources';
+export * as server from './api/server';
 export * as custom from './api/custom';
 
 export { init } from './api/init';

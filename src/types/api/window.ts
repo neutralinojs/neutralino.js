@@ -13,6 +13,7 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     extendUserAgentWith?: string;
     injectGlobals?: boolean;
     injectClientLibrary?: boolean;
+    injectScript?: string;
     processArgs?: string;
   }
   
