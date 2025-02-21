@@ -170,6 +170,7 @@ const typeFiles = getTypeDefinitionFiles();
 const writeDts = (filepath, definitions) => {
     // A 'declare' modifier cannot be used in an already ambient context.
     definitions = definitions.replaceAll ('declare namespace', 'namespace')
+    definitions = definitions.replaceAll('export enum', 'declare enum')
     definitions = definitions.replaceAll ('declare function', 'function')
 
     // Read the type definition files
