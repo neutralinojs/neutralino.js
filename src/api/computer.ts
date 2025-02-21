@@ -1,48 +1,12 @@
 import { sendMessage } from '../ws/websocket';
-
-export interface MemoryInfo {
-    total: number;
-    available: number;
-}
-
-export interface KernelInfo {
-    variant: string;
-    version: string;
-}
-
-export interface OSInfo {
-    name: string;
-    description: string;
-    version: string;
-}
-
-export interface CPUInfo {
-    vendor: string;
-    model: string;
-    frequency: number;
-    architecture: string;
-    logicalThreads: number;
-    physicalCores: number;
-    physicalUnits: number;
-}
-
-export interface Display {
-    id: number;
-    resolution: Resolution;
-    dpi: number;
-    bpp: number;
-    refreshRate: number;
-}
-
-interface Resolution {
-    width: number;
-    height: number;
-}
-
-interface MousePosition {
-    x: number;
-    y: number;
-}
+import type {
+    MemoryInfo,
+    KernelInfo,
+    OSInfo,
+    CPUInfo,
+    Display,
+    MousePosition
+} from '../types/api/computer';
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');

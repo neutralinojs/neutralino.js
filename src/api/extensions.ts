@@ -1,13 +1,9 @@
 import * as websocket from '../ws/websocket';
-
-export interface ExtensionStats {
-    loaded: string[];
-    connected: string[];
-}
+import type { ExtensionStats } from '../types/api/extensions';
 
 export function dispatch(extensionId: string, event: string, data?: any): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
-        let stats = await getStats();
+        const stats = await getStats();
         if(!stats.loaded.includes(extensionId)) {
             reject({
                 code: 'NE_EX_EXTNOTL',
@@ -16,7 +12,7 @@ export function dispatch(extensionId: string, event: string, data?: any): Promis
         }
         else if(stats.connected.includes(extensionId)) {
             try {
-                let result = await websocket.sendMessage('extensions.dispatch', {extensionId, event, data});
+                const result = await websocket.sendMessage('extensions.dispatch', {extensionId, event, data});
                 resolve(result);
             }
             catch(err: any) {

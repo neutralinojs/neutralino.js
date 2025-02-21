@@ -1,7 +1,4 @@
 {
-  "include": [
-    "src/**/*.ts" // otherwise, the neutralino.d.ts file is included by webpack.
-  ],
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": false,

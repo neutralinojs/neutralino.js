@@ -1,8 +1,10 @@
+import type { Architecture, Mode, OperatingSystem } from './types/enums';
+
 declare global {
 interface Window {
     // --- globals ---
     /** Mode of the application: window, browser, cloud, or chrome */
-    NL_MODE: string;
+    NL_MODE: Mode;
     /** Application port */
     NL_PORT: number;
     /** Command-line arguments */
@@ -17,12 +19,18 @@ interface Window {
     NL_APPVERSION: string;
     /** Application path */
     NL_PATH: string;
+    /** Application data path */
+    NL_DATAPATH: string;
     /** Returns true if extensions are enabled */
     NL_EXTENABLED: boolean;
+    /** Returns true if the client library is injected */
+    NL_GINJECTED: boolean;
+    /** Returns true if globals are injected */
+    NL_CINJECTED: boolean;
     /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
-    NL_OS: string;
+    NL_OS: OperatingSystem;
     /** CPU architecture: x64, arm, itanium, ia32, or unknown */
-    NL_ARCH: string;
+    NL_ARCH: Architecture;
     /** Neutralinojs server version */
     NL_VERSION: string;
     /** Current working directory */
@@ -52,7 +60,21 @@ export * as events from './api/events';
 export * as extensions from './api/extensions';
 export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
+export * as resources from './api/resources';
+export * as server from './api/server';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
-export { Error, ErrorCode } from './api/protocol';
+
+export type * from './types/api/protocol';
+export type * from './types/api/app';
+export type * from './types/api/computer';
+export type * from './types/api/clipboard';
+export type * from './types/api/extensions';
+export type * from './types/api/filesystem';
+export type * from './types/api/init';
+export type * from './types/api/os';
+export type * from './types/api/updater';
+export type * from './types/api/window';
+export type * from './types/enums';
+export type * from './types/events';

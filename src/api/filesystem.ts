@@ -1,40 +1,15 @@
 import { sendMessage } from '../ws/websocket';
-import { base64ToBytesArray } from '../helpers';
-
-export interface DirectoryEntry {
-    entry: string;
-    path: string;
-    type: string;
-}
-
-export interface FileReaderOptions {
-    pos: number;
-    size: number;
-}
-
-export interface DirectoryReaderOptions {
-    recursive: boolean;
-}
-
-export interface OpenedFile {
-    id: number;
-    eof: boolean;
-    pos: number;
-    lastRead: number;
-}
-
-export interface Stats {
-    size: number;
-    isFile: boolean;
-    isDirectory: boolean;
-    createdAt: number;
-    modifiedAt: number;
-}
-
-export interface Watcher {
-    id: number;
-    path: string;
-}
+import { base64ToBytesArray, arrayBufferToBase64 } from '../helpers';
+import type {
+    DirectoryEntry,
+    DirectoryReaderOptions,
+    FileReaderOptions,
+    CopyOptions,
+    OpenedFile,
+    Stats,
+    Watcher,
+    PathParts,
+} from '../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
@@ -110,8 +85,8 @@ export function readDirectory(path: string, options?: DirectoryReaderOptions): P
     return sendMessage('filesystem.readDirectory', { path, ...options });
 };
 
-export function copy(source: string, destination: string): Promise<void> {
-    return sendMessage('filesystem.copy', { source, destination } );
+export function copy(source: string, destination: string, options?: CopyOptions ): Promise<void> {
+    return sendMessage('filesystem.copy', { source, destination, ...options } );
 };
 
 export function move(source: string, destination: string): Promise<void> {
@@ -122,15 +97,14 @@ export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
 
-function arrayBufferToBase64(data: ArrayBuffer): string {
-    let bytes: Uint8Array = new Uint8Array(data);
-    let asciiStr: string = '';
-
-    for(let byte of bytes) {
-        asciiStr += String.fromCharCode(byte);
-    }
-
-    return window.btoa(asciiStr);
+export function getAbsolutePath(path: string): Promise<string> {
+    return sendMessage('filesystem.getAbsolutePath', { path });
 };
 
+export function getRelativePath(path: string, base?: string): Promise<string> {
+    return sendMessage('filesystem.getRelativePath', { path, base });
+};
 
+export function getPathParts(path: string): Promise<PathParts> {
+    return sendMessage('filesystem.getPathParts', { path });
+};

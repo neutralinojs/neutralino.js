@@ -2,14 +2,16 @@ import * as events from '../browser/events';
 import { base64ToBytesArray } from '../helpers';
 
 let ws;
-let nativeCalls = {};
-let offlineMessageQueue = [];
-let extensionMessageQueue = {}
+const nativeCalls = {};
+const offlineMessageQueue = [];
+const extensionMessageQueue = {}
 
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    ws = new WebSocket(`ws://${window.location.hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
+    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
+                            '127.0.0.1' : window.location.hostname;
+    ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
 }
@@ -114,7 +116,7 @@ function registerSocketEvents() {
     });
 
     ws.addEventListener('close', async (event) => {
-        let error = {
+        const error = {
             code: 'NE_CL_NSEROFF',
             message: 'Neutralino server is offline. Try restarting the application'
         };
@@ -128,9 +130,9 @@ function registerSocketEvents() {
 
 async function processQueue(messageQueue: any[]) {
     while(messageQueue.length > 0) {
-        let message = messageQueue.shift();
+        const message = messageQueue.shift();
         try {
-            let response = await sendMessage(message.method, message.data);
+            const response = await sendMessage(message.method, message.data);
             message.resolve(response);
         }
         catch(err: any) {

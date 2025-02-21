@@ -6,6 +6,70 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v5.6.0
+
+### API: server
+- Export `server.mount()`, `server.unmount()`, and `server.getMounts()` functions.
+
+### API: resources
+- Export `resources.getStats()` and `resources.extractDirectory()` functions.
+
+### API: window
+- Export `window.snapshot()` function.
+
+### API: clipboard
+- Add the `format` parameter to the `clipboard.readImage()` function format pixel data. Accepted formats: `rgb`, `rgba`, `argb`, and `bgra`.
+
+### Bugfixes/improvements
+- Fix the slow loading issue on Windows by using `127.0.0.1` instead of `localhost`.
+
+## v5.5.0
+
+### Core: initialization
+- Support client library source injection
+
+### TypeScript
+- Fix some missing type details.
+
+## v5.4.0
+
+### API: resources
+- Export `getFiles()`, `extractFile(path, dest)`, `readFile(path)`, and `readBinaryFile(path)` functions.
+
+### API: window
+- Export `minimize()`, `unminimize()`, and `isMinimized()` functions.
+- Add `alwaysCapture` and `dragMinDistance` options to the `window.setDraggableRegion()` function and improve the performance of the overall draggable window implementation.
+
+### Bugfixes/improvements
+- Fix several issues with TypeScript exports and definitions.
+
+## v5.3.0
+
+### API: filesystem
+- Expose `filesystem.getAbsolutePath(path)`, `filesystem.getRelativePath(path, ?base)`, and `filesystem.getPathParts(path)` functions.
+
+## v5.2.0
+
+### API: filesystem
+- Accept `overwrite`, `skip`, and `recursive` options for the `filesystem.copy()` function.
+
+### Bugfixes/improvements
+- Improve the `window.create()` function's option-to-CLI argument mapping logic.
+
+## v5.1.1
+
+### NPM
+- Fix the NPM package import issue.
+
+## v5.1.0
+
+### API: clipboard
+- Export new framework functions: `clipboard.getFormat()`, `clipboard.readImage()`, and `clipboard.writeImage(image)`.
+
+### TypeScript
+- Separate type definitions into a new directory to improve project structure.
+- Add missing type definitions.
+
 ## v5.0.1
 
 ### TypeScript
@@ -51,7 +115,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## v3.8.2
 
 ### NPM/ESM support
-- Add ESM support for the client library via `neutralino.mjs`. 
+- Add ESM support for the client library via `neutralino.mjs`.
 - Publish (and automate) the client library as an NPM package,`@neutralinojs/lib`.
 
 ## v3.8.0
@@ -104,7 +168,7 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### API: init
 - Store `NL_TOKEN` in sessionStorage and handle native API calls after page reload.
-- Show a message to the user via HTML if `NL_TOKEN` is not valid (Eg: when the user tries to open the app from another client with `one-time` token). 
+- Show a message to the user via HTML if `NL_TOKEN` is not valid (Eg: when the user tries to open the app from another client with `one-time` token).
 
 ### API: window
 - Add `window.setAlwaysOnTop(bool)`.
