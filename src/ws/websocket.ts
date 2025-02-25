@@ -53,12 +53,14 @@ export function sendWhenExtReady(extensionId: string, message: any) {
 }
 
 function registerLibraryEvents() {
+
+    if (!window.NL_EXTENABLED) {
+        return;
+    }
+
     events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
-        if(!window.NL_EXTENABLED) {
-            return;
-        }
 
         let stats = await sendMessage('extensions.getStats');
         for(let extension of stats.connected) {
@@ -69,10 +71,6 @@ function registerLibraryEvents() {
     events.on('extClientConnect', (evt) => {
         events.dispatch('extensionReady', evt.detail);
     });
-
-    if(!window.NL_EXTENABLED) {
-        return;
-    }
 
     events.on('extensionReady', async (evt) => {
         if(evt.detail in extensionMessageQueue) {
