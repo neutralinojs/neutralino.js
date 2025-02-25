@@ -137,15 +137,16 @@ function patchInitFile (search, replace)
     writeFileSync ('./src/api/init.ts', initSource, { encoding: 'utf8' })
 }
 
-function addCommitHash ()
-{
-    exec ('git log -n 1 main --pretty=format:"%H"', (err, stdout) => {
-        let hash = stdout.trim()
-        patchInitFile ('<git_commit_hash_latest>', hash)
-        commitHash = hash
-    })
+function addCommitHash() {
+    try {
+        const hash = exec('git log -n 1 main --pretty=format:"%H"').toString().trim();
+        patchInitFile('<git_commit_hash_latest>', hash);
+        commitHash = hash;
+    } catch (err) {
+        console.warn('Warning: Could not get git commit hash:', err.message);
+        commitHash = '<git_commit_hash_latest>';
+    }
 }
-
 function resetCommitHash ()
 {
     patchInitFile (commitHash, '<git_commit_hash_latest>')
