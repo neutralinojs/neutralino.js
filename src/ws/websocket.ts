@@ -1,4 +1,3 @@
-import * as extensions from '../api/extensions';
 import * as events from '../browser/events';
 import { base64ToBytesArray } from '../helpers';
 
@@ -61,8 +60,8 @@ function registerLibraryEvents() {
             return;
         }
 
-        const stats = await extensions.getStats();
-        for(const extension of stats.connected) {
+        let stats = await sendMessage('extensions.getStats');
+        for(let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });

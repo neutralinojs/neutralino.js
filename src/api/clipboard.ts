@@ -95,6 +95,14 @@ export function writeImage(image: ClipboardImage): Promise<void> {
     return sendMessage('clipboard.writeImage', props);
 };
 
+export function readHTML(): Promise<string> {
+	return sendMessage('clipboard.readHTML');
+};
+
+export function writeHTML(data: string): Promise<void> {
+	return sendMessage('clipboard.writeHTML', { data });
+};
+
 export function clear(): Promise<void> {
     return sendMessage('clipboard.clear');
 };
