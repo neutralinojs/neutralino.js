@@ -49,3 +49,19 @@ export interface PathParts {
     stem: string;
     extension: string;
 }
+
+export interface Permissions {
+    all: boolean;
+    ownerAll: boolean;
+    ownerRead: boolean;
+    ownerWrite: boolean;
+    ownerExec: boolean;
+    groupAll: boolean;
+    groupRead: boolean;
+    groupWrite: boolean;
+    groupExec: boolean;
+    othersAll: boolean;
+    othersRead: boolean;
+    othersWrite: boolean;
+    othersExec: boolean;
+}

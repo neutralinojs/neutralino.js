@@ -9,6 +9,7 @@ import type {
     Stats,
     Watcher,
     PathParts,
+    Permissions,
 } from '../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
@@ -107,4 +108,8 @@ export function getRelativePath(path: string, base?: string): Promise<string> {
 
 export function getPathParts(path: string): Promise<PathParts> {
     return sendMessage('filesystem.getPathParts', { path });
+};
+
+export function getPermissions(path: string): Promise<Permissions> {
+    return sendMessage('filesystem.getPermissions', { path });
 };
