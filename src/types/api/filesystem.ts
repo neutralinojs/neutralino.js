@@ -67,6 +67,6 @@ export interface Permissions {
 }
 
 export type PermissionsMode = 
-    'add' |
-    'replace' | 
-    'remove'
+    'ADD' |
+    'REPLACE' | 
+    'REMOVE'
