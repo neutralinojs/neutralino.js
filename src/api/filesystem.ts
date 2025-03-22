@@ -10,6 +10,7 @@ import type {
     Watcher,
     PathParts,
     Permissions,
+    PermissionsMode,
 } from '../types/api/filesystem';
 
 export function createDirectory(path: string): Promise<void> {
@@ -112,4 +113,8 @@ export function getPathParts(path: string): Promise<PathParts> {
 
 export function getPermissions(path: string): Promise<Permissions> {
     return sendMessage('filesystem.getPermissions', { path });
+};
+
+export function setPermissions(path: string, permissions: Permissions, mode: PermissionsMode): Promise<void> {
+    return sendMessage('filesystem.setPermissions', { path, ...permissions, mode });
 };

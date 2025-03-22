@@ -65,3 +65,8 @@ export interface Permissions {
     othersWrite: boolean;
     othersExec: boolean;
 }
+
+export type PermissionsMode = 
+    'add' |
+    'replace' | 
+    'remove'
