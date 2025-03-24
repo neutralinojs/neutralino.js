@@ -15,7 +15,7 @@ import { readFileSync, writeFile, writeFileSync, mkdirSync, existsSync, readdirS
 import { exec } from 'child_process'
 import { join as joinPath } from 'path'
 import { rollup } from 'rollup'
-import Ts   from 'rollup-plugin-ts'
+import Ts from '@rollup/plugin-typescript'
 import Json from '@rollup/plugin-json'
 import Minify from '@rollup/plugin-terser'
 import cleanup from 'rollup-plugin-cleanup';
@@ -41,10 +41,9 @@ rollup ({
     plugins: [
         Json (),
         Ts ({
-            tsconfig: config => ({
+            compilerOptions: config => ({
                 ...config,
-                // rollup-plugin-ts produce an empty map, maybe we will find a solution in the future.
-                // declarationMap: devmode
+                declarationMap: devmode,
                 include: ['src/**/*.ts', 'types/**/*.d.ts']
             })
         }),
@@ -73,7 +72,7 @@ rollup ({
     console.log ('generate dist/neutralino.js')
 
     return build.generate ({
-        file      : 'neutralino.js',
+        file      : joinPath (outdir, 'neutralino.js'),
         format    : 'iife',
         name      : 'Neutralino',
         sourcemap : devmode,
@@ -138,15 +137,16 @@ function patchInitFile (search, replace)
     writeFileSync ('./src/api/init.ts', initSource, { encoding: 'utf8' })
 }
 
-function addCommitHash ()
-{
-    exec ('git log -n 1 main --pretty=format:"%H"', (err, stdout) => {
-        let hash = stdout.trim()
-        patchInitFile ('<git_commit_hash_latest>', hash)
-        commitHash = hash
-    })
+function addCommitHash() {
+    try {
+        const hash = exec('git log -n 1 main --pretty=format:"%H"').toString().trim();
+        patchInitFile('<git_commit_hash_latest>', hash);
+        commitHash = hash;
+    } catch (err) {
+        console.warn('Warning: Could not get git commit hash:', err.message);
+        commitHash = '<git_commit_hash_latest>';
+    }
 }
-
 function resetCommitHash ()
 {
     patchInitFile (commitHash, '<git_commit_hash_latest>')
