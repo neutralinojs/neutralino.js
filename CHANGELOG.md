@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v6.0.0
+
 ### API: filesystem
 - Export `filesystem.getPermissions(path)` and `filesystem.setPermissions(path, permissions, mode)` functions.
 
