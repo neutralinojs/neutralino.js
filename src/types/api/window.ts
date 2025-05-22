@@ -31,3 +31,12 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     x: number;
     y: number;
   }
+
+  export interface WindowMenu extends Array<WindowMenuItem>{}
+
+  export interface WindowMenuItem {
+      id?: string;
+      text: string;
+      isDisabled?: boolean;
+      isChecked?: boolean;
+  }

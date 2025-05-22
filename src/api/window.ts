@@ -3,7 +3,8 @@ import * as os from './os';
 import {
     WindowOptions,
     WindowPosOptions,
-    WindowSizeOptions
+    WindowSizeOptions,
+    WindowMenu,
 } from '../types/api/window';
 
 const draggableRegions: WeakMap<HTMLElement, {
@@ -304,3 +305,7 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
 export function snapshot(path: string): Promise<void> {
     return sendMessage('window.snapshot', { path });
 }
+
+export function setMainMenu(options: WindowMenu): Promise<void> {
+    return sendMessage('window.setMainMenu', options);
+};
