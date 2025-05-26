@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: window
+- Export the `window.setMainMenu` function.
+
 ## v6.0.0
 
 ### API: filesystem

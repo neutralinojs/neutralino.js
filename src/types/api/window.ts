@@ -39,4 +39,5 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
       text: string;
       isDisabled?: boolean;
       isChecked?: boolean;
+      menuItems?: WindowMenuItem[];
   }
