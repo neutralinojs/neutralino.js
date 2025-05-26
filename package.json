@@ -1,6 +1,6 @@
 {
   "name": "@neutralinojs/lib",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "JavaScript API for Neutralinojs",
   "main": "./dist/index.js",
   "files": [
