@@ -62,7 +62,6 @@ export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
 export * as resources from './api/resources';
 export * as server from './api/server';
-export * as webview from './api/webview';
 export * as custom from './api/custom';
 
 export { init } from './api/init';

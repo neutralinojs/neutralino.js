@@ -309,3 +309,7 @@ export function snapshot(path: string): Promise<void> {
 export function setMainMenu(options: WindowMenu): Promise<void> {
     return sendMessage('window.setMainMenu', options);
 };
+
+export function print(): Promise<void> {
+    return sendMessage('window.print');
+};
