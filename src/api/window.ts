@@ -7,6 +7,8 @@ import {
     WindowMenu,
 } from '../types/api/window';
 
+import { normalizeElements } from '../helpers';
+
 const draggableRegions = new Set<HTMLElement>();
 const draggableExclusions = new Map<HTMLElement, Set<HTMLElement>>();
 const draggableListeners = new Map<HTMLElement, EventListener>();
