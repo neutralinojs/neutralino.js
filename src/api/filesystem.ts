@@ -118,3 +118,15 @@ export function getPermissions(path: string): Promise<Permissions> {
 export function setPermissions(path: string, permissions: Permissions, mode: PermissionsMode): Promise<void> {
     return sendMessage('filesystem.setPermissions', { path, ...permissions, mode });
 };
+
+export function getJoinedPath(...paths: string[]): Promise<string> {
+    return sendMessage('filesystem.getJoinedPath', { paths });
+};
+
+export function getNormalizedPath(path: string): Promise<string> {
+    return sendMessage('filesystem.getNormalizedPath', { path });
+};
+
+export function getUnnormalizedPath(path: string): Promise<string> {
+    return sendMessage('filesystem.getUnnormalizedPath', { path });
+};
