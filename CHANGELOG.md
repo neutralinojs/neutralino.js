@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v6.2.0
+
 ### API: draggable region API
 The new draggable region API implementation uses native, platform-specific window dragging event via the `window.beginDrag()` function, so now draggable regions behave the same as native window dragging with features such as window snapping, unlike the previous draggable region implementation.
 
