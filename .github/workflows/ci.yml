@@ -24,4 +24,6 @@ jobs:
             - run: npm ci
             - run: npm run build
             - run: |
+                  echo "Generated files:"
+                  ls ./dist
                   if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
