@@ -1,13 +1,12 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "rootDir": "./src/",
-    "noImplicitAny": false,
-    "module": "es6", // Rollup needs esm inputs
-    "target": "es6",
-    "allowJs": false,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "declaration": true
-  }
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "declarationDir": "./dist/declarations/",
+        "noImplicitAny": false,
+        "allowJs": false,
+        "resolveJsonModule": true,
+        "declaration": true
+    }
 }
