@@ -1,51 +1,51 @@
 import type { Architecture, Mode, OperatingSystem } from './types/enums';
 
 declare global {
-interface Window {
-    // --- globals ---
-    /** Mode of the application: window, browser, cloud, or chrome */
-    NL_MODE: Mode;
-    /** Application port */
-    NL_PORT: number;
-    /** Command-line arguments */
-    NL_ARGS: string[];
-    /** Basic authentication token */
-    NL_TOKEN: string;
-    /** Neutralinojs client version */
-    NL_CVERSION: string;
-    /** Application identifier */
-    NL_APPID: string;
-    /** Application version */
-    NL_APPVERSION: string;
-    /** Application path */
-    NL_PATH: string;
-    /** Application data path */
-    NL_DATAPATH: string;
-    /** Returns true if extensions are enabled */
-    NL_EXTENABLED: boolean;
-    /** Returns true if the client library is injected */
-    NL_GINJECTED: boolean;
-    /** Returns true if globals are injected */
-    NL_CINJECTED: boolean;
-    /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
-    NL_OS: OperatingSystem;
-    /** CPU architecture: x64, arm, itanium, ia32, or unknown */
-    NL_ARCH: Architecture;
-    /** Neutralinojs server version */
-    NL_VERSION: string;
-    /** Current working directory */
-    NL_CWD: string;
-    /** Identifier of the current process */
-    NL_PID: string;
-    /** Source of application resources: bundle or directory */
-    NL_RESMODE: string;
-    /** Release commit of the client library */
-    NL_CCOMMIT: string;
-    /** An array of custom methods */
-    NL_CMETHODS: string[];
-    // --- globals ---
-}
-     /** Neutralino global object for custom methods **/
+    interface Window {
+        // --- globals ---
+        /** Mode of the application: window, browser, cloud, or chrome */
+        NL_MODE: Mode;
+        /** Application port */
+        NL_PORT: number;
+        /** Command-line arguments */
+        NL_ARGS: string[];
+        /** Basic authentication token */
+        NL_TOKEN: string;
+        /** Neutralinojs client version */
+        NL_CVERSION: string;
+        /** Application identifier */
+        NL_APPID: string;
+        /** Application version */
+        NL_APPVERSION: string;
+        /** Application path */
+        NL_PATH: string;
+        /** Application data path */
+        NL_DATAPATH: string;
+        /** Returns true if extensions are enabled */
+        NL_EXTENABLED: boolean;
+        /** Returns true if the client library is injected */
+        NL_GINJECTED: boolean;
+        /** Returns true if globals are injected */
+        NL_CINJECTED: boolean;
+        /** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */
+        NL_OS: OperatingSystem;
+        /** CPU architecture: x64, arm, itanium, ia32, or unknown */
+        NL_ARCH: Architecture;
+        /** Neutralinojs server version */
+        NL_VERSION: string;
+        /** Current working directory */
+        NL_CWD: string;
+        /** Identifier of the current process */
+        NL_PID: string;
+        /** Source of application resources: bundle or directory */
+        NL_RESMODE: string;
+        /** Release commit of the client library */
+        NL_CCOMMIT: string;
+        /** An array of custom methods */
+        NL_CMETHODS: string[];
+        // --- globals ---
+    }
+    /** Neutralino global object for custom methods **/
     const Neutralino: any;
 }
 

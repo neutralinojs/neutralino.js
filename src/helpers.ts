@@ -1,4 +1,4 @@
-export function base64ToBytesArray(data: string): ArrayBuffer {
+export function base64ToBytesArray(data: string): ArrayBufferLike {
     const binaryData: string = window.atob(data);
     const len: number = binaryData.length;
     const bytes: Uint8Array = new Uint8Array(len);
@@ -21,9 +21,7 @@ export function arrayBufferToBase64(data: ArrayBuffer): string {
     return window.btoa(asciiStr);
 }
 
-export function normalizeElements(
-    inputs: Array<string | HTMLElement | Array<string | HTMLElement>>,
-): HTMLElement[] {
+export function normalizeElements(inputs: any[]): HTMLElement[] {
     const result: HTMLElement[] = [];
 
     for (const input of inputs) {
