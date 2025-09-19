@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### TypeScript
+- Fix several type definition issues by updating the Rollup build script and Rollup TypeScript plugin.
+
 ## v6.2.0
 
 ### API: draggable region API
