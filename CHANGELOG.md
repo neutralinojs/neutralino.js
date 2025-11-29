@@ -6,6 +6,12 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: storage
+- Export `storage.clear()` and `storage.removeData(key)` functions.
+
+### TypeScript
+- Add missing properties to the `WindowMenu` interface.
+
 ## v6.3.0
 
 ### TypeScript
