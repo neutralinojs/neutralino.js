@@ -364,3 +364,11 @@ export function setMainMenu(options: WindowMenu): Promise<void> {
 export function print(): Promise<void> {
     return sendMessage('window.print');
 };
+
+export function setZoom(factor: number): Promise<void> {
+    return sendMessage('window.setZoom', { factor });
+}
+
+export function getZoom(): Promise<number> {
+    return sendMessage('window.getZoom');
+}
