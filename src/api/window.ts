@@ -366,7 +366,7 @@ export function print(): Promise<void> {
 };
 
 export function setZoom(factor: number): Promise<void> {
-    return sendMessage('window.setZoom', { factor });
+    return sendMessage('window.setZoom', { zoom: factor });
 }
 
 export function getZoom(): Promise<number> {
