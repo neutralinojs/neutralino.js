@@ -15,9 +15,9 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     injectClientLibrary?: boolean;
     injectScript?: string;
     processArgs?: string;
-  }
-  
-  export interface WindowSizeOptions {
+}
+
+export interface WindowSizeOptions {
     width?: number;
     height?: number;
     minWidth?: number;
@@ -25,21 +25,22 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     maxWidth?: number;
     maxHeight?: number;
     resizable?: boolean;
-  }
-  
-  export interface WindowPosOptions {
-    x: number;
-    y: number;
-  }
+}
 
-  export interface WindowMenu extends Array<WindowMenuItem>{}
+export interface WindowPosOptions {
+    x?: number;
+    y?: number;
+    center?: boolean;
+}
 
-  export interface WindowMenuItem {
-      id?: string;
-      text: string;
-      action?: string;
-      shortcut?: string;
-      isDisabled?: boolean;
-      isChecked?: boolean;
-      menuItems?: WindowMenuItem[];
-  }
+export interface WindowMenu extends Array<WindowMenuItem> {}
+
+export interface WindowMenuItem {
+    id?: string;
+    text: string;
+    action?: string;
+    shortcut?: string;
+    isDisabled?: boolean;
+    isChecked?: boolean;
+    menuItems?: WindowMenuItem[];
+}
