@@ -8,6 +8,6 @@ export function unmount(path: string): Promise<void> {
     return sendMessage('server.unmount', { path });
 }
 
-export function getMounts(): Promise<void> {
+export function getMounts(): Promise<Record<string, string>> {
     return sendMessage('server.getMounts');
 }

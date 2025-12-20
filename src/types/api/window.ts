@@ -26,13 +26,11 @@ export interface WindowSizeOptions {
     maxHeight?: number;
     resizable?: boolean;
 }
-
 export interface WindowPosOptions {
     x?: number;
     y?: number;
     center?: boolean;
 }
-
 export interface WindowMenu extends Array<WindowMenuItem> {}
 
 export interface WindowMenuItem {
