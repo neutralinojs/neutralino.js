@@ -46,31 +46,17 @@ export function checkForUpdates(url: string): Promise<Manifest> {
 
 export function install(): Promise<void> {
     return new Promise(async (resolve: any, reject: any) => {
-
         if(!manifest) {
             return reject({
                 code: 'NE_UP_UPDNOUF',
-                message:
-                  'updater.install() was called before a successful ' +
-                  'checkForUpdates() call. The updater API is stateful.'
-            });
-        }
-
-        if(!manifest.resourcesURL) {
-            return reject({
-                code: 'NE_UP_UPDINVR',
-                message: 'Invalid update manifest: resourcesURL is missing'
+                message: 'No update manifest loaded. Make sure that updater.checkForUpdates() has been called before install().'
             });
         }
 
         try {
             const response = await fetch(manifest.resourcesURL);
             const resourcesBuffer = await response.arrayBuffer();
-
-            await filesystem.writeBinaryFile(
-                window.NL_PATH + '/resources.neu',
-                resourcesBuffer
-            );
+            await filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
             resolve({
                 success: true,
