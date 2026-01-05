@@ -49,7 +49,7 @@ export function install(): Promise<void> {
         if(!manifest) {
             return reject({
                 code: 'NE_UP_UPDNOUF',
-                message: 'No update manifest loaded. Make sure that updater.checkForUpdates() has been called before install().'
+                message: 'No update manifest loaded. Make sure that updater.checkForUpdates() is called before install().'
             });
         }
 
