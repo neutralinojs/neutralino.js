@@ -49,9 +49,10 @@ export function install(): Promise<void> {
         if(!manifest) {
             return reject({
                 code: 'NE_UP_UPDNOUF',
-                message: 'No update manifest loaded'
+                message: 'No update manifest loaded. Make sure that updater.checkForUpdates() is called before install().'
             });
         }
+
         try {
             const response = await fetch(manifest.resourcesURL);
             const resourcesBuffer = await response.arrayBuffer();
@@ -68,6 +69,5 @@ export function install(): Promise<void> {
                 message: 'Update installation error'
             });
         }
-
     });
 };
