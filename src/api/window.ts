@@ -301,6 +301,10 @@ export function setAlwaysOnTop(onTop: boolean): Promise<void> {
     return sendMessage('window.setAlwaysOnTop', { onTop });
 }
 
+export function setBorderless(borderless: boolean): Promise<void> {
+    return sendMessage('window.setBorderless', { borderless });
+}
+
 export function create(url: string, options?: WindowOptions): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
         options = { ...options, useSavedState: false };
