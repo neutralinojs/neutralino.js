@@ -27,13 +27,54 @@ npm install
 npm run build
 ```
 
-How to test with the Neutralinojs server?
+
+## How to test `neutralinojs` changes with the Neutralino.js server
+
+To test local changes made in the `neutralino.js` (JS client) repository, you need to sync the client with the main Neutralino server repository.
+
+### Steps
+
+#### 1. Build the JS client locally
+
+From the `neutralino.js` repository:
+
+```bash
+npm install
+npm run build
+```
+
+
+#### 2. Sync the JS client with the Neutralino server
+
+Move to the main Neutralino server repository:
 
 ```bash
 cd ../neutralinojs
-bash ./bin/script_update_client.sh
-./bin/neutralino-{platform}_{arch} --load-dir-res # Eg: ./bin/neutralino-linux_x64 --load-dir-res
+bash scripts/update_client.sh
 ```
+
+This script builds the local JS client (if needed) and copies the generated files into:
+
+```
+bin/resources/js/
+```
+
+
+#### 3. Run the Neutralino server
+
+```bash
+./bin/neutralino-{platform}_{arch} --load-dir-res
+# Example:
+# ./bin/neutralino-linux_x64 --load-dir-res
+```
+
+
+### Notes
+
+* The Neutralino binary always loads the JS client from `bin/resources/js`
+* Do **not** edit files inside `bin/resources/js` directly, as they are generated
+* Re-run `scripts/update_client.sh` after every JS client change
+
 
 ### License
 
