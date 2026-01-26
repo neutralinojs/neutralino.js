@@ -6,6 +6,16 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: window
+- Export `window.setBorderless(borderless: boolean)`
+
+### TypeScript
+- Add missing `center` to `WindowPosOptions`
+- Use correct return type for `server.getMounts()`
+
+### Bugfixes/improvements
+- Improve updator API error messages
+
 ## v6.4.0
 
 ### API: storage
