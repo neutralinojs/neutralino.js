@@ -7,6 +7,7 @@ export interface Response {
       'ready' |
       'trayMenuItemClicked' |
       'windowClose' |
+      'windowActivate' |
       'serverOffline' |
       'clientConnect' |
       'clientDisconnect' |
