@@ -84,7 +84,17 @@ function registerLibraryEvents() {
 
 function registerSocketEvents() {
     ws.addEventListener('message', (event) => {
-        const message = JSON.parse(event.data);
+        let message;
+        try {
+            message = JSON.parse(event.data);
+        }
+        catch(e) {
+            return;
+        }
+
+        if(!message || typeof message !== 'object') {
+            return;
+        }
 
         if(message.id && message.id in nativeCalls) {
             // Native call response
@@ -105,7 +115,12 @@ function registerSocketEvents() {
         else if(message.event) {
             // Event from process
             if(message.event == 'openedFile' && message?.data?.action == 'dataBinary') {
-                message.data.data = base64ToBytesArray(message.data.data);
+                try {
+                    message.data.data = base64ToBytesArray(message.data.data);
+                }
+                catch(e) {
+                    return;
+                }
             }
             events.dispatch(message.event, message.data);
         }
