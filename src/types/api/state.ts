@@ -1,6 +1,5 @@
 export interface StateOptions {
-    /** Persist value to storage so it survives app restarts */
-    persist?: boolean;
+  persist?: boolean;
 }
 
 export interface StateSnapshot {

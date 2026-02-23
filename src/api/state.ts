@@ -10,13 +10,12 @@ const store = new Map<string, any>();
 const subscribers = new Map<string, Set<StateHandler>>();
 const persistKeys = new Set<string>();
 
-// Listen for state changes broadcast from other windows
+
 events.on('stateChange', (evt: CustomEvent) => {
     const { key, value } = evt.detail ?? {};
     if(typeof key !== 'string') return;
 
     const current = store.get(key);
-    // Skip own echo: value already matches what we set locally
     if(JSON.stringify(current) === JSON.stringify(value)) return;
 
     const previous = current;
@@ -72,7 +71,7 @@ export async function restore(key?: string): Promise<void> {
             }
         }
         catch(e) {
-            // No persisted state exists yet
+
         }
     }
 }
@@ -126,7 +125,7 @@ async function restoreKey(key: string): Promise<void> {
         notifySubscribers(key, value, previous);
     }
     catch(e) {
-        // Key doesn't exist in storage yet, skip silently
+        
     }
 }
 
