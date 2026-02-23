@@ -35,3 +35,15 @@ export function getDisplays(): Promise<Display[]> {
 export function getMousePosition(): Promise<MousePosition> {
     return sendMessage('computer.getMousePosition');
 };
+
+export function setMousePosition(x: number, y: number): Promise<void> {
+    return sendMessage('computer.setMousePosition', { x, y });
+}
+
+export function setMouseGrabbing(grabbing: boolean): Promise<void> {
+    return sendMessage('computer.setMouseGrabbing', { grabbing });
+}
+
+export function sendKey(keyCode: number, up: boolean): Promise<void> {
+    return sendMessage('computer.sendKey', { keyCode, up });
+}
