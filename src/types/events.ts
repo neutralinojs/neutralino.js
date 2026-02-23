@@ -15,4 +15,5 @@ export interface Response {
       'extClientConnect' |
       'extClientDisconnect' |
       'extensionReady' |
-      'neuDev_reloadApp'
+      'neuDev_reloadApp' |
+      'stateChange'
