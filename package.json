@@ -13,7 +13,18 @@
         "build": "node build.mjs",
         "watch": "rollup -c -w",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
-        "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+        "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+        "format:check": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json)\"",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "prettier --write",
+            "eslint --fix"
+        ],
+        "*.{json,md}": [
+            "prettier --write"
+        ]
     },
     "repository": {
         "type": "git",
@@ -36,6 +47,8 @@
         "dts-bundle-generator": "^9.5.1",
         "eslint": "^9.34.0",
         "eslint-config-prettier": "^10.1.8",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
         "prettier": "^3.6.2",
         "rollup": "^4.48.1",
         "rollup-plugin-cleanup": "^3.2.1",
