@@ -93,7 +93,7 @@ export function beginDrag(
 }
 
 function createDraggableListener(region: HTMLElement): EventListener {
-    return async function draggableListener(ev: PointerEvent) {
+    return function draggableListener(ev: PointerEvent) {
         if (ev.button !== 0) return;
 
         const exclusions = draggableExclusions.get(region);
@@ -103,8 +103,42 @@ function createDraggableListener(region: HTMLElement): EventListener {
             }
         }
 
-        await beginDrag(ev.screenX, ev.screenY);
-        ev.preventDefault();
+        const startX = ev.screenX;
+        const startY = ev.screenY;
+        const startTime = performance.now();
+
+        const MOVE_THRESHOLD = 6;
+        const TIME_THRESHOLD = 120;
+
+        function onPointerMove(moveEv: PointerEvent) {
+            const dx = Math.abs(moveEv.screenX - startX);
+            const dy = Math.abs(moveEv.screenY - startY);
+            const elapsed = performance.now() - startTime;
+
+            if (Math.max(dx, dy) >= MOVE_THRESHOLD || elapsed >= TIME_THRESHOLD) {
+                cleanup();
+                beginDrag(startX, startY);
+                moveEv.preventDefault();
+            }
+        }
+
+        function onPointerUp() {
+            cleanup();
+        }
+
+        function onPointerCancel() {
+            cleanup();
+        }
+
+        function cleanup() {
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerup', onPointerUp);
+            window.removeEventListener('pointercancel', onPointerCancel);
+        }
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerCancel);
     };
 }
 
