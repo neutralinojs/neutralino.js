@@ -5,7 +5,8 @@ import type {
     OSInfo,
     CPUInfo,
     Display,
-    MousePosition
+    MousePosition,
+    SendKeyState,
 } from '../types/api/computer';
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
@@ -44,6 +45,6 @@ export function setMouseGrabbing(grabbing: boolean): Promise<void> {
     return sendMessage('computer.setMouseGrabbing', { grabbing });
 }
 
-export function sendKey(keyCode: number, up: boolean): Promise<void> {
-    return sendMessage('computer.sendKey', { keyCode, up });
+export function sendKey(keyCode: number, keyState: SendKeyState): Promise<void> {
+    return sendMessage('computer.sendKey', { keyCode, keyState });
 }
