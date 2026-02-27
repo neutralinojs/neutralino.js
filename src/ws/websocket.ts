@@ -143,15 +143,46 @@ async function processQueue(messageQueue: any[]) {
 
 function handleNativeMethodTokenError() {
     ws.close();
-    document.body.innerText = '';
-    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
-                                    ' execute native methods since <code>NL_TOKEN</code> is invalid.');
+    showError('NE_RT_INVTOKN', 
+        'Neutralinojs application cannot execute native methods since NL_TOKEN is invalid.');
 }
 
 function handleConnectError() {
+    showError('NE_CL_IVCTOKN',
+        'Neutralinojs application cannot connect with the framework core using NL_TOKEN.');
+}
+
+function showError(code: string, message: string) {
     document.body.innerText = '';
-    document.write('<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
-                                    ' connect with the framework core using <code>NL_TOKEN</code>.');
+    
+    const container = document.createElement('div');
+    container.style.cssText = `
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fee;
+        border-left: 4px solid #c33;
+        border-radius: 4px;
+    `;
+    
+    const codeElement = document.createElement('code');
+    codeElement.textContent = code;
+    codeElement.style.cssText = `
+        background-color: #fdd;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        color: #c33;
+    `;
+    
+    const messageText = document.createElement('span');
+    messageText.textContent = ': ' + message;
+    
+    container.appendChild(codeElement);
+    container.appendChild(messageText);
+    document.body.appendChild(container);
 }
 
 function initAuth() {
