@@ -6,15 +6,15 @@ let manifest: Manifest = null;
 
 export function checkForUpdates(url: string): Promise<Manifest> {
     function isValidManifest(manifest: Manifest): manifest is Manifest {
-        if(manifest.applicationId && manifest.applicationId == window.NL_APPID
+        if (manifest.applicationId && manifest.applicationId === window.NL_APPID
             && manifest.version && manifest.resourcesURL) {
             return true;
         }
         return false;
     }
 
-    return new Promise(async (resolve: (m: Manifest) => void, reject: (e: Error) => void) => {
-        if(!url) {
+    return new Promise(async (resolve, reject) => {
+        if (!url) {
             return reject({
                 code: 'NE_RT_NATRTER',
                 message: 'Missing require parameter: url'
@@ -24,7 +24,7 @@ export function checkForUpdates(url: string): Promise<Manifest> {
             const response = await fetch(url);
             manifest = JSON.parse(await response.text());
 
-            if(isValidManifest(manifest)) {
+            if (isValidManifest(manifest)) {
                 resolve(manifest);
             }
             else {
@@ -34,7 +34,7 @@ export function checkForUpdates(url: string): Promise<Manifest> {
                 });
             }
         }
-        catch(err) {
+        catch (err) {
             reject({
                 code: 'NE_UP_CUPDERR',
                 message: 'Unable to fetch update manifest'
@@ -45,8 +45,8 @@ export function checkForUpdates(url: string): Promise<Manifest> {
 };
 
 export function install(): Promise<void> {
-    return new Promise(async (resolve: any, reject: any) => {
-        if(!manifest) {
+    return new Promise(async (resolve, reject) => {
+        if (!manifest) {
             return reject({
                 code: 'NE_UP_UPDNOUF',
                 message: 'No update manifest loaded. Make sure that updater.checkForUpdates() is called before install().'
@@ -58,12 +58,9 @@ export function install(): Promise<void> {
             const resourcesBuffer = await response.arrayBuffer();
             await filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
-            resolve({
-                success: true,
-                message: 'Update installed. Restart the process to see updates'
-            });
+            resolve();
         }
-        catch(err) {
+        catch (err) {
             reject({
                 code: 'NE_UP_UPDINER',
                 message: 'Update installation error'
