@@ -63,6 +63,7 @@ export * as clipboard from './api/clipboard';
 export * as resources from './api/resources';
 export * as server from './api/server';
 export * as custom from './api/custom';
+export * as state from './api/state';
 
 export { init } from './api/init';
 
@@ -78,3 +79,4 @@ export type * from './types/api/updater';
 export type * from './types/api/window';
 export type * from './types/enums';
 export type * from './types/events';
+export type * from './types/api/state';
