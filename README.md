@@ -1,3 +1,5 @@
+**Important security notice ⚠️:** This repository (`src/index.ts`) received a malicious JavaScript snippet, apparently via a supply chain attack through commit [`90665b4`](https://github.com/neutralinojs/neutralino.js/commit/90665b4. If you cloned/forked this repository and ran the test suite after this specific commit was pushed, we recommend you scan your computer with a virus scanner. Note that now the repository has been cleaned, and Neutralinojs binaries aren't affected by this attack. Neutralinojs maintainers apologize for this incident. We'll publish a report for this incident after security investigations. Thanks, OpenSourceMalware team, for security advice and collaboration. 
+
 # neutralino.js
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/neutralinojs/neutralino.js)](https://github.com/neutralinojs/neutralino.js/releases)
