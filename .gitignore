@@ -77,6 +77,8 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+.env
+.env.test
 .env*.local
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -127,4 +129,3 @@ tmp/
 temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/node
-config.bat
