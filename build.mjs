@@ -90,9 +90,15 @@ rollup({
     .then(returned => {
         console.log('Rolling up typescript declarations');
 
+        const dtsCompilationOptions = {
+            preferredConfigPath: './tsconfig.json',
+        };
         const bundled = generateDtsBundle([
             {
                 filePath: './dist/declarations/index.d.ts',
+                libraries: {
+                    allowedTypesLibraries: [],
+                },
                 output: {
                     inlineDeclareGlobals: true,
                     inlineDeclareExternals: true,
@@ -100,10 +106,13 @@ rollup({
                     exportReferencedTypes: false,
                 },
             },
-        ]);
+        ], dtsCompilationOptions);
         const bundledUnderNamespace = generateDtsBundle([
             {
                 filePath: './dist/declarations/index.d.ts',
+                libraries: {
+                    allowedTypesLibraries: [],
+                },
                 output: {
                     inlineDeclareGlobals: true,
                     inlineDeclareExternals: true,
@@ -112,7 +121,7 @@ rollup({
                     umdModuleName: 'Neutralino',
                 },
             },
-        ]);
+        ], dtsCompilationOptions);
         write(joinPath(outdir, 'neutralino.d.ts'), bundledUnderNamespace[0]);
         write(joinPath(outdir, 'neutralino.d.mts'), bundled[0]);
         write(joinPath(outdir, 'index.d.ts'), bundled[0]);

@@ -7,6 +7,11 @@
         "noImplicitAny": false,
         "allowJs": false,
         "resolveJsonModule": true,
-        "declaration": true
-    }
+        "declaration": true,
+        "typeRoots": ["./node_modules/@types"],
+        "types": [],
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
 }

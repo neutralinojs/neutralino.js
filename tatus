@@ -1,0 +1,152 @@
+* [33m197507f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/gsoc-security-fix[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mgsoc-security-fix[m[33m)[m 6.6.0
+* [33m7eddc20[m Export new computer API functions
+* [33ma484436[m Add windowActivate to Builtin event type (#190)
+* [33m18de10c[m Add useTemplateIcon option to TrayOptions (#189)
+* [33m23884f4[m Update changelog for v6.5.0
+* [33m5cb16bb[m 6.5.0
+* [33mbffdca3[m Update CHANGELOG.md
+* [33mbde7559[m Export window.setBorderless
+* [33m5f061bb[m # 145  Improve updater error when install() is called before checkForUpdates() (#178)
+* [33m721ee88[m fix(types): correct return type of server.getMounts #170 (#176)
+* [33mbce9004[m fix: cleanup window types and add center option (#175)
+* [33me41cbad[m Update changelog for v6.4.0
+* [33m9b602f8[m Bump js-yaml from 4.1.0 to 4.1.1 (#167)
+* [33mbdcdb2f[m Update CHANGELOG.md
+* [33mbac106a[m 6.4.0
+* [33m9d85920[m Add missing WindowMenu properties to types (#166)
+* [33m51a40cc[m Add storage.clear() and storage.removeData()
+* [33m048768e[m Update changelog for v6.3.0
+* [33mb0e17ef[m Update CHANGELOG.md
+* [33mcb2e053[m 6.3.0
+* [33mdc37b19[m Update optional deps
+* [33md91d5d3[m changed rollup-plugin-ts to @rollup/plugin-typescript (#163)
+* [33mae3b5a9[m Update changelog for v6.2.0
+* [33me7cc8af[m Update CHANGELOG.md
+* [33mb9f94f6[m 6.2.0
+* [33m310e158[m Fix compilation issues
+* [33mb535d18[m fix: incorrect prettier config, fixed extraneous style alterations (#159)
+* [33m3da4e33[m Export getJoinedPath(), getNormalizedPath(), and getUnnormalizedPath() functions
+* [33m1c4bb9a[m Update CHANGELOG.md
+* [33mba1d12b[m webview.print -> window.print
+* [33m3cca3ff[m Export webview.print
+* [33m25c0656[m Bump brace-expansion from 1.1.11 to 1.1.12 (#160)
+* [33med7d250[m Update changelog for v6.1.0
+* [33m6e9d7b4[m 6.1.0
+* [33me16f6d0[m Update changelog and types
+*   [33mca6ba22[m Merge branch 'main' of https://github.com/neutralinojs/neutralino.js into main
+[32m|[m[33m\[m  
+[32m|[m * [33mb4c5967[m Update changelog for v6.0.0
+[32m|[m * [33m2669024[m Bump @babel/helpers from 7.15.4 to 7.26.10 (#156)
+[32m|[m * [33m36fe5c7[m Bump @babel/runtime from 7.15.4 to 7.26.10 (#155)
+[32m|[m * [33me4c227c[m Update CHANGELOG.md
+* [33m|[m [33m840ce1c[m Expose window.setMainMenu
+[33m|[m[33m/[m  
+* [33m854584e[m 6.0.0
+* [33me271168[m Capitalize enums
+* [33m3b8f62e[m Export filesystem.setPermissions()
+* [33m1b02408[m Export filesystem.getPermissions()
+* [33m5276be9[m Added Api support for Env variables in os.spawnProcess (#152)
+* [33m353ee01[m Issue #129 Fixes neutralino.d.ts by replacing export with declare for TypeScript compatibility (#134)
+* [33mf190058[m Removing circular dependency (#101)
+* [33mb8e824d[m Added HTML Clipboard API Implementation (#149)
+* [33mba1885f[m Update changelog for v5.6.0
+* [33m2b1e520[m 5.6.0
+* [33m092e893[m Update CHANGELOG.md
+* [33m220ba60[m Export resources.getStats
+* [33m34095f4[m Export resources.extractDirectory
+* [33m5470eae[m app.mount* -> server.mount*
+* [33m429e4c3[m :sparkles: Add app.mount, app.unmount (#142)
+* [33m32f02ec[m :zap: Use 127.0.0.1 as the default websocket hostname instead of localhost (#143)
+* [33m1364ed7[m Added API method in window - captureWindow (#137)
+* [33mab8d212[m Additional pixel format parameters for clipboard.ts -> readImage() (#130)
+* [33m5f00511[m Update changelog for v5.5.0
+* [33m9e09499[m Update the changelog file
+* [33m9931e59[m Add missing type data
+* [33m3661028[m Bump cross-spawn from 7.0.3 to 7.0.6 (#136)
+* [33me08c52d[m Bump semver and core-js-compat (#131)
+* [33m0ef8a6a[m 5.5.0
+* [33m17fe35e[m Support globals and client lib injection
+* [33m300c407[m Update changelog for v5.4.0
+* [33m5b36ae9[m Update create_release.yml
+* [33me9c0247[m Update nightly_release.yml
+* [33m6395ad0[m Bump rollup from 4.19.0 to 4.22.4 (#128)
+* [33mdb6baed[m Update CHANGELOG.md
+*   [33m8c16aee[m Merge branch 'main' of https://github.com/neutralinojs/neutralino.js into main
+[34m|[m[35m\[m  
+[34m|[m * [33m7768403[m Update CHANGELOG.md
+* [35m|[m [33m3b60e1c[m 5.4.0
+[35m|[m[35m/[m  
+* [33mcd9ef33[m Export window.isMinimized()
+* [33m16e92af[m Export window.unminimize()
+* [33m1227680[m Bump micromatch from 4.0.5 to 4.0.8 (#126)
+* [33m496b32d[m Bump actions/download-artifact from 2 to 4.1.7 in /.github/workflows (#125)
+* [33md5968f1[m Export readFile() and readBinaryFile() functions from the res module
+* [33m3348793[m Export the resources.extractFile function
+* [33mfe2d580[m Export the resources.getFiles() function
+* [33m6c1fef9[m :zap: Improve window.setDraggableRegion and add options to allow native-feeling behavior. (#120)
+* [33me274a9b[m :bug: Fix wrong enum values in enums.ts (#118)
+* [33me862d1e[m :bug: Remove exports in neutralino.d.ts which made it unusable in TypeScript projects (#117)
+* [33m2b311f3[m Update changelog for v5.3.0
+* [33ma170576[m Update create_release.yml
+* [33m1767668[m Update create_release.yml
+* [33m234caa4[m Update CHANGELOG.md
+* [33m8f10efa[m 5.3.0
+* [33m3555632[m Add getRelativePath() and getPathParts()
+* [33mefc64c2[m Update CHANGELOG.md
+* [33m6a2dd62[m Bump semver from 6.3.0 to 6.3.1 (#115)
+* [33mac7a92f[m Expose filesystem.getAbsPath()
+* [33m74a459d[m Bump braces from 3.0.2 to 3.0.3 (#114)
+* [33m3c81391[m Update changelog for v5.2.0
+* [33m8bafbc2[m Update CHANGELOG.md
+* [33m7f012b2[m 5.2.0
+* [33mdb595dc[m Update CHANGELOG.md
+* [33m760f677[m Improve option-to-CLI param transforming Regex
+* [33m9490817[m Update changelog for v5.1.1
+* [33m0ed12e3[m Update CHANGELOG.md
+*   [33m1be8318[m Merge branch 'main' of https://github.com/neutralinojs/neutralino.js into main
+[36m|[m[1;31m\[m  
+[36m|[m * [33mfd2731a[m Update CHANGELOG.md
+* [1;31m|[m [33m18181c9[m 5.1.1
+[1;31m|[m[1;31m/[m  
+* [33mad801ca[m Fix package NPM import issue
+* [33m884b374[m Add options for the filesystem.copy function
+* [33me01e8c7[m Update changelog for v5.1.0
+* [33ma1f2175[m Update CHANGELOG.md
+* [33me337254[m 5.1.0
+*   [33m62c0967[m Fix merge conflicts
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33mcd25139[m fix some fixable eslint issues (#106)
+[1;32m|[m * [33mca1aed0[m Update ci.yml
+* [1;33m|[m [33m5b40a3d[m Expose new framework clipboard APIs
+[1;33m|[m[1;33m/[m  
+*   [33m97f5f24[m Merge branch 'main' of https://github.com/neutralinojs/neutralino.js into main
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [33mc688d18[m Update ci.yml
+* [1;35m|[m [33m7469dbe[m Update dependencies
+[1;35m|[m[1;35m/[m  
+* [33me49ac11[m Update build.mjs and pkgjson
+* [33m56cc994[m Fix TypeScript definition compilation issues
+* [33m425c526[m Update changelog
+* [33m6c80b1d[m feat: separated types from executable code and modifying the build.mjs file accordingly (#105)
+* [33m0f5de04[m api/computer: Add missing physical and virtual objects on MemoryInfo type def (#104)
+* [33m7eee5c2[m Add clipboard.clear()
+* [33me42ffe8[m Using enums for constants instead of string datatype (#98)
+* [33mceb6374[m fix: fixing spelling mistake in index.ts (#95)
+* [33mec5f49f[m feat: adding ESLint and prettier configuration for code quality and consistency (#93)
+* [33mdcfab68[m Update changelog for v5.0.1
+* [33m8f0ed4c[m 5.0.1
+* [33mc6f63e8[m Update CHANGELOG.md
+*   [33ma175576[m Merge branch 'main' of https://github.com/neutralinojs/neutralino.js into main
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33m3ee64fa[m Update CHANGELOG.md
+* [31m|[m [33m76cafea[m #86: Avoid re-declaring types for globals
+[31m|[m[31m/[m  
+* [33m1f3604e[m #86: Fix type declaration issues
+* [33m28620b4[m feat: making NL_APPVERSION optional (#90)
+* [33m5fd967f[m Update CHANGELOG.md
+* [33m5362298[m Update changelog for v5.0.0
+* [33m8ac7ce9[m 5.0.0
+* [33mb90b3bc[m Update FUNDING.yml
+* [33ma20aeef[m Use a connect token to connect with WS
+* [33mfb247f7[m Add NL_ARCH and update NL_OS's comment
+* [33m0718eb7[m Add recursive read support for filesyst

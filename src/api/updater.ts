@@ -2,12 +2,30 @@ import * as filesystem from './filesystem';
 import { Error } from '../types/api/protocol';
 import { Manifest } from '../types/api/updater';
 
+export async function computeSHA256(buffer: ArrayBuffer): Promise<string> {
+    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashArray = new Uint8Array(hashBuffer);
+    return Array.from(hashArray)
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+export function verifyChecksum(actual: string, expected: string): boolean {
+    if (actual.length !== expected.length) return false;
+    // Constant-time comparison to prevent timing attacks
+    let result = 0;
+    for (let i = 0; i < actual.length; i++) {
+        result |= actual.charCodeAt(i) ^ expected.charCodeAt(i);
+    }
+    return result === 0;
+}
+
 let manifest: Manifest = null;
 
 export function checkForUpdates(url: string): Promise<Manifest> {
     function isValidManifest(manifest: Manifest): manifest is Manifest {
         if(manifest.applicationId && manifest.applicationId == window.NL_APPID
-            && manifest.version && manifest.resourcesURL) {
+            && manifest.version && manifest.resourcesURL && manifest.checksum) {
             return true;
         }
         return false;
@@ -56,6 +74,15 @@ export function install(): Promise<void> {
         try {
             const response = await fetch(manifest.resourcesURL);
             const resourcesBuffer = await response.arrayBuffer();
+
+            const computedChecksum = await computeSHA256(resourcesBuffer);
+            if (!verifyChecksum(computedChecksum, manifest.checksum.toLowerCase())) {
+                return reject({
+                    code: 'NE_UP_UPDCSER',
+                    message: 'Resource checksum mismatch: the downloaded update binary integrity check failed'
+                });
+            }
+
             await filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
 
             resolve({
