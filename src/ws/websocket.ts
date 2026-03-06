@@ -2,45 +2,69 @@ import * as events from '../browser/events';
 import { base64ToBytesArray } from '../helpers';
 
 let ws;
-const nativeCalls = {};
-const offlineMessageQueue = [];
-const extensionMessageQueue = {}
+const nativeCalls: Record<string, { resolve: any; reject: any; timer: ReturnType<typeof setTimeout> }> = {};
+const offlineMessageQueue: Array<{ method: string; data: any; resolve: any; reject: any; timer: ReturnType<typeof setTimeout> }> = [];
+const extensionMessageQueue: Record<string, any[]> = {};
+
+const CALL_TIMEOUT_MS = 10_000;
 
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
+    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ?
                             '127.0.0.1' : window.location.hostname;
     ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
 }
 
-export function sendMessage(method: string, data?: any): Promise<any> {
+export function sendMessage(method: string, data?: any, timeout: number = CALL_TIMEOUT_MS): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
 
         if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
+            sendWhenReady({method, data, resolve, reject}, timeout);
             return;
         }
 
         const id: string = uuidv4();
         const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+        const timer = setTimeout(() => {
+            if(id in nativeCalls) {
+                delete nativeCalls[id];
+                reject({ code: 'NE_CL_CALLTM', message: `Native call timed out: ${method}` });
+            }
+        }, timeout);
 
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
+        nativeCalls[id] = { resolve, reject, timer };
+
+        try {
+            ws.send(JSON.stringify({
+                id,
+                method,
+                data,
+                accessToken
+            }));
+        }
+        catch(err) {
+            clearTimeout(timer);
+            delete nativeCalls[id];
+            reject({ code: 'NE_CL_SENDERROR', message: `Failed to send native call: ${method}` });
+        }
 
     });
 }
 
-export function sendWhenReady(message: any) {
-    offlineMessageQueue.push(message);
+export function sendWhenReady(message: any, timeout: number = CALL_TIMEOUT_MS) {
+    const timer = setTimeout(() => {
+        const idx = offlineMessageQueue.indexOf(entry);
+        if(idx !== -1) {
+            offlineMessageQueue.splice(idx, 1);
+            message.reject({ code: 'NE_CL_CALLTM', message: `Native call timed out: ${message.method}` });
+        }
+    }, timeout);
+    const entry = { ...message, timer };
+    offlineMessageQueue.push(entry);
 }
 
 export function sendWhenExtReady(extensionId: string, message: any) {
@@ -88,6 +112,7 @@ function registerSocketEvents() {
 
         if(message.id && message.id in nativeCalls) {
             // Native call response
+            clearTimeout(nativeCalls[message.id].timer);
             if(message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
                 if(message.data.error.code == 'NE_RT_INVTOKN') {
@@ -131,6 +156,7 @@ function registerSocketEvents() {
 async function processQueue(messageQueue: any[]) {
     while(messageQueue.length > 0) {
         const message = messageQueue.shift();
+        clearTimeout(message.timer);
         try {
             const response = await sendMessage(message.method, message.data);
             message.resolve(response);
