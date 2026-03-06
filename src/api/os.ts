@@ -61,6 +61,20 @@ export function showMessageBox(title: string, content: string,
 export function setTray(options: TrayOptions): Promise<void> {
     return sendMessage('os.setTray', options);
 };
+export function updateTrayMenuItem( menuItem: Partial<TrayOptions['menuItems'][number]> & { id: string }, tray: TrayOptions): Promise<void> {
+    if (!tray || !tray.menuItems) {
+        return Promise.reject(new Error('Neutralino.os.updateTrayMenuItem: Invalid tray object.'));
+    }
+
+    const index = tray.menuItems.findIndex((item) => item.id === menuItem.id);
+
+    if (index !== -1) {
+        tray.menuItems[index] = { ...tray.menuItems[index], ...menuItem };
+        return setTray(tray);
+    } else {
+        return Promise.reject(new Error(`Neutralino.os.updateTrayMenuItem: Item with id "${menuItem.id}" not found.`));
+    }
+};
 
 export function open(url: string): Promise<void> {
     return sendMessage('os.open', { url });
