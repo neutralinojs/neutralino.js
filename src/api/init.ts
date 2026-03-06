@@ -6,12 +6,13 @@ import type { InitOptions } from '../types/api/init';
 
 let initialized = false;
 
-export function init(options: InitOptions = {}): void {
+export async function init(options: InitOptions = {}): Promise<void> {
     options = { exportCustomMethods: true ,...options };
 
     if(initialized) {
         return;
     }
+    await waitForGlobals();
 
     websocket.init();
 
@@ -42,4 +43,27 @@ export function init(options: InitOptions = {}): void {
     window.NL_CVERSION = version;
     window.NL_CCOMMIT = '425c526c318342e0e5d0f17caceef2a53049eda4'; // only the build server will update this
     initialized = true;
+}
+async function waitForGlobals(): Promise<void> {
+    const timeout = 5000; 
+    const interval = 100;
+    let elapsed = 0;
+
+    return new Promise((resolve, reject) => {
+        const check = () => {
+            if (typeof window.NL_PORT !== 'undefined' && typeof window.NL_TOKEN !== 'undefined') {
+                resolve();
+                return;
+            }
+
+            if (elapsed >= timeout) {
+                reject(new Error("Neutralinojs: Initialization timeout. Native layer not ready."));
+                return;
+            }
+
+            elapsed += interval;
+            setTimeout(check, interval);
+        };
+        check();
+    });
 }
