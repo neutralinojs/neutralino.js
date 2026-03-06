@@ -7,27 +7,27 @@ import type { InitOptions } from '../types/api/init';
 let initialized = false;
 
 export function init(options: InitOptions = {}): void {
-    options = { exportCustomMethods: true ,...options };
+    options = { exportCustomMethods: true, ...options };
 
-    if(initialized) {
+    if (initialized) {
         return;
     }
 
     websocket.init();
 
-    if(window.NL_ARGS.find((arg) => arg == '--neu-dev-auto-reload')) {
+    if (window.NL_ARGS.find((arg) => arg === '--neu-dev-auto-reload')) {
         events.on('neuDev_reloadApp', async () => {
             await debug.log('Reloading the application...');
             location.reload();
         });
     }
 
-    if(options.exportCustomMethods && window.NL_CMETHODS && window.NL_CMETHODS.length > 0) {
-        for(const method of window.NL_CMETHODS) {
+    if (options.exportCustomMethods && window.NL_CMETHODS && window.NL_CMETHODS.length > 0) {
+        for (const method of window.NL_CMETHODS) {
             Neutralino.custom[method] = (...args) => {
                 let data = {};
-                for(const [argi, argv] of args.entries()) {
-                    if(typeof argv == 'object' && !Array.isArray(argv) && argv != null) {
+                for (const [argi, argv] of args.entries()) {
+                    if (typeof argv === 'object' && !Array.isArray(argv) && argv !== null) {
                         data = {...data, ...argv};
                     }
                     else {
