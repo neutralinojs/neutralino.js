@@ -12,6 +12,7 @@ import type {
     Permissions,
     PermissionsMode,
 } from '../types/api/filesystem';
+const DEFAULT_BINARY_CHUNK_SIZE = 1024 * 1024;
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
@@ -29,12 +30,40 @@ export function appendFile(path: string, data: string): Promise<void> {
     return sendMessage('filesystem.appendFile', { path, data });
 };
 
-export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
-    return sendMessage('filesystem.writeBinaryFile', {
-        path,
-        data: arrayBufferToBase64(data)
-    });
-};
+export async function writeBinaryFile(
+    path: string,
+    data: ArrayBuffer,
+    chunkSize = DEFAULT_BINARY_CHUNK_SIZE
+): Promise<void> {
+    const total = data.byteLength;
+    if (total <= chunkSize) {
+        return sendMessage('filesystem.writeBinaryFile', {
+            path,
+            data: arrayBufferToBase64(data)
+        });
+    }
+    let offset = 0;
+    let first = true;
+    while (offset < total) {
+        const end = Math.min(offset + chunkSize, total);
+        const chunk = data.slice(offset, end);
+        if (first) {
+            await sendMessage('filesystem.writeBinaryFile', {
+                path,
+                data: arrayBufferToBase64(chunk)
+            });
+            first = false;
+        }
+        else {
+            await sendMessage('filesystem.appendBinaryFile', {
+                path,
+                data: arrayBufferToBase64(chunk)
+            });
+        }
+        offset = end;
+    }
+}
+
 
 export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
     return sendMessage('filesystem.appendBinaryFile', {
