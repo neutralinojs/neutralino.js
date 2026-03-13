@@ -148,12 +148,31 @@ async function processQueue(messageQueue: any[]) {
 }
 
 function displayErrorContext(code: string, message: string) {
-    document.body.innerText = '';
+    // Preserve existing application UI and show an overlay on top instead.
+
+    // Remove any existing error overlay to avoid duplicates.
+    const existingOverlay = document.querySelector('[data-nl-error-overlay="true"]');
+    if (existingOverlay && existingOverlay.parentElement) {
+        existingOverlay.parentElement.removeChild(existingOverlay);
+    }
+
+    const overlay = document.createElement('div');
+    overlay.setAttribute('data-nl-error-overlay', 'true');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = '0';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '2147483647'; // Ensure it appears above the app UI.
 
     const container = document.createElement('div');
     container.style.fontFamily = 'system-ui, -apple-system, sans-serif';
     container.style.padding = '20px';
-    container.style.margin = '20px auto';
+    container.style.margin = '20px';
     container.style.maxWidth = '600px';
     container.style.background = '#ffebee';
     container.style.color = '#c62828';
@@ -163,7 +182,9 @@ function displayErrorContext(code: string, message: string) {
     container.setAttribute('role', 'alert');
 
     container.innerHTML = `<strong>${code}</strong>: ${message}`;
-    document.body.appendChild(container);
+
+    overlay.appendChild(container);
+    document.body.appendChild(overlay);
 }
 
 function handleNativeMethodTokenError() {
