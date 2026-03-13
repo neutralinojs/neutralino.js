@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### Bugfixes/improvements
+- Replace deprecated `document.write()` API with modern DOM manipulation in WebSocket error handling (#186)
+
 ## v6.5.0
 
 ### API: window
