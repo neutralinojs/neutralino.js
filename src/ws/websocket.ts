@@ -181,7 +181,37 @@ function displayErrorContext(code: string, message: string) {
     container.style.lineHeight = '1.5';
     container.setAttribute('role', 'alert');
 
-    container.innerHTML = `<strong>${code}</strong>: ${message}`;
+    const strongEl = document.createElement('strong');
+    strongEl.textContent = code;
+    container.appendChild(strongEl);
+    container.appendChild(document.createTextNode(': '));
+
+    const tokenPlaceholder = 'NL_TOKEN';
+    let currentIndex = 0;
+
+    while (true) {
+        const index = message.indexOf(tokenPlaceholder, currentIndex);
+        if (index === -1) {
+            if (currentIndex < message.length) {
+                container.appendChild(
+                    document.createTextNode(message.substring(currentIndex)),
+                );
+            }
+            break;
+        }
+
+        if (index > currentIndex) {
+            container.appendChild(
+                document.createTextNode(message.substring(currentIndex, index)),
+            );
+        }
+
+        const codeEl = document.createElement('code');
+        codeEl.textContent = tokenPlaceholder;
+        container.appendChild(codeEl);
+
+        currentIndex = index + tokenPlaceholder.length;
+    }
 
     overlay.appendChild(container);
     document.body.appendChild(overlay);
@@ -191,14 +221,14 @@ function handleNativeMethodTokenError() {
     ws.close();
     displayErrorContext(
         'NE_RT_INVTOKN',
-        'Neutralinojs application cannot execute native methods since <code>NL_TOKEN</code> is invalid.',
+        'Neutralinojs application cannot execute native methods since NL_TOKEN is invalid.',
     );
 }
 
 function handleConnectError() {
     displayErrorContext(
         'NE_CL_IVCTOKN',
-        'Neutralinojs application cannot connect with the framework core using <code>NL_TOKEN</code>.',
+        'Neutralinojs application cannot connect with the framework core using NL_TOKEN.',
     );
 }
 
