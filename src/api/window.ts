@@ -273,20 +273,12 @@ export function unsetDraggableRegion(
     });
 }
 
-export function setSize(options: WindowSizeOptions): Promise<void> {
-    return new Promise(async (resolve: any, reject: any) => {
-        let sizeOptions = await getSize();
+export async function setSize(options: WindowSizeOptions): Promise<void> {
+    let sizeOptions = await getSize();
 
-        options = { ...sizeOptions, ...options }; // merge prioritizing options arg
+    options = { ...sizeOptions, ...options }; // merge prioritizing options arg
 
-        sendMessage('window.setSize', options)
-            .then((response: any) => {
-                resolve(response);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    return sendMessage('window.setSize', options);
 }
 
 export function getSize(): Promise<WindowSizeOptions> {
@@ -306,55 +298,51 @@ export function setBorderless(borderless: boolean): Promise<void> {
 }
 
 export function create(url: string, options?: WindowOptions): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
-        options = { ...options, useSavedState: false };
-        // useSavedState: false -> Child windows won't save their states
+    options = { ...options, useSavedState: false };
+    // useSavedState: false -> Child windows won't save their states
 
-        function normalize(arg: any) {
-            if (typeof arg != 'string') return arg;
-            arg = arg.trim();
-            if (arg.includes(' ')) {
-                arg = `"${arg}"`;
+    function normalize(arg: any) {
+        if (typeof arg != 'string') return arg;
+        arg = arg.trim();
+        if (arg.includes(' ')) {
+            arg = `"${arg}"`;
+        }
+        return arg;
+    }
+
+    let command = window.NL_ARGS.reduce(
+        (acc: string, arg: string, index: number) => {
+            if (
+                arg.includes('--path=') ||
+                arg.includes('--debug-mode') ||
+                arg.includes('--load-dir-res') ||
+                index == 0
+            ) {
+                acc += ' ' + normalize(arg);
             }
-            return arg;
-        }
+            return acc;
+        },
+        '',
+    );
 
-        let command = window.NL_ARGS.reduce(
-            (acc: string, arg: string, index: number) => {
-                if (
-                    arg.includes('--path=') ||
-                    arg.includes('--debug-mode') ||
-                    arg.includes('--load-dir-res') ||
-                    index == 0
-                ) {
-                    acc += ' ' + normalize(arg);
-                }
-                return acc;
-            },
-            '',
-        );
+    command += ' --url=' + normalize(url);
 
-        command += ' --url=' + normalize(url);
+    for (let key in options) {
+        if (key == 'processArgs') continue;
 
-        for (let key in options) {
-            if (key == 'processArgs') continue;
+        let cliKey: string =
+            '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        // @ts-ignore
+        command += ` --window${cliKey}=${normalize(options[key as keyof WindowOptions])}`;
+    }
 
-            let cliKey: string =
-                '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-            command += ` --window${cliKey}=${normalize(options[key])}`;
-        }
+    if (options && options.processArgs) command += ' ' + options.processArgs;
 
-        if (options && options.processArgs)
-            command += ' ' + options.processArgs;
-
-        os.execCommand(command, { background: true })
-            .then((processInfo: any) => {
-                resolve(processInfo);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    return os
+        .execCommand(command, { background: true })
+        .then((processInfo: any) => {
+            return processInfo;
+        });
 }
 
 export function snapshot(path: string): Promise<void> {
@@ -363,8 +351,8 @@ export function snapshot(path: string): Promise<void> {
 
 export function setMainMenu(options: WindowMenu): Promise<void> {
     return sendMessage('window.setMainMenu', options);
-};
+}
 
 export function print(): Promise<void> {
     return sendMessage('window.print');
-};
+}
