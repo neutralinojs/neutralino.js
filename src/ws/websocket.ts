@@ -4,38 +4,42 @@ import { base64ToBytesArray } from '../helpers';
 let ws;
 const nativeCalls = {};
 const offlineMessageQueue = [];
-const extensionMessageQueue = {}
+const extensionMessageQueue = {};
 
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
-                            '127.0.0.1' : window.location.hostname;
-    ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
+    const hostname: string =
+        window.NL_GINJECTED || window.NL_CINJECTED
+            ? '127.0.0.1'
+            : window.location.hostname;
+    ws = new WebSocket(
+        `ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`,
+    );
     registerLibraryEvents();
     registerSocketEvents();
 }
 
 export function sendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-
-        if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
+        if (ws?.readyState != WebSocket.OPEN) {
+            sendWhenReady({ method, data, resolve, reject });
             return;
         }
 
         const id: string = uuidv4();
         const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+        nativeCalls[id] = { resolve, reject };
 
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
-
+        ws.send(
+            JSON.stringify({
+                id,
+                method,
+                data,
+                accessToken,
+            }),
+        );
     });
 }
 
@@ -44,10 +48,9 @@ export function sendWhenReady(message: any) {
 }
 
 export function sendWhenExtReady(extensionId: string, message: any) {
-    if(extensionId in extensionMessageQueue) {
+    if (extensionId in extensionMessageQueue) {
         extensionMessageQueue[extensionId].push(message);
-    }
-    else {
+    } else {
         extensionMessageQueue[extensionId] = [message];
     }
 }
@@ -56,26 +59,26 @@ function registerLibraryEvents() {
     events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
-        if(!window.NL_EXTENABLED) {
+        if (!window.NL_EXTENABLED) {
             return;
         }
 
         let stats = await sendMessage('extensions.getStats');
-        for(let extension of stats.connected) {
+        for (let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });
 
-    events.on('extClientConnect', (evt) => {
+    events.on('extClientConnect', evt => {
         events.dispatch('extensionReady', evt.detail);
     });
 
-    if(!window.NL_EXTENABLED) {
+    if (!window.NL_EXTENABLED) {
         return;
     }
 
-    events.on('extensionReady', async (evt) => {
-        if(evt.detail in extensionMessageQueue) {
+    events.on('extensionReady', async evt => {
+        if (evt.detail in extensionMessageQueue) {
             await processQueue(extensionMessageQueue[evt.detail]);
             delete extensionMessageQueue[evt.detail];
         }
@@ -83,75 +86,150 @@ function registerLibraryEvents() {
 }
 
 function registerSocketEvents() {
-    ws.addEventListener('message', (event) => {
+    ws.addEventListener('message', event => {
         const message = JSON.parse(event.data);
 
-        if(message.id && message.id in nativeCalls) {
+        if (message.id && message.id in nativeCalls) {
             // Native call response
-            if(message.data?.error) {
+            if (message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
-                if(message.data.error.code == 'NE_RT_INVTOKN') {
+                if (message.data.error.code == 'NE_RT_INVTOKN') {
                     // Invalid native method token
                     handleNativeMethodTokenError();
                 }
-            }
-            else if(message.data?.success) {
-                nativeCalls[message.id]
-                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue
-                        : message.data);
+            } else if (message.data?.success) {
+                nativeCalls[message.id].resolve(
+                    message.data.hasOwnProperty('returnValue')
+                        ? message.data.returnValue
+                        : message.data,
+                );
             }
             delete nativeCalls[message.id];
-        }
-        else if(message.event) {
+        } else if (message.event) {
             // Event from process
-            if(message.event == 'openedFile' && message?.data?.action == 'dataBinary') {
+            if (
+                message.event == 'openedFile' &&
+                message?.data?.action == 'dataBinary'
+            ) {
                 message.data.data = base64ToBytesArray(message.data.data);
             }
             events.dispatch(message.event, message.data);
         }
     });
 
-    ws.addEventListener('open', async (event) => {
+    ws.addEventListener('open', async event => {
         events.dispatch('ready');
     });
 
-    ws.addEventListener('close', async (event) => {
+    ws.addEventListener('close', async event => {
         const error = {
             code: 'NE_CL_NSEROFF',
-            message: 'Neutralino server is offline. Try restarting the application'
+            message:
+                'Neutralino server is offline. Try restarting the application',
         };
         events.dispatch('serverOffline', error);
     });
 
-    ws.addEventListener('error', async (event) => {
+    ws.addEventListener('error', async event => {
         handleConnectError();
     });
 }
 
 async function processQueue(messageQueue: any[]) {
-    while(messageQueue.length > 0) {
+    while (messageQueue.length > 0) {
         const message = messageQueue.shift();
         try {
             const response = await sendMessage(message.method, message.data);
             message.resolve(response);
-        }
-        catch(err: any) {
+        } catch (err: any) {
             message.reject(err);
         }
     }
 }
 
+function displayErrorContext(code: string, message: string) {
+    // Preserve existing application UI and show an overlay on top instead.
+
+    // Remove any existing error overlay to avoid duplicates.
+    const existingOverlay = document.querySelector('[data-nl-error-overlay="true"]');
+    if (existingOverlay && existingOverlay.parentElement) {
+        existingOverlay.parentElement.removeChild(existingOverlay);
+    }
+
+    const overlay = document.createElement('div');
+    overlay.setAttribute('data-nl-error-overlay', 'true');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = '0';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '2147483647'; // Ensure it appears above the app UI.
+
+    const container = document.createElement('div');
+    container.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+    container.style.padding = '20px';
+    container.style.margin = '20px';
+    container.style.maxWidth = '600px';
+    container.style.background = '#ffebee';
+    container.style.color = '#c62828';
+    container.style.border = '1px solid #ef9a9a';
+    container.style.borderRadius = '6px';
+    container.style.lineHeight = '1.5';
+    container.setAttribute('role', 'alert');
+
+    const strongEl = document.createElement('strong');
+    strongEl.textContent = code;
+    container.appendChild(strongEl);
+    container.appendChild(document.createTextNode(': '));
+
+    const tokenPlaceholder = 'NL_TOKEN';
+    let currentIndex = 0;
+
+    while (true) {
+        const index = message.indexOf(tokenPlaceholder, currentIndex);
+        if (index === -1) {
+            if (currentIndex < message.length) {
+                container.appendChild(
+                    document.createTextNode(message.substring(currentIndex)),
+                );
+            }
+            break;
+        }
+
+        if (index > currentIndex) {
+            container.appendChild(
+                document.createTextNode(message.substring(currentIndex, index)),
+            );
+        }
+
+        const codeEl = document.createElement('code');
+        codeEl.textContent = tokenPlaceholder;
+        container.appendChild(codeEl);
+
+        currentIndex = index + tokenPlaceholder.length;
+    }
+
+    overlay.appendChild(container);
+    document.body.appendChild(overlay);
+}
+
 function handleNativeMethodTokenError() {
     ws.close();
-    document.body.innerText = '';
-    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
-                                    ' execute native methods since <code>NL_TOKEN</code> is invalid.');
+    displayErrorContext(
+        'NE_RT_INVTOKN',
+        'Neutralinojs application cannot execute native methods since NL_TOKEN is invalid.',
+    );
 }
 
 function handleConnectError() {
-    document.body.innerText = '';
-    document.write('<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
-                                    ' connect with the framework core using <code>NL_TOKEN</code>.');
+    displayErrorContext(
+        'NE_CL_IVCTOKN',
+        'Neutralinojs application cannot connect with the framework core using NL_TOKEN.',
+    );
 }
 
 function initAuth() {
@@ -165,7 +243,10 @@ function getAuthToken() {
 
 // From: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
 function uuidv4(): string {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c: any) =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
+    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c: any) =>
+        (
+            c ^
+            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+        ).toString(16),
+    );
 }
