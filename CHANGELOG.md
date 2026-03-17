@@ -6,6 +6,11 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: computer
+- Export `computer.setMousePosition(x, y)` to update mouse cursor position.
+- Export `computer.setMouseGrabbing(grabbing: boolean)` to confine mouse within app window.
+- Export `computer.sendKey(keyCode, keyState?)` to simulate keyboard events. Accepted `keyState` values: `press`, `down`, and `up`.
+
 ## v6.5.0
 
 ### API: window

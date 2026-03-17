@@ -44,6 +44,6 @@ export function setMouseGrabbing(grabbing: boolean): Promise<void> {
     return sendMessage('computer.setMouseGrabbing', { grabbing });
 }
 
-export function sendKey(keyCode: number, up: boolean): Promise<void> {
-    return sendMessage('computer.sendKey', { keyCode, up });
+export function sendKey(keyCode: number, keyState?: 'press' | 'down' | 'up'): Promise<void> {
+    return sendMessage('computer.sendKey', { keyCode, keyState });
 }
