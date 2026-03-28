@@ -10,13 +10,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-      
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16.x'
-        registry-url: 'https://registry.npmjs.org'
-        scope: '@neutralinojs'
+      uses: actions/checkout@v6
         
     - name: Install and Build
       run: |
@@ -24,7 +18,7 @@ jobs:
         npm run build
         if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v6
       with:
         name: lib_dist
         path: ./dist/
@@ -34,17 +28,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       
     - name: Delete nightly tag
-      uses: dev-drprasad/delete-tag-and-release@v1.0
-      with:
-        tag_name: nightly
+      run: |
+        if gh release view nightly &> /dev/null; then
+          gh release delete nightly --cleanup-tag --yes
+        fi
       env:
-        GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Download build artifacts 
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v8
       with:
         name: lib_dist
         path: ./dist/
@@ -52,17 +47,19 @@ jobs:
     - name: Create Release Notes
       run: |
         chmod +x ./scripts/rz.py
-        ./scripts/rz.py create nightly --no-changes --top=":warning: **Nightly build**: This nighly-release may contain experimental features and breaking changes."
-        
+        ./scripts/rz.py create nightly \
+        --no-changes \
+        --top=":warning: **Nightly build**: This nightly-release may contain experimental features and breaking changes."
+
     - name: Update nightly GitHub release
-      uses: ncipollo/release-action@v1
-      with:
-          name: Neutralino.js nightly release
-          bodyFile: ./.tmprz/release_notes.md
-          artifacts: dist/*.*
-          prerelease: true
-          allowUpdates: true
-          tag: nightly
+      run: |
+          gh release create nightly \
+          dist/*.* \
+          --title "Neutralinojs nightly release" \
+          --notes-file .tmprz/release_notes.md \
+          --prerelease
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Clean Release Notes
       run: |
@@ -73,11 +70,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v6
       with:
-        node-version: '16.x'
+        node-version: '24.x'
         registry-url: 'https://registry.npmjs.org'
         scope: '@neutralinojs'
       
