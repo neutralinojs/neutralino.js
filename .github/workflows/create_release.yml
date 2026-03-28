@@ -5,7 +5,10 @@ on:
     inputs: 
       version: 
         type: text
-        description: 'Version number Eg: 4.2.0' 
+        description: "Version number Eg: 4.2.0"
+env:
+  VERSION: ${{inputs.version}}
+  VERSION_WITH_V: "v${{inputs.version}}"
 
 jobs:
   build:
@@ -14,21 +17,16 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-    
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16.x'
-        registry-url: 'https://registry.npmjs.org'
-        scope: '@neutralinojs'
+      uses: actions/checkout@v6
       
-    - name: Install and Build
+    - name: Install and build
       run: |
         npm ci
         npm run build
         if [ -e ./dist/neutralino.js ]; then echo "OK"; else echo "ERR"; exit 1; fi
+      
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v6
       with:
         name: lib_dist
         path: ./dist/
@@ -38,41 +36,51 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       
-    - name: Download Linux build artifacts 
-      uses: actions/download-artifact@v4.1.7
+    - name: Download build artifacts 
+      uses: actions/download-artifact@v8
       with:
         name: lib_dist
         path: ./dist/
         
-    - name: Create Release Notes
+    - name: Create Release notes
       run: |
         chmod +x ./scripts/rz.py
-        ./scripts/rz.py create ${{github.event.inputs.version}}
+        ./scripts/rz.py create $VERSION
         
-    - name: Commit and Push Changelog
-      uses: EndBug/add-and-commit@v7.4.0
-      with:
-        default_author: github_actions
-        message: 'Update changelog for v${{github.event.inputs.version}}' 
-        add: 'CHANGELOG.md'
-        tag: v${{github.event.inputs.version}}
-        
-    - name: Create Branch
-      uses: peterjgrainger/action-create-branch@v3.0.0
-      with: 
-        branch: v${{github.event.inputs.version}}
+    - name: Create branch for release
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git checkout -b $VERSION_WITH_V
+        git push origin $VERSION_WITH_V
       env:
-        GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
-        
-    - name: Create a GitHub release
-      uses: ncipollo/release-action@v1
-      with:
-          tag: v${{github.event.inputs.version}}
-          name: Neutralino.js v${{github.event.inputs.version}} released!
-          bodyFile: ./.tmprz/release_notes.md
-          artifacts: 'dist/*.*'
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create the new release
+      run: |
+          gh release create $VERSION_WITH_V \
+          dist/*.* \
+          --title "Neutralino.js $VERSION_WITH_V released!" \
+          --notes-file .tmprz/release_notes.md \
+          --prerelease
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Send a pull request for the modified changelog
+      run: |
+        branch=changelog-update-$VERSION_WITH_V
+        git checkout -b $branch
+        git add CHANGELOG.md
+        git commit -m "Update changelog for $VERSION_WITH_V"
+        git push origin $branch
+        gh pr create \
+        --title "Update changelog after $VERSION_WITH_V release" \
+        --body "This pull request updates CHANGELOG.md file after the recent release." \
+        --assignee "${{github.actor}}"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Clean Release Notes
       run: |
@@ -83,29 +91,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v6
       with:
-        node-version: '16.x'
-        registry-url: 'https://registry.npmjs.org'
-        scope: '@neutralinojs'
+        node-version: "24.x"
+        registry-url: "https://registry.npmjs.org"
+        scope: "@neutralinojs"
         
     - name: Install dependencies
       run: npm ci
 
-    - name: Publish to NPM Registry
+    - name: Publish to the NPM registry
       run: |
         npm run build
         npm publish --access=public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     
-    - name: Send Discord Notification
+    - name: Send a Discord message
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
         args: |
-          Neutralino.js v${{github.event.inputs.version}} released 🚀
-          Changelog: https://github.com/neutralinojs/neutralino.js/releases/tag/v${{github.event.inputs.version}}
+          Neutralino.js ${{ env.VERSION_WITH_V }} released 🚀
+          Changelog: https://github.com/neutralinojs/neutralino.js/releases/tag/${{ env.VERSION_WITH_V }}
