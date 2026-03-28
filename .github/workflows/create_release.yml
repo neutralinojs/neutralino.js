@@ -61,7 +61,7 @@ jobs:
     - name: Create the new release
       run: |
           gh release create $VERSION_WITH_V \
-          ./bin/neutralinojs-${VERSION_WITH_V}.zip \
+          dist/*.* \
           --title "Neutralino.js $VERSION_WITH_V released!" \
           --notes-file .tmprz/release_notes.md \
           --prerelease
