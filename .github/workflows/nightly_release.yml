@@ -89,7 +89,6 @@ jobs:
         if [[ $out == *"ST_HAS_CHANGES"* ]]; then
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
         fi
-        exit 1
 
     - name: Publish to NPM Registry
       if: ${{ steps.check_changelog.outputs.has_changes == 'true' }}
