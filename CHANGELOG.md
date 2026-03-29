@@ -7,7 +7,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 ## Unreleased
 
 ### API: os
-- Add `useTemplateIcon: boolean` option to `os.setTray(options)` 
+- Add `useTemplateIcon: boolean` option to `os.setTray(options)`.
+
+### API: computer
+- Export `computer.setMousePosition(x,y)`, `computer.sendKey(keycode, keyState)`, and `computer.setMouseGrabbling(grabbing: boolean)` functions.
 
 ## v6.5.0
 
