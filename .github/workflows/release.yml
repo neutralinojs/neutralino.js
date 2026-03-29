@@ -96,12 +96,12 @@ jobs:
       run: |
           if [[ "$VERSION" != "nightly" ]]; then
             gh release create $VERSION_WITH_V \
-              ./bin/neutralinojs-${VERSION_WITH_V}.zip \
+              dist/*.* \
               --title "Neutralino.js $VERSION_WITH_V released!" \
               --notes-file .tmprz/release_notes.md
           else
             gh release create nightly \
-              ./bin/neutralinojs-nightly.zip \
+              dist/*.* \
               --title "Neutralino.js nightly release" \
               --notes-file .tmprz/release_notes.md \
               --prerelease
