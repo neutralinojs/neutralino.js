@@ -179,5 +179,5 @@ jobs:
       uses: Ilshidur/action-discord@master
       with:
         args: |
-          Neutralinojs CLI ${{ env.VERSION_WITH_V }} released 🚀
+          Neutralino.js ${{ env.VERSION_WITH_V }} released 🚀
           Changelog: https://github.com/neutralinojs/neutralino.js/releases/tag/${{ env.VERSION_WITH_V }}
