@@ -22,6 +22,7 @@ on:
 env:
   VERSION: ${{inputs.version != '' && inputs.version || 'nightly'}}
   VERSION_WITH_V: ${{inputs.version != '' && format('v{0}', inputs.version) || 'nightly'}}
+  NIGHTLY_NPM: ${{inputs.publish_nightly_npm}}
 
 jobs:
   release-info:
@@ -31,6 +32,7 @@ jobs:
       run: |
         echo "VERSION: $VERSION"
         echo "VERSION_WITH_V: $VERSION_WITH_V"
+        echo "NIGHTLY_NPM: $NIGHTLY_NPM"
         
   build:
     needs: [release-info]
@@ -150,7 +152,7 @@ jobs:
       run: npm ci
 
     - name: Publish nightly release
-      if: ${{ env.VERSION == 'nightly' && inputs.publish_nightly_npm == 'true' }}
+      if: ${{ env.VERSION == 'nightly' && env.NIGHTLY_NPM == 'true' }}
       run: |
         vend=nightly-$(date +"%Y%m%d")
         v=$(npm pkg get version | tr -d '"')-$vend
