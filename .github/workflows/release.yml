@@ -11,6 +11,11 @@ on:
         type: string
         required: false
         description: "Version number Eg: 4.2.0"
+      publish_nightly_npm:
+        type: boolean
+        required: false
+        default: false
+        description: "Publish nightly NPM package"
   schedule:
     - cron: 0 0 * * *
 
@@ -144,18 +149,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Check changelogs before nightly release
-      if: ${{ env.VERSION == 'nightly' }}
-      id: check_changelog
-      run: |
-        chmod +x ./scripts/rz.py
-        out=$(./scripts/rz.py check)
-        if [[ $out == *"ST_HAS_CHANGES"* ]]; then
-          echo "has_changes=true" >> "$GITHUB_OUTPUT"
-        fi
-
     - name: Publish nightly release
-      if: ${{ env.VERSION == 'nightly' && steps.check_changelog.outputs.has_changes == 'true' }}
+      if: ${{ env.VERSION == 'nightly' && inputs.publish_nightly_npm == 'true' }}
       run: |
         vend=nightly-$(date +"%Y%m%d")
         v=$(npm pkg get version | tr -d '"')-$vend
@@ -173,6 +168,10 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     
+  announcement:
+    needs: [publish-npm-package]
+    runs-on: ubuntu-latest
+    steps:
     - name: Send a Discord message
       if: ${{ env.VERSION != 'nightly' }}
       env:
@@ -180,5 +179,5 @@ jobs:
       uses: Ilshidur/action-discord@master
       with:
         args: |
-          Neutralino.js ${{ env.VERSION_WITH_V }} released 🚀
+          Neutralinojs CLI ${{ env.VERSION_WITH_V }} released 🚀
           Changelog: https://github.com/neutralinojs/neutralino.js/releases/tag/${{ env.VERSION_WITH_V }}
