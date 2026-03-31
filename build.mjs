@@ -131,6 +131,11 @@ rollup({
         );
     });
 
+/**
+ * @param {string} filepath
+ * @param {string} content
+ * @returns {void}
+ */
 function write(filepath, content) {
     console.log('write', filepath);
     writeFile(filepath, content, { encoding: 'utf8' }, err => {
@@ -138,12 +143,20 @@ function write(filepath, content) {
     });
 }
 
+/**
+ * @param {string} search
+ * @param {string} replace
+ * @returns {void}
+ */
 function patchInitFile(search, replace) {
     let initSource = readFileSync('./src/api/init.ts', { encoding: 'utf8' });
     initSource = initSource.replace(search, replace);
     writeFileSync('./src/api/init.ts', initSource, { encoding: 'utf8' });
 }
 
+/**
+ * @returns {void}
+ */
 function addCommitHash() {
     try {
         const hash = exec('git log -n 1 main --pretty=format:"%H"')
@@ -156,6 +169,10 @@ function addCommitHash() {
         commitHash = '<git_commit_hash_latest>';
     }
 }
+/**
+ * @returns {void}
+ */
 function resetCommitHash() {
+    if (!commitHash) return;
     patchInitFile(commitHash, '<git_commit_hash_latest>');
 }
