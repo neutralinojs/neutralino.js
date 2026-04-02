@@ -6,8 +6,6 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
-## v6.6.0
-
 ### API: os
 - Add `useTemplateIcon: boolean` option to `os.setTray(options)`.
 
