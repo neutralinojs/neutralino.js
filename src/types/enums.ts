@@ -3,7 +3,7 @@ export enum LoggerType {
     WARNING = 'WARNING',
     ERROR = 'ERROR',
     INFO = 'INFO'
-  }
+ }
 
 // os
 export enum Icon {
@@ -52,3 +52,9 @@ export enum Architecture {
     ia32 = 'ia32',
     unknown = 'unknown'
 }
+
+export enum SendKeyState {
+    press = 'press',
+    down = 'down',
+    up = 'up'
+ }

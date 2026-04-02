@@ -7,6 +7,7 @@ import type {
     Display,
     MousePosition
 } from '../types/api/computer';
+import type { SendKeyState } from '../types/enums';
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');
@@ -44,6 +45,6 @@ export function setMouseGrabbing(grabbing: boolean): Promise<void> {
     return sendMessage('computer.setMouseGrabbing', { grabbing });
 }
 
-export function sendKey(key: number, state: string): Promise<void> {
+export function sendKey(key: number, state: SendKeyState): Promise<void> {
     return sendMessage('computer.sendKey', { key, state });
 }
