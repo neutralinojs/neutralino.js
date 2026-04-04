@@ -4,38 +4,84 @@ import { base64ToBytesArray } from '../helpers';
 let ws;
 const nativeCalls = {};
 const offlineMessageQueue = [];
-const extensionMessageQueue = {}
+const extensionMessageQueue = {};
 
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
-                            '127.0.0.1' : window.location.hostname;
-    ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
+    const hostname: string =
+        window.NL_GINJECTED || window.NL_CINJECTED
+            ? '127.0.0.1'
+            : window.location.hostname;
+
+    const { protocol, port } = getWebSocketConfig();
+
+    ws = new WebSocket(
+        `${protocol}://${hostname}:${port}?connectToken=${connectToken}`,
+    );
     registerLibraryEvents();
     registerSocketEvents();
 }
 
+/**
+ * Determines the correct protocol and port for the WebSocket
+ * based on how the application is accessed
+ */
+function getWebSocketConfig(): { protocol: string; port: number } {
+    const currentProtocol = window.location.protocol;
+    const currentPort = window.location.port;
+
+    // If we are in local development (specific port different from 80/443)
+    if (window.NL_GINJECTED || window.NL_CINJECTED) {
+        return {
+            protocol: 'ws',
+            port: window.NL_PORT,
+        };
+    }
+
+    // If accessed via HTTPS (port 443 or explicit HTTPS)
+    if (currentProtocol === 'https:' || currentPort === '443') {
+        return {
+            protocol: 'wss',
+            port: currentPort ? parseInt(currentPort) : 443,
+        };
+    }
+
+    // If accessed via HTTP (port 80 or explicit HTTP)
+    if (currentProtocol === 'http:' || currentPort === '80') {
+        return {
+            protocol: 'ws',
+            port: currentPort ? parseInt(currentPort) : 80,
+        };
+    }
+
+    // Fallback: use default configuration
+    return {
+        protocol: currentProtocol === 'https:' ? 'wss' : 'ws',
+        port: window.NL_PORT,
+    };
+}
+
 export function sendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-
-        if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
+        if (ws?.readyState != WebSocket.OPEN) {
+            sendWhenReady({ method, data, resolve, reject });
             return;
         }
 
         const id: string = uuidv4();
         const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+        nativeCalls[id] = { resolve, reject };
 
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
-
+        ws.send(
+            JSON.stringify({
+                id,
+                method,
+                data,
+                accessToken,
+            }),
+        );
     });
 }
 
@@ -44,10 +90,9 @@ export function sendWhenReady(message: any) {
 }
 
 export function sendWhenExtReady(extensionId: string, message: any) {
-    if(extensionId in extensionMessageQueue) {
+    if (extensionId in extensionMessageQueue) {
         extensionMessageQueue[extensionId].push(message);
-    }
-    else {
+    } else {
         extensionMessageQueue[extensionId] = [message];
     }
 }
@@ -56,26 +101,26 @@ function registerLibraryEvents() {
     events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
-        if(!window.NL_EXTENABLED) {
+        if (!window.NL_EXTENABLED) {
             return;
         }
 
         let stats = await sendMessage('extensions.getStats');
-        for(let extension of stats.connected) {
+        for (let extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });
 
-    events.on('extClientConnect', (evt) => {
+    events.on('extClientConnect', evt => {
         events.dispatch('extensionReady', evt.detail);
     });
 
-    if(!window.NL_EXTENABLED) {
+    if (!window.NL_EXTENABLED) {
         return;
     }
 
-    events.on('extensionReady', async (evt) => {
-        if(evt.detail in extensionMessageQueue) {
+    events.on('extensionReady', async evt => {
+        if (evt.detail in extensionMessageQueue) {
             await processQueue(extensionMessageQueue[evt.detail]);
             delete extensionMessageQueue[evt.detail];
         }
@@ -83,59 +128,62 @@ function registerLibraryEvents() {
 }
 
 function registerSocketEvents() {
-    ws.addEventListener('message', (event) => {
+    ws.addEventListener('message', event => {
         const message = JSON.parse(event.data);
 
-        if(message.id && message.id in nativeCalls) {
+        if (message.id && message.id in nativeCalls) {
             // Native call response
-            if(message.data?.error) {
+            if (message.data?.error) {
                 nativeCalls[message.id].reject(message.data.error);
-                if(message.data.error.code == 'NE_RT_INVTOKN') {
+                if (message.data.error.code == 'NE_RT_INVTOKN') {
                     // Invalid native method token
                     handleNativeMethodTokenError();
                 }
-            }
-            else if(message.data?.success) {
-                nativeCalls[message.id]
-                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue
-                        : message.data);
+            } else if (message.data?.success) {
+                nativeCalls[message.id].resolve(
+                    message.data.hasOwnProperty('returnValue')
+                        ? message.data.returnValue
+                        : message.data,
+                );
             }
             delete nativeCalls[message.id];
-        }
-        else if(message.event) {
+        } else if (message.event) {
             // Event from process
-            if(message.event == 'openedFile' && message?.data?.action == 'dataBinary') {
+            if (
+                message.event == 'openedFile' &&
+                message?.data?.action == 'dataBinary'
+            ) {
                 message.data.data = base64ToBytesArray(message.data.data);
             }
             events.dispatch(message.event, message.data);
         }
     });
 
-    ws.addEventListener('open', async (event) => {
+    ws.addEventListener('open', async event => {
         events.dispatch('ready');
     });
 
-    ws.addEventListener('close', async (event) => {
+    ws.addEventListener('close', async event => {
         const error = {
             code: 'NE_CL_NSEROFF',
-            message: 'Neutralino server is offline. Try restarting the application'
+            message:
+                'Neutralino server is offline. Try restarting the application',
         };
         events.dispatch('serverOffline', error);
     });
 
-    ws.addEventListener('error', async (event) => {
+    ws.addEventListener('error', async event => {
         handleConnectError();
     });
 }
 
 async function processQueue(messageQueue: any[]) {
-    while(messageQueue.length > 0) {
+    while (messageQueue.length > 0) {
         const message = messageQueue.shift();
         try {
             const response = await sendMessage(message.method, message.data);
             message.resolve(response);
-        }
-        catch(err: any) {
+        } catch (err: any) {
             message.reject(err);
         }
     }
@@ -144,14 +192,18 @@ async function processQueue(messageQueue: any[]) {
 function handleNativeMethodTokenError() {
     ws.close();
     document.body.innerText = '';
-    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
-                                    ' execute native methods since <code>NL_TOKEN</code> is invalid.');
+    document.write(
+        '<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
+            ' execute native methods since <code>NL_TOKEN</code> is invalid.',
+    );
 }
 
 function handleConnectError() {
     document.body.innerText = '';
-    document.write('<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
-                                    ' connect with the framework core using <code>NL_TOKEN</code>.');
+    document.write(
+        '<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
+            ' connect with the framework core using <code>NL_TOKEN</code>.',
+    );
 }
 
 function initAuth() {
@@ -165,7 +217,10 @@ function getAuthToken() {
 
 // From: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
 function uuidv4(): string {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c: any) =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
+    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c: any) =>
+        (
+            c ^
+            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+        ).toString(16),
+    );
 }
