@@ -158,6 +158,9 @@ function initAuth() {
     if (window.NL_TOKEN) {
         sessionStorage.setItem('NL_TOKEN', window.NL_TOKEN);
     }
+    else if (sessionStorage.getItem('NL_TOKEN')) {
+        window.NL_TOKEN = sessionStorage.getItem('NL_TOKEN');
+    }
 }
 function getAuthToken() {
     return window.NL_TOKEN || sessionStorage.getItem('NL_TOKEN') || '';
