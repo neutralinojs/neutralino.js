@@ -38,15 +38,36 @@ export function getEnvs(): Promise<Envs> {
 };
 
 export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]> {
-    return sendMessage('os.showOpenDialog', { title, ...options });
+    if (typeof title === 'object') {
+        options = title as unknown as OpenDialogOptions;
+        title = undefined;
+    }
+    return sendMessage('os.showOpenDialog', {
+        title: title ?? 'Open a file',
+        ...options,
+    });
 };
 
 export function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string> {
-    return sendMessage('os.showFolderDialog', { title, ...options });
+    if (typeof title === 'object') {
+        options = title as unknown as FolderDialogOptions;
+        title = undefined;
+    }
+    return sendMessage('os.showFolderDialog', {
+        title: title ?? 'Select a folder',
+        ...options,
+    });
 };
 
 export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string> {
-    return sendMessage('os.showSaveDialog', { title, ...options });
+    if (typeof title === 'object') {
+        options = title as unknown as SaveDialogOptions;
+        title = undefined;
+    }
+    return sendMessage('os.showSaveDialog', {
+        title: title ?? 'Save a file',
+        ...options,
+    });
 };
 
 export function showNotification(title: string, content: string, icon?: Icon): Promise<void> {
@@ -54,7 +75,7 @@ export function showNotification(title: string, content: string, icon?: Icon): P
 };
 
 export function showMessageBox(title: string, content: string,
-                choice?: MessageBoxChoice, icon?: Icon): Promise<string> {
+    choice?: MessageBoxChoice, icon?: Icon): Promise<string> {
     return sendMessage('os.showMessageBox', { title, content, choice, icon });
 };
 
