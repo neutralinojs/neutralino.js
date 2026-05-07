@@ -141,17 +141,26 @@ async function processQueue(messageQueue: any[]) {
     }
 }
 
+function renderFatalError(code: string, message: string) {
+    document.body.replaceChildren();
+    const container = document.createElement('div');
+    container.innerHTML = `<code>${code}</code>: ${message}`;
+    document.body.appendChild(container);
+}
+
 function handleNativeMethodTokenError() {
     ws.close();
-    document.body.innerText = '';
-    document.write('<code>NE_RT_INVTOKN</code>: Neutralinojs application cannot' +
-                                    ' execute native methods since <code>NL_TOKEN</code> is invalid.');
+    renderFatalError(
+        'NE_RT_INVTOKN',
+        'Neutralinojs application cannot execute native methods since <code>NL_TOKEN</code> is invalid.'
+    );
 }
 
 function handleConnectError() {
-    document.body.innerText = '';
-    document.write('<code>NE_CL_IVCTOKN</code>: Neutralinojs application cannot' +
-                                    ' connect with the framework core using <code>NL_TOKEN</code>.');
+    renderFatalError(
+        'NE_CL_IVCTOKN',
+        'Neutralinojs application cannot connect with the framework core using <code>NL_TOKEN</code>.'
+    );
 }
 
 function initAuth() {
