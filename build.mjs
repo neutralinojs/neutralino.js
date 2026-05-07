@@ -32,6 +32,7 @@ const { version } = JSON.parse(
 const outdir = 'dist';
 const devmode = process.argv.includes('--dev');
 
+/** @type {string | null} */
 let commitHash = null;
 
 if (existsSync(outdir)) {
@@ -131,6 +132,10 @@ rollup({
         );
     });
 
+/**
+ * @param {string} filepath
+ * @param {string} content
+ */
 function write(filepath, content) {
     console.log('write', filepath);
     writeFile(filepath, content, { encoding: 'utf8' }, err => {
@@ -138,6 +143,10 @@ function write(filepath, content) {
     });
 }
 
+/**
+ * @param {string | RegExp} search
+ * @param {string} replace
+ */
 function patchInitFile(search, replace) {
     let initSource = readFileSync('./src/api/init.ts', { encoding: 'utf8' });
     initSource = initSource.replace(search, replace);
@@ -151,11 +160,14 @@ function addCommitHash() {
             .trim();
         patchInitFile('<git_commit_hash_latest>', hash);
         commitHash = hash;
-    } catch (err) {
+    } catch (/** @type {any} */ err) {
         console.warn('Warning: Could not get git commit hash:', err.message);
         commitHash = '<git_commit_hash_latest>';
     }
 }
+/**
+ * @returns {void}
+ */
 function resetCommitHash() {
-    patchInitFile(commitHash, '<git_commit_hash_latest>');
+    patchInitFile(/** @type {string} */ (commitHash), '<git_commit_hash_latest>');
 }
