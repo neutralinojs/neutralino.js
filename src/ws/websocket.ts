@@ -8,7 +8,6 @@ const extensionMessageQueue = {}
 
 export function init() {
     initAuth();
-
     const connectToken: string = getAuthToken().split('.')[1];
     const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
                             '127.0.0.1' : window.location.hostname;
