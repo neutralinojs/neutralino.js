@@ -167,7 +167,6 @@ function handleConnectError() {
     );
 }
 
-
 function initAuth() {
     if (window.NL_TOKEN) {
         sessionStorage.setItem('NL_TOKEN', window.NL_TOKEN);
