@@ -31,7 +31,7 @@ How to test with the Neutralinojs server?
 
 ```bash
 cd ../neutralinojs
-bash ./bin/script_update_client.sh
+bash ./scripts/update_client.sh
 ./bin/neutralino-{platform}_{arch} --load-dir-res # Eg: ./bin/neutralino-linux_x64 --load-dir-res
 ```
 
