@@ -142,18 +142,14 @@ async function processQueue(messageQueue: any[]) {
 }
 
 function renderFatalError(code: string, message: string) {
-    try {
-        ws?.close();
-    } catch {}
-
     document.body.replaceChildren();
     const container = document.createElement('div');
     container.innerHTML = `<code>${code}</code>: ${message}`;
-
     document.body.appendChild(container);
 }
 
 function handleNativeMethodTokenError() {
+    ws.close();
     renderFatalError(
         'NE_RT_INVTOKN',
         'Neutralinojs application cannot execute native methods since <code>NL_TOKEN</code> is invalid.'
