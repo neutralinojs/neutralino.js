@@ -69,3 +69,7 @@ export function open(url: string): Promise<void> {
 export function getPath(name: KnownPath): Promise<string> {
     return sendMessage('os.getPath', { name });
 };
+
+export function trashItem(path: string): Promise<string> {
+    return sendMessage('os.trashItem', { path });
+};
