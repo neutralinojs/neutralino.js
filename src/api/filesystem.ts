@@ -130,3 +130,15 @@ export function getNormalizedPath(path: string): Promise<string> {
 export function getUnnormalizedPath(path: string): Promise<string> {
     return sendMessage('filesystem.getUnnormalizedPath', { path });
 };
+
+export function access(path: string, mode?: number): Promise<string> {
+    return sendMessage('filesystem.access', { path, mode });
+};
+
+export function chmod(path: string, mode: number): Promise<string> {
+    return sendMessage('filesystem.chmod', { path, mode });
+};
+
+export function chown(path: string, uid: number, gid: number): Promise<string> {
+    return sendMessage('filesystem.chown', { path, uid, gid });
+};
