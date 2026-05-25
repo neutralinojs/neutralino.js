@@ -33,6 +33,10 @@ export function getDisplays(): Promise<Display[]> {
     return sendMessage('computer.getDisplays');
 };
 
+export function getHostname(): Promise<string> {
+    return sendMessage('computer.getHostname');
+};
+
 export function getMousePosition(): Promise<MousePosition> {
     return sendMessage('computer.getMousePosition');
 };
