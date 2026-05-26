@@ -65,6 +65,7 @@ export * as server from './api/server';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
+export { SendKeyState } from './types/enums';
 
 export type * from './types/api/protocol';
 export type * from './types/api/app';

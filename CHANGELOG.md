@@ -6,13 +6,17 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### TypeScript
+- Make `computer.sendKey` `state` parameter optional (server defaults to `press`).
+- Export `SendKeyState` enum for npm consumers.
+
 ## v6.7.0
 
 ### API: os
 - Add `useTemplateIcon: boolean` option to `os.setTray(options)`.
 
 ### API: computer
-- Export `computer.setMousePosition(x,y)`, `computer.sendKey(keycode, keyState)`, and `computer.setMouseGrabbling(grabbing: boolean)` functions.
+- Export `computer.setMousePosition(x,y)`, `computer.sendKey(key, state)`, and `computer.setMouseGrabbing(grabbing: boolean)` functions.
 
 ## v6.5.0
 
