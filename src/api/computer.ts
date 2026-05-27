@@ -4,6 +4,7 @@ import type {
     KernelInfo,
     OSInfo,
     CPUInfo,
+    GPUInfo,
     Display,
     MousePosition
 } from '../types/api/computer';
@@ -27,6 +28,10 @@ export function getOSInfo(): Promise<OSInfo> {
 
 export function getCPUInfo(): Promise<CPUInfo> {
     return sendMessage('computer.getCPUInfo');
+};
+
+export function getGPUInfo(): Promise<GPUInfo[]> {
+    return sendMessage('computer.getGPUInfo');
 };
 
 export function getDisplays(): Promise<Display[]> {
