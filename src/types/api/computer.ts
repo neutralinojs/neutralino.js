@@ -1,3 +1,5 @@
+import { NetworkFamily } from '../enums';
+
 export interface MemoryInfo {
     physical: {
         total: number;
@@ -46,4 +48,15 @@ export interface Resolution {
 export interface MousePosition {
     x: number;
     y: number;
+}
+
+export interface NetworkInterface {
+    address: string;
+    mac: string;
+    isInternal: boolean;
+    family: NetworkFamily;
+}
+
+export interface NetworkInterfaces {
+    [key: string]: NetworkInterface;
 }
