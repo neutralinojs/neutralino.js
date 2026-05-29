@@ -60,6 +60,11 @@ export enum SendKeyState {
     up = 'up'
  }
 
+export enum NetworkFamily {
+    ipv4 = 'ipv4',
+    ipv6 = 'ipv6'
+}
+
 // filesystem
  export enum AccessMode {
     F_OK = 0,
