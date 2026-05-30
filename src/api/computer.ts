@@ -6,7 +6,8 @@ import type {
     CPUInfo,
     Display,
     MousePosition,
-    NetworkInterfaces
+    NetworkInterfaces,
+    
 } from '../types/api/computer';
 import type { SendKeyState } from '../types/enums';
 
@@ -54,6 +55,12 @@ export function sendKey(key: number, state: SendKeyState): Promise<void> {
     return sendMessage('computer.sendKey', { key, state });
 }
 
-export function getNetworkInterfaces(): Promise<NetworkInterfaces> {
-    return sendMessage('computer.getNetworkInterfaces');
+export interface GetNetworkInterfacesOptions {
+    excludeLoopback?: boolean;
+}
+
+export function getNetworkInterfaces(
+    options: GetNetworkInterfacesOptions = {}
+): Promise<NetworkInterfaces> {
+    return sendMessage('computer.getNetworkInterfaces', options);
 };
