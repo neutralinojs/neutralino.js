@@ -6,6 +6,19 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: os
+- Export `os.trashItem(path)`.
+
+### API: filesystem
+- Export `filesystem.chmod(path, mode)`, `filesystem.access(path, mode)`, and `filesystem.chown(path, uid, gid)`.
+
+### API: computer
+- Export `computer.getHostname()` and `computer.getNetworkInterfaces()`
+
+### Bugfixes/improvements
+- Update TypeScript builder dependencies.
+- Replace deprecated `document.write()` code segments with newer equivalents.
+
 ## v6.7.0
 
 ### API: os
@@ -21,10 +34,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ### TypeScript
 - Add missing `center` to `WindowPosOptions`
-- Use correct return type for `server.getMounts()`
+- Use the correct return type for `server.getMounts()`
 
 ### Bugfixes/improvements
-- Improve updator API error messages
+- Improve updater API error messages
 
 ## v6.4.0
 
