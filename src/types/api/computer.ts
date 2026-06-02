@@ -50,13 +50,13 @@ export interface MousePosition {
     y: number;
 }
 
-export interface NetworkInterface {
+export interface NetworkInterfaceAddress {
     address: string;
     mac: string;
     isInternal: boolean;
     family: NetworkFamily;
 }
 
-export interface NetworkInterfaces {
-    [key: string]: NetworkInterface;
+export interface NetworkInterfaceInfo {
+    [key: string]: NetworkInterfaceAddress;
 }
