@@ -6,6 +6,7 @@ import type {
     ExecCommandResult,
     FolderDialogOptions,
     KnownPath,
+    LocaleInfo,
     OpenDialogOptions,
     SaveDialogOptions,
     SpawnedProcess,
@@ -27,6 +28,10 @@ export function updateSpawnedProcess(id: number, event: string, data?: any): Pro
 
 export function getSpawnedProcesses(): Promise<SpawnedProcess[]> {
     return sendMessage('os.getSpawnedProcesses');
+};
+
+export function getLocale(): Promise<LocaleInfo> {
+    return sendMessage('os.getLocale');
 };
 
 export function getEnv(key: string): Promise<string> {
