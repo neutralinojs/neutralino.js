@@ -1,27 +1,78 @@
 export type ErrorCode =
-    'NE_FS_DIRCRER' |
-    'NE_FS_RMDIRER' |
-    'NE_FS_FILRDER' |
-    'NE_FS_FILWRER' |
-    'NE_FS_FILRMER' |
-    'NE_FS_NOPATHE' |
+    // Filesystem
+    'NE_FS_ACSFAIL' |
+    'NE_FS_CHMDERR' |
+    'NE_FS_CHWNERR' |
+    'NE_FS_COPYERR' |
     'NE_FS_COPYFER' |
+    'NE_FS_DIRCRER' |
+    'NE_FS_FILOPER' |
+    'NE_FS_FILRDER' |
+    'NE_FS_FILRMER' |
+    'NE_FS_FILWRER' |
+    'NE_FS_MOVEERR' |
     'NE_FS_MOVEFER' |
-    'NE_OS_INVMSGA' |
+    'NE_FS_NOPATHE' |
+    'NE_FS_NOTADIR' |
+    'NE_FS_NOWATID' |
+    'NE_FS_REMVERR' |
+    'NE_FS_RMDIRER' |
+    'NE_FS_UNLCWAT' |
+    'NE_FS_UNLSTPR' |
+    'NE_FS_UNLTFOP' |
+    'NE_FS_UNLTOUP' |
+    // OS
     'NE_OS_INVKNPT' |
+    'NE_OS_INVMSGA' |
+    'NE_OS_INVNOTA' |
+    'NE_OS_TRAYIER' |
+    'NE_OS_UNLTOUP' |
+    'NE_OS_UNLTRAS' |
+    // Storage
     'NE_ST_INVSTKY' |
+    'NE_ST_NOSTDIR' |
+    'NE_ST_NOSTKEX' |
+    'NE_ST_STKEYRE' |
     'NE_ST_STKEYWE' |
-    'NE_RT_INVTOKN' |
-    'NE_RT_NATPRME' |
+    // Runtime
     'NE_RT_APIPRME' |
-    'NE_RT_NATRTER' |
+    'NE_RT_INVTOKN' |
     'NE_RT_NATNTIM' |
+    'NE_RT_NATPRME' |
+    'NE_RT_NATRTER' |
+    // Client
     'NE_CL_NSEROFF' |
+    // Extensions
     'NE_EX_EXTNOTC' |
-    'NE_UP_CUPDMER' |
+    // Updater
     'NE_UP_CUPDERR' |
+    'NE_UP_CUPDMER' |
+    'NE_UP_UPDINER' |
     'NE_UP_UPDNOUF' |
-    'NE_UP_UPDINER'
+    // Computer
+    'NE_CO_UNLTOMG' |
+    'NE_CO_UNLTONI' |
+    'NE_CO_UNLTOSC' |
+    'NE_CO_UNLTOSK' |
+    // Window
+    'NE_WI_UNBSWSR' |
+    // Resources
+    'NE_RS_DIREXTF' |
+    'NE_RS_FILEXTF' |
+    'NE_RS_NOPATHE' |
+    'NE_RS_TREEGER' |
+    'NE_RS_UNBLDRE' |
+    // Server
+    'NE_SR_MPINUSE' |
+    'NE_SR_NOMTPTH' |
+    'NE_SR_UNBPARS' |
+    'NE_SR_UNBSEND' |
+    // Config
+    'NE_CF_UNBLDCF' |
+    'NE_CF_UNBLWCF' |
+    'NE_CF_UNBPRCF' |
+    'NE_CF_UNSUPMD'
+
 
 export interface Error {
     code: ErrorCode;

@@ -41,6 +41,18 @@ declare global {
         NL_RESMODE: string;
         /** Release commit of the client library */
         NL_CCOMMIT: string;
+        /** Release commit of the Neutralinojs server */
+        NL_COMMIT: string;
+        /** Application config file path */
+        NL_CONFIGFILE: string;
+        /** Compilation data */
+        NL_COMPDATA: string;
+        /** System locale string */
+        NL_LOCALE: string;
+        /** Returns true if the client library is injected by the server */
+        NL_SINJECTED: boolean;
+        /** Returns true if the window saved state was loaded */
+        NL_WSAVSTLOADED: boolean;
         /** An array of custom methods */
         NL_CMETHODS: string[];
         // --- globals ---

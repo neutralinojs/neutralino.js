@@ -1,7 +1,9 @@
 import { sendMessage } from '../ws/websocket';
 
-export function setData(key: string, data: string | null): Promise<void> {
-    return sendMessage('storage.setData', { key, data });
+export function setData(key: string, data?: string | null): Promise<void> {
+    const payload: Record<string, unknown> = { key };
+    if (data != null) payload.data = data;
+    return sendMessage('storage.setData', payload);
 };
 
 export function getData(key: string): Promise<string> {

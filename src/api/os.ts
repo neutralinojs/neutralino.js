@@ -6,12 +6,12 @@ import type {
     ExecCommandResult,
     FolderDialogOptions,
     KnownPath,
+    LocaleInfo,
     OpenDialogOptions,
     SaveDialogOptions,
     SpawnedProcess,
     TrayOptions,
     SpawnedProcessOptions,
-    LocaleInfo,
 } from '../types/api/os';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {

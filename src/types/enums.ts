@@ -2,7 +2,8 @@
 export enum LoggerType {
     WARNING = 'WARNING',
     ERROR = 'ERROR',
-    INFO = 'INFO'
+    INFO = 'INFO',
+    DEBUG = 'DEBUG'
  }
 
 // os

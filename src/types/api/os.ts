@@ -2,6 +2,7 @@ export interface ExecCommandOptions {
     stdIn?: string;
     background?: boolean;
     cwd?: string;
+    envs?: Record<string, string>;
 }
 
 export interface ExecCommandResult {
@@ -76,4 +77,6 @@ export type KnownPath =
     'downloads' |
     'savedGames1' |
     'savedGames2' | 
-    'temp'
+    'temp' |
+    'desktop' |
+    'home'

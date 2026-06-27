@@ -1,4 +1,4 @@
-import { NetworkFamily } from '../enums';
+import type { NetworkFamily } from '../enums';
 
 export interface MemoryInfo {
     physical: {
@@ -67,5 +67,5 @@ export interface NetworkInterfaceAddress {
 }
 
 export interface NetworkInterfaceInfo {
-    [key: string]: NetworkInterfaceAddress;
+    [key: string]: NetworkInterfaceAddress[];
 }
