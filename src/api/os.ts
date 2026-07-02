@@ -11,6 +11,7 @@ import type {
     SpawnedProcess,
     TrayOptions,
     SpawnedProcessOptions,
+    LocaleInfo,
 } from '../types/api/os';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
@@ -31,6 +32,10 @@ export function getSpawnedProcesses(): Promise<SpawnedProcess[]> {
 
 export function getEnv(key: string): Promise<string> {
     return sendMessage('os.getEnv', { key });
+};
+
+export function setEnv(key: string, value: string): Promise<string> {
+    return sendMessage('os.setEnv', { key, value });
 };
 
 export function getEnvs(): Promise<Envs> {
@@ -72,4 +77,8 @@ export function getPath(name: KnownPath): Promise<string> {
 
 export function trashItem(path: string): Promise<string> {
     return sendMessage('os.trashItem', { path });
+};
+
+export function getLocaleInfo(): Promise<LocaleInfo> {
+    return sendMessage('os.getLocaleInfo');
 };
