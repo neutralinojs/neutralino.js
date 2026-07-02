@@ -49,3 +49,7 @@ export function writeProcessOutput(data: string): Promise<void> {
 export function writeProcessError(data: string): Promise<void> {
     return sendMessage('app.writeProcessError', { data });
 };
+
+export function getProcessId(): Promise<number> {
+    return sendMessage('app.getProcessId');
+};

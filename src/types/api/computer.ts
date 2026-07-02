@@ -40,6 +40,15 @@ export interface Display {
     refreshRate: number;
 }
 
+export interface Disk {
+    id: number;
+    vendor: string;
+    model: string;
+    serial: string;
+    total: number;
+    free: number;
+}
+
 export interface Resolution {
     width: number;
     height: number;

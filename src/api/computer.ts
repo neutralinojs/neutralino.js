@@ -5,6 +5,7 @@ import type {
     OSInfo,
     CPUInfo,
     Display,
+    Disk,
     MousePosition,
     NetworkInterfaceInfo
 } from '../types/api/computer';
@@ -34,6 +35,11 @@ export function getDisplays(): Promise<Display[]> {
     return sendMessage('computer.getDisplays');
 };
 
+export function getDisks(): Promise<Disk> {
+    return sendMessage('computer.getDisks');
+};
+
+
 export function getHostname(): Promise<string> {
     return sendMessage('computer.getHostname');
 };
@@ -56,4 +62,8 @@ export function sendKey(key: number, state: SendKeyState): Promise<void> {
 
 export function getNetworkInterfaces(): Promise<NetworkInterfaceInfo> {
     return sendMessage('computer.getNetworkInterfaces');
+};
+
+export function getMachineId(): Promise<string> {
+    return sendMessage('computer.getMachineId');
 };

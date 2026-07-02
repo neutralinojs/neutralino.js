@@ -59,6 +59,12 @@ export interface TrayMenuItem {
     isChecked?: boolean;
 }
 
+export interface LocaleInfo {
+    locale: string;
+    language: string;
+    region: string;
+} 
+
 export type KnownPath =
     'config' |
     'data' |
