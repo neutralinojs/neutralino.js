@@ -6,6 +6,10 @@ export function exit(code?: number): Promise<void> {
     return sendMessage('app.exit', { code });
 };
 
+export function getProcessId(): Promise<number> {
+    return sendMessage('app.getProcessId');
+};
+
 export function killProcess(): Promise<void> {
     return sendMessage('app.killProcess');
 };
