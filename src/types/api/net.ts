@@ -19,7 +19,7 @@ export interface NetRequestOptions {
 }
 
 export interface NetResponse {
-    statusCode: number,
+    status: number,
     text: string,
     reason: string,
     headers: NetHeaders[],
