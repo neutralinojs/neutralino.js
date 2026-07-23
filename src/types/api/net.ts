@@ -20,9 +20,10 @@ export interface NetRequestOptions {
 
 export interface NetResponse {
     status: number,
-    text: string,
-    reason: string,
+    statusText: string,
+    body: string,
     headers: NetHeaders[],
     cookies: string,
+    location: string,
     version: string
 }

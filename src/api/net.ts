@@ -22,9 +22,10 @@ export function put(url: string, options?: NetRequestOptions): Promise<NetRespon
     return request(url, "PUT", options);
 };
 
-export function del(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+function __delete(url: string, options?: NetRequestOptions): Promise<NetResponse> {
     return request(url, "DELETE", options);
 };
+export { __delete as delete } // 'delete' is a keyword, so direct export won't work
 
 export function patch(url: string, options?: NetRequestOptions): Promise<NetResponse> {
     return request(url, "PATCH", options);
