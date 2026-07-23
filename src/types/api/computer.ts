@@ -32,6 +32,15 @@ export interface CPUInfo {
     physicalUnits: number;
 }
 
+export interface GPUInfo {
+    id: number;
+    vendor: string;
+    name: string;
+    memorySize: number;
+    cacheSize: number;
+    maxFrequency: number;
+}
+
 export interface Display {
     id: number;
     resolution: Resolution;
