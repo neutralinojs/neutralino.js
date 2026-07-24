@@ -6,6 +6,8 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+## v6.9.0
+
 ### API: net
 - Export `net.reqeust(url, method, options)`
 - Export `net.get(url, options)`, `net.post(url, options)`, `net.put(url, options)`, `net.del(url, options)`, `net.patch(url, options)`, `net.head(url, options)`, and `net.options(url, options)`
