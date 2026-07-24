@@ -10,6 +10,15 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 - Export `net.reqeust(url, method, options)`
 - Export `net.get(url, options)`, `net.post(url, options)`, `net.put(url, options)`, `net.del(url, options)`, `net.patch(url, options)`, `net.head(url, options)`, and `net.options(url, options)`
 
+### API: computer
+- Export `computer.getDisks()` and `compuer.getMachineId()`.
+
+### API: app
+- Export `app.getProcessId()`.
+
+### API: os
+- Export `os.setEnv(key, value)` and `os.getLocaleInfo()`.
+
 ## v6.8.0
 
 ### API: os
