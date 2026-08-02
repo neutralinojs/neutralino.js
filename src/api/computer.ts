@@ -35,7 +35,7 @@ export function getDisplays(): Promise<Display[]> {
     return sendMessage('computer.getDisplays');
 };
 
-export function getDisks(): Promise<Disk> {
+export function getDisks(): Promise<Disk[]> {
     return sendMessage('computer.getDisks');
 };
 

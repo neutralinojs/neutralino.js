@@ -45,6 +45,7 @@ export interface Disk {
     vendor: string;
     model: string;
     serial: string;
+    mountPoint: string;
     total: number;
     free: number;
 }

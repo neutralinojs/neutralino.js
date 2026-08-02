@@ -75,8 +75,8 @@ export type KnownPath =
     'music' |
     'video' |
     'downloads' |
-    'savedGames1' |
-    'savedGames2' | 
+    'saveGames1' |
+    'saveGames2' | 
     'temp' |
     'desktop' |
     'home'

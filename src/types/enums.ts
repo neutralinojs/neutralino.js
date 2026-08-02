@@ -27,6 +27,7 @@ export enum MessageBoxChoice {
 export enum ClipboardFormat {
     unknown = 'unknown',
     text = 'text',
+    html = 'html',
     image = 'image'
 }
 
