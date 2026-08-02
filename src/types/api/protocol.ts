@@ -86,3 +86,9 @@ export interface Error {
     code: ErrorCode;
     message: string;
 }
+
+/** Standard response envelope of native methods that have no returnValue */
+export interface SuccessResponse {
+    success: boolean;
+    message?: string;
+}

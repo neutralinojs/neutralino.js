@@ -12,31 +12,32 @@ import type {
     Permissions,
     PermissionsMode,
 } from '../types/api/filesystem';
+import type { SuccessResponse } from '../types/api/protocol';
 
-export function createDirectory(path: string): Promise<void> {
+export function createDirectory(path: string): Promise<SuccessResponse> {
     return sendMessage('filesystem.createDirectory', { path });
 };
 
-export function remove(path: string): Promise<void> {
+export function remove(path: string): Promise<SuccessResponse> {
     return sendMessage('filesystem.remove', { path });
 };
 
-export function writeFile(path: string, data: string): Promise<void> {
+export function writeFile(path: string, data: string): Promise<SuccessResponse> {
     return sendMessage('filesystem.writeFile', { path, data });
 };
 
-export function appendFile(path: string, data: string): Promise<void> {
+export function appendFile(path: string, data: string): Promise<SuccessResponse> {
     return sendMessage('filesystem.appendFile', { path, data });
 };
 
-export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<SuccessResponse> {
     return sendMessage('filesystem.writeBinaryFile', {
         path,
         data: arrayBufferToBase64(data)
     });
 };
 
-export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<SuccessResponse> {
     return sendMessage('filesystem.appendBinaryFile', {
         path,
         data: arrayBufferToBase64(data)
@@ -75,7 +76,7 @@ export function getWatchers(): Promise<Watcher[]> {
     return sendMessage('filesystem.getWatchers');
 };
 
-export function updateOpenedFile(id: number, event: string, data?: any): Promise<void> {
+export function updateOpenedFile(id: number, event: string, data?: any): Promise<SuccessResponse> {
     return sendMessage('filesystem.updateOpenedFile', { id, event, data });
 };
 
@@ -87,11 +88,11 @@ export function readDirectory(path: string, options?: DirectoryReaderOptions): P
     return sendMessage('filesystem.readDirectory', { path, ...options });
 };
 
-export function copy(source: string, destination: string, options?: CopyOptions ): Promise<void> {
+export function copy(source: string, destination: string, options?: CopyOptions ): Promise<SuccessResponse> {
     return sendMessage('filesystem.copy', { source, destination, ...options } );
 };
 
-export function move(source: string, destination: string): Promise<void> {
+export function move(source: string, destination: string): Promise<SuccessResponse> {
     return sendMessage('filesystem.move', { source, destination });
 };
 
@@ -115,7 +116,7 @@ export function getPermissions(path: string): Promise<Permissions> {
     return sendMessage('filesystem.getPermissions', { path });
 };
 
-export function setPermissions(path: string, permissions: Permissions, mode: PermissionsMode): Promise<void> {
+export function setPermissions(path: string, permissions: Permissions, mode: PermissionsMode): Promise<number> {
     return sendMessage('filesystem.setPermissions', { path, ...permissions, mode });
 };
 
@@ -131,14 +132,14 @@ export function getUnnormalizedPath(path: string): Promise<string> {
     return sendMessage('filesystem.getUnnormalizedPath', { path });
 };
 
-export function access(path: string, mode?: number): Promise<string> {
+export function access(path: string, mode?: number): Promise<SuccessResponse> {
     return sendMessage('filesystem.access', { path, mode });
 };
 
-export function chmod(path: string, mode: number): Promise<string> {
+export function chmod(path: string, mode: number): Promise<SuccessResponse> {
     return sendMessage('filesystem.chmod', { path, mode });
 };
 
-export function chown(path: string, uid: number, gid: number): Promise<string> {
+export function chown(path: string, uid: number, gid: number): Promise<SuccessResponse> {
     return sendMessage('filesystem.chown', { path, uid, gid });
 };

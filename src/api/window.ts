@@ -8,12 +8,13 @@ import {
 } from '../types/api/window';
 
 import { normalizeElements } from '../helpers';
+import type { SuccessResponse } from '../types/api/protocol';
 
 const draggableRegions = new Set<HTMLElement>();
 const draggableExclusions = new Map<HTMLElement, Set<HTMLElement>>();
 const draggableListeners = new Map<HTMLElement, EventListener>();
 
-export function setTitle(title: string): Promise<void> {
+export function setTitle(title: string): Promise<SuccessResponse> {
     return sendMessage('window.setTitle', { title });
 }
 
@@ -21,11 +22,11 @@ export function getTitle(): Promise<string> {
     return sendMessage('window.getTitle');
 }
 
-export function maximize(): Promise<void> {
+export function maximize(): Promise<SuccessResponse> {
     return sendMessage('window.maximize');
 }
 
-export function unmaximize(): Promise<void> {
+export function unmaximize(): Promise<SuccessResponse> {
     return sendMessage('window.unmaximize');
 }
 
@@ -33,11 +34,11 @@ export function isMaximized(): Promise<boolean> {
     return sendMessage('window.isMaximized');
 }
 
-export function minimize(): Promise<void> {
+export function minimize(): Promise<SuccessResponse> {
     return sendMessage('window.minimize');
 }
 
-export function unminimize(): Promise<void> {
+export function unminimize(): Promise<SuccessResponse> {
     return sendMessage('window.unminimize');
 }
 
@@ -45,11 +46,11 @@ export function isMinimized(): Promise<boolean> {
     return sendMessage('window.isMinimized');
 }
 
-export function setFullScreen(): Promise<void> {
+export function setFullScreen(): Promise<SuccessResponse> {
     return sendMessage('window.setFullScreen');
 }
 
-export function exitFullScreen(): Promise<void> {
+export function exitFullScreen(): Promise<SuccessResponse> {
     return sendMessage('window.exitFullScreen');
 }
 
@@ -57,11 +58,11 @@ export function isFullScreen(): Promise<boolean> {
     return sendMessage('window.isFullScreen');
 }
 
-export function show(): Promise<void> {
+export function show(): Promise<SuccessResponse> {
     return sendMessage('window.show');
 }
 
-export function hide(): Promise<void> {
+export function hide(): Promise<SuccessResponse> {
     return sendMessage('window.hide');
 }
 
@@ -69,30 +70,30 @@ export function isVisible(): Promise<boolean> {
     return sendMessage('window.isVisible');
 }
 
-export function focus(): Promise<void> {
+export function focus(): Promise<SuccessResponse> {
     return sendMessage('window.focus');
 }
 
-export function setIcon(icon: string): Promise<void> {
+export function setIcon(icon: string): Promise<SuccessResponse> {
     return sendMessage('window.setIcon', { icon });
 }
 
-export function setBadge(count: number): Promise<void> {
+export function setBadge(count: number): Promise<SuccessResponse> {
     return sendMessage('window.setBadge', { count });
 }
 
-export function move(x: number, y: number): Promise<void> {
+export function move(x: number, y: number): Promise<SuccessResponse> {
     return sendMessage('window.move', { x, y });
 }
 
-export function center(): Promise<void> {
+export function center(): Promise<SuccessResponse> {
     return sendMessage('window.center');
 }
 
 export function beginDrag(
     screenX: number = 0,
     screenY: number = 0,
-): Promise<void> {
+): Promise<SuccessResponse> {
     return sendMessage('window.beginDrag', { screenX, screenY });
 }
 
@@ -277,7 +278,7 @@ export function unsetDraggableRegion(
     });
 }
 
-export function setSize(options: WindowSizeOptions): Promise<void> {
+export function setSize(options: WindowSizeOptions): Promise<SuccessResponse> {
     return new Promise(async (resolve: any, reject: any) => {
         let sizeOptions = await getSize();
 
@@ -301,11 +302,11 @@ export function getPosition(): Promise<WindowPosOptions> {
     return sendMessage('window.getPosition');
 }
 
-export function setAlwaysOnTop(onTop: boolean): Promise<void> {
+export function setAlwaysOnTop(onTop: boolean): Promise<SuccessResponse> {
     return sendMessage('window.setAlwaysOnTop', { onTop });
 }
 
-export function setBorderless(borderless: boolean): Promise<void> {
+export function setBorderless(borderless: boolean): Promise<SuccessResponse> {
     return sendMessage('window.setBorderless', { borderless });
 }
 
@@ -361,14 +362,14 @@ export function create(url: string, options?: WindowOptions): Promise<void> {
     });
 }
 
-export function snapshot(path: string): Promise<void> {
+export function snapshot(path: string): Promise<SuccessResponse> {
     return sendMessage('window.snapshot', { path });
 }
 
-export function setMainMenu(options: WindowMenu): Promise<void> {
+export function setMainMenu(options: WindowMenu): Promise<SuccessResponse> {
     return sendMessage('window.setMainMenu', options);
 };
 
-export function print(): Promise<void> {
+export function print(): Promise<SuccessResponse> {
     return sendMessage('window.print');
 };
