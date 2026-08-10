@@ -41,9 +41,22 @@ export function setEnv(key: string, value: string): Promise<string> {
 export function getEnvs(): Promise<Envs> {
     return sendMessage('os.getEnvs');
 };
+export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]>;
+export function showOpenDialog(options?: OpenDialogOptions): Promise<string[]>;
 
-export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]> {
-    return sendMessage('os.showOpenDialog', { title, ...options });
+export function showOpenDialog(
+    titleOrOptions?: string | OpenDialogOptions,
+    options?: OpenDialogOptions
+): Promise<string[]> {
+    if (typeof titleOrOptions === 'object') {
+        options = titleOrOptions;
+        titleOrOptions = undefined;
+    }
+
+    return sendMessage('os.showOpenDialog', {
+        title: titleOrOptions,
+        ...options
+    });
 };
 
 export function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string> {
