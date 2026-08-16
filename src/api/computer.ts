@@ -11,59 +11,58 @@ import type {
 } from '../types/api/computer';
 import type { SendKeyState } from '../types/enums';
 
-export function getMemoryInfo(): Promise<MemoryInfo> {
-    return sendMessage('computer.getMemoryInfo');
-};
-
-export function getArch(): Promise<string> {
-    return sendMessage('computer.getArch');
-};
-
-export function getKernelInfo(): Promise<KernelInfo> {
-    return sendMessage('computer.getKernelInfo');
-};
-
-export function getOSInfo(): Promise<OSInfo> {
-    return sendMessage('computer.getOSInfo');
-};
-
-export function getCPUInfo(): Promise<CPUInfo> {
-    return sendMessage('computer.getCPUInfo');
-};
-
-export function getDisplays(): Promise<Display[]> {
-    return sendMessage('computer.getDisplays');
-};
-
-export function getDisks(): Promise<Disk> {
-    return sendMessage('computer.getDisks');
-};
-
-
-export function getHostname(): Promise<string> {
-    return sendMessage('computer.getHostname');
-};
-
-export function getMousePosition(): Promise<MousePosition> {
-    return sendMessage('computer.getMousePosition');
-};
-
-export function setMousePosition(x: number, y: number): Promise<void> {
-    return sendMessage('computer.setMousePosition', { x, y });
+export async function getMemoryInfo(): Promise<MemoryInfo> {
+    return await sendMessage('computer.getMemoryInfo');
 }
 
-export function setMouseGrabbing(grabbing: boolean): Promise<void> {
-    return sendMessage('computer.setMouseGrabbing', { grabbing });
+export async function getArch(): Promise<string> {
+    return await sendMessage('computer.getArch');
 }
 
-export function sendKey(key: number, state: SendKeyState): Promise<void> {
-    return sendMessage('computer.sendKey', { key, state });
+export async function getKernelInfo(): Promise<KernelInfo> {
+    return await sendMessage('computer.getKernelInfo');
 }
 
-export function getNetworkInterfaces(): Promise<NetworkInterfaceInfo> {
-    return sendMessage('computer.getNetworkInterfaces');
-};
+export async function getOSInfo(): Promise<OSInfo> {
+    return await sendMessage('computer.getOSInfo');
+}
 
-export function getMachineId(): Promise<string> {
-    return sendMessage('computer.getMachineId');
-};
+export async function getCPUInfo(): Promise<CPUInfo> {
+    return await sendMessage('computer.getCPUInfo');
+}
+
+export async function getDisplays(): Promise<Display[]> {
+    return await sendMessage('computer.getDisplays');
+}
+
+export async function getDisks(): Promise<Disk> {
+    return await sendMessage('computer.getDisks');
+}
+
+export async function getHostname(): Promise<string> {
+    return await sendMessage('computer.getHostname');
+}
+
+export async function getMousePosition(): Promise<MousePosition> {
+    return await sendMessage('computer.getMousePosition');
+}
+
+export async function setMousePosition(x: number, y: number): Promise<void> {
+    return await sendMessage('computer.setMousePosition', { x, y });
+}
+
+export async function setMouseGrabbing(grabbing: boolean): Promise<void> {
+    return await sendMessage('computer.setMouseGrabbing', { grabbing });
+}
+
+export async function sendKey(key: number, state: SendKeyState): Promise<void> {
+    return await sendMessage('computer.sendKey', { key, state });
+}
+
+export async function getNetworkInterfaces(): Promise<NetworkInterfaceInfo> {
+    return await sendMessage('computer.getNetworkInterfaces');
+}
+
+export async function getMachineId(): Promise<string> {
+    return await sendMessage('computer.getMachineId');
+}

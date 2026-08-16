@@ -1,5 +1,6 @@
 import * as events from '../browser/events';
 import { base64ToBytesArray } from '../helpers';
+import { NeutralinoApiError } from '../types/errors';
 
 let ws;
 const nativeCalls = {};
@@ -9,34 +10,44 @@ const extensionMessageQueue = {}
 export function init() {
     initAuth();
     const connectToken: string = getAuthToken().split('.')[1];
-    const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
-                            '127.0.0.1' : window.location.hostname;
+    const hostname: string =
+        window.NL_GINJECTED || window.NL_CINJECTED
+            ? '127.0.0.1'
+            : window.location.hostname;
     ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
     registerLibraryEvents();
     registerSocketEvents();
 }
 
-export function sendMessage(method: string, data?: any): Promise<any> {
+export function nativeSendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-
-        if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
+        if (ws?.readyState != WebSocket.OPEN) {
+            sendWhenReady({ method, data, resolve, reject });
             return;
         }
 
         const id: string = uuidv4();
         const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+        nativeCalls[id] = { resolve, reject };
 
-        ws.send(JSON.stringify({
-            id,
-            method,
-            data,
-            accessToken
-        }));
-
+        ws.send(
+            JSON.stringify({
+                id,
+                method,
+                data,
+                accessToken,
+            }),
+        );
     });
+}
+
+export async function sendMessage(method: string, data?: any): Promise<any> {
+    try {
+        return await nativeSendMessage(method, data);
+    } catch (error) {
+        throw new NeutralinoApiError(error);
+    }
 }
 
 export function sendWhenReady(message: any) {
@@ -56,12 +67,12 @@ function registerLibraryEvents() {
     events.on('ready', async () => {
         await processQueue(offlineMessageQueue);
 
-        if(!window.NL_EXTENABLED) {
+        if (!window.NL_EXTENABLED) {
             return;
         }
 
-        let stats = await sendMessage('extensions.getStats');
-        for(let extension of stats.connected) {
+        const stats = await sendMessage('extensions.getStats');
+        for(const extension of stats.connected) {
             events.dispatch('extensionReady', extension);
         }
     });
@@ -70,7 +81,7 @@ function registerLibraryEvents() {
         events.dispatch('extensionReady', evt.detail);
     });
 
-    if(!window.NL_EXTENABLED) {
+    if (!window.NL_EXTENABLED) {
         return;
     }
 
@@ -96,9 +107,11 @@ function registerSocketEvents() {
                 }
             }
             else if(message.data?.success) {
-                nativeCalls[message.id]
-                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue
-                        : message.data);
+                nativeCalls[message.id].resolve(
+                    Object.hasOwn(message.data, 'returnValue')
+                        ? message.data.returnValue
+                        : message.data,
+                );
             }
             delete nativeCalls[message.id];
         }
@@ -111,11 +124,11 @@ function registerSocketEvents() {
         }
     });
 
-    ws.addEventListener('open', async (event) => {
+    ws.addEventListener('open', async () => {
         events.dispatch('ready');
     });
 
-    ws.addEventListener('close', async (event) => {
+    ws.addEventListener('close', async () => {
         const error = {
             code: 'NE_CL_NSEROFF',
             message: 'Neutralino server is offline. Try restarting the application'
@@ -123,7 +136,7 @@ function registerSocketEvents() {
         events.dispatch('serverOffline', error);
     });
 
-    ws.addEventListener('error', async (event) => {
+    ws.addEventListener('error', async () => {
         handleConnectError();
     });
 }

@@ -13,83 +13,83 @@ const draggableRegions = new Set<HTMLElement>();
 const draggableExclusions = new Map<HTMLElement, Set<HTMLElement>>();
 const draggableListeners = new Map<HTMLElement, EventListener>();
 
-export function setTitle(title: string): Promise<void> {
-    return sendMessage('window.setTitle', { title });
+export async function setTitle(title: string): Promise<void> {
+    return await sendMessage('window.setTitle', { title });
 }
 
-export function getTitle(): Promise<string> {
-    return sendMessage('window.getTitle');
+export async function getTitle(): Promise<string> {
+    return await sendMessage('window.getTitle');
 }
 
-export function maximize(): Promise<void> {
-    return sendMessage('window.maximize');
+export async function maximize(): Promise<void> {
+    return await sendMessage('window.maximize');
 }
 
-export function unmaximize(): Promise<void> {
-    return sendMessage('window.unmaximize');
+export async function unmaximize(): Promise<void> {
+    return await sendMessage('window.unmaximize');
 }
 
-export function isMaximized(): Promise<boolean> {
-    return sendMessage('window.isMaximized');
+export async function isMaximized(): Promise<boolean> {
+    return await sendMessage('window.isMaximized');
 }
 
-export function minimize(): Promise<void> {
-    return sendMessage('window.minimize');
+export async function minimize(): Promise<void> {
+    return await sendMessage('window.minimize');
 }
 
-export function unminimize(): Promise<void> {
-    return sendMessage('window.unminimize');
+export async function unminimize(): Promise<void> {
+    return await sendMessage('window.unminimize');
 }
 
-export function isMinimized(): Promise<boolean> {
-    return sendMessage('window.isMinimized');
+export async function isMinimized(): Promise<boolean> {
+    return await sendMessage('window.isMinimized');
 }
 
-export function setFullScreen(): Promise<void> {
-    return sendMessage('window.setFullScreen');
+export async function setFullScreen(): Promise<void> {
+    return await sendMessage('window.setFullScreen');
 }
 
-export function exitFullScreen(): Promise<void> {
-    return sendMessage('window.exitFullScreen');
+export async function exitFullScreen(): Promise<void> {
+    return await sendMessage('window.exitFullScreen');
 }
 
-export function isFullScreen(): Promise<boolean> {
-    return sendMessage('window.isFullScreen');
+export async function isFullScreen(): Promise<boolean> {
+    return await sendMessage('window.isFullScreen');
 }
 
-export function show(): Promise<void> {
-    return sendMessage('window.show');
+export async function show(): Promise<void> {
+    return await sendMessage('window.show');
 }
 
-export function hide(): Promise<void> {
-    return sendMessage('window.hide');
+export async function hide(): Promise<void> {
+    return await sendMessage('window.hide');
 }
 
-export function isVisible(): Promise<boolean> {
-    return sendMessage('window.isVisible');
+export async function isVisible(): Promise<boolean> {
+    return await sendMessage('window.isVisible');
 }
 
-export function focus(): Promise<void> {
-    return sendMessage('window.focus');
+export async function focus(): Promise<void> {
+    return await sendMessage('window.focus');
 }
 
-export function setIcon(icon: string): Promise<void> {
-    return sendMessage('window.setIcon', { icon });
+export async function setIcon(icon: string): Promise<void> {
+    return await sendMessage('window.setIcon', { icon });
 }
 
-export function move(x: number, y: number): Promise<void> {
-    return sendMessage('window.move', { x, y });
+export async function move(x: number, y: number): Promise<void> {
+    return await sendMessage('window.move', { x, y });
 }
 
-export function center(): Promise<void> {
-    return sendMessage('window.center');
+export async function center(): Promise<void> {
+    return await sendMessage('window.center');
 }
 
-export function beginDrag(
+export async function beginDrag(
     screenX: number = 0,
     screenY: number = 0,
 ): Promise<void> {
-    return sendMessage('window.beginDrag', { screenX, screenY });
+    return await sendMessage('window.beginDrag', { screenX, screenY });
 }
 
 function createDraggableListener(region: HTMLElement): EventListener {
@@ -108,7 +108,7 @@ function createDraggableListener(region: HTMLElement): EventListener {
     };
 }
 
-export function setDraggableRegion(
+export async function setDraggableRegion(
     DOMElementOrId: string | HTMLElement,
     options?: {
         exclude?: Array<string | HTMLElement>;
@@ -230,7 +230,7 @@ export function setDraggableRegion(
     );
 }
 
-export function unsetDraggableRegion(
+export async function unsetDraggableRegion(
     DOMElementOrId: string | HTMLElement,
 ): Promise<{
     success: true;
@@ -273,98 +273,79 @@ export function unsetDraggableRegion(
     });
 }
 
-export function setSize(options: WindowSizeOptions): Promise<void> {
-    return new Promise(async (resolve: any, reject: any) => {
-        let sizeOptions = await getSize();
+export async function setSize(options: WindowSizeOptions): Promise<void> {
+    const sizeOptions = await getSize();
+    options = { ...sizeOptions, ...options }; // merge prioritizing options arg
 
-        options = { ...sizeOptions, ...options }; // merge prioritizing options arg
-
-        sendMessage('window.setSize', options)
-            .then((response: any) => {
-                resolve(response);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    return await sendMessage('window.setSize', options);
 }
 
-export function getSize(): Promise<WindowSizeOptions> {
-    return sendMessage('window.getSize');
+export async function getSize(): Promise<WindowSizeOptions> {
+    return await sendMessage('window.getSize');
 }
 
-export function getPosition(): Promise<WindowPosOptions> {
-    return sendMessage('window.getPosition');
+export async function getPosition(): Promise<WindowPosOptions> {
+    return await sendMessage('window.getPosition');
 }
 
-export function setAlwaysOnTop(onTop: boolean): Promise<void> {
-    return sendMessage('window.setAlwaysOnTop', { onTop });
+export async function setAlwaysOnTop(onTop: boolean): Promise<void> {
+    return await sendMessage('window.setAlwaysOnTop', { onTop });
 }
 
-export function setBorderless(borderless: boolean): Promise<void> {
-    return sendMessage('window.setBorderless', { borderless });
+export async function setBorderless(borderless: boolean): Promise<void> {
+    return await sendMessage('window.setBorderless', { borderless });
 }
 
-export function create(url: string, options?: WindowOptions): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
-        options = { ...options, useSavedState: false };
-        // useSavedState: false -> Child windows won't save their states
+export async function create(url: string, options?: WindowOptions): Promise<void> {
+    options = { ...options, useSavedState: false };
+    // useSavedState: false -> Child windows won't save their states
 
-        function normalize(arg: any) {
-            if (typeof arg != 'string') return arg;
-            arg = arg.trim();
-            if (arg.includes(' ')) {
-                arg = `"${arg}"`;
+    function normalize(arg: string) {
+        if (typeof arg != 'string') return arg;
+        arg = arg.trim();
+        if (arg.includes(' ')) {
+            arg = `"${arg}"`;
+        }
+        return arg;
+    }
+
+    let command = window.NL_ARGS.reduce(
+        (acc: string, arg: string, index: number) => {
+            if (
+                arg.includes('--path=') ||
+                arg.includes('--debug-mode') ||
+                arg.includes('--load-dir-res') ||
+                index == 0
+            ) {
+                acc += ' ' + normalize(arg);
             }
-            return arg;
-        }
+            return acc;
+        },
+        '',
+    );
 
-        let command = window.NL_ARGS.reduce(
-            (acc: string, arg: string, index: number) => {
-                if (
-                    arg.includes('--path=') ||
-                    arg.includes('--debug-mode') ||
-                    arg.includes('--load-dir-res') ||
-                    index == 0
-                ) {
-                    acc += ' ' + normalize(arg);
-                }
-                return acc;
-            },
-            '',
-        );
+    command += ' --url=' + normalize(url);
 
-        command += ' --url=' + normalize(url);
+    for (const key in options) {
+        if (key == 'processArgs') continue;
 
-        for (let key in options) {
-            if (key == 'processArgs') continue;
+        const cliKey: string = '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        command += ` --window${cliKey}=${normalize(options[key])}`;
+    }
 
-            let cliKey: string =
-                '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-            command += ` --window${cliKey}=${normalize(options[key])}`;
-        }
+    if (options && options.processArgs) command += ' ' + options.processArgs;
 
-        if (options && options.processArgs)
-            command += ' ' + options.processArgs;
-
-        os.execCommand(command, { background: true })
-            .then((processInfo: any) => {
-                resolve(processInfo);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    await os.execCommand(command, { background: true });
 }
 
-export function snapshot(path: string): Promise<void> {
-    return sendMessage('window.snapshot', { path });
+export async function snapshot(path: string): Promise<void> {
+    return await sendMessage('window.snapshot', { path });
 }
 
-export function setMainMenu(options: WindowMenu): Promise<void> {
-    return sendMessage('window.setMainMenu', options);
-};
+export async function setMainMenu(options: WindowMenu): Promise<void> {
+    return await sendMessage('window.setMainMenu', options);
+}
 
-export function print(): Promise<void> {
-    return sendMessage('window.print');
-};
+export async function print(): Promise<void> {
+    return await sendMessage('window.print');
+}

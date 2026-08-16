@@ -2,27 +2,27 @@ import { sendMessage } from '../ws/websocket';
 import { base64ToBytesArray } from '../helpers';
 import { Stats } from '../types/api/resources';
 
-export function getFiles(): Promise<string[]> {
-    return sendMessage('resources.getFiles');
-};
+export async function getFiles(): Promise<string[]> {
+    return await sendMessage('resources.getFiles');
+}
 
-export function getStats(path: string): Promise<Stats> {
-    return sendMessage('resources.getStats', { path });
-};
+export async function getStats(path: string): Promise<Stats> {
+    return await sendMessage('resources.getStats', { path });
+}
 
-export function extractFile(path: string, destination: string): Promise<void> {
-    return sendMessage('resources.extractFile', { path, destination });
-};
+export async function extractFile(path: string, destination: string): Promise<void> {
+    return await sendMessage('resources.extractFile', { path, destination });
+}
 
-export function extractDirectory(path: string, destination: string): Promise<void> {
-    return sendMessage('resources.extractDirectory', { path, destination });
-};
+export async function extractDirectory(path: string, destination: string): Promise<void> {
+    return await sendMessage('resources.extractDirectory', { path, destination });
+}
 
-export function readFile(path: string): Promise<string> {
-    return sendMessage('resources.readFile', { path });
-};
+export async function readFile(path: string): Promise<string> {
+    return await sendMessage('resources.readFile', { path });
+}
 
-export function readBinaryFile(path: string): Promise<ArrayBuffer> {
+export async function readBinaryFile(path: string): Promise<ArrayBuffer> {
     return new Promise((resolve: any, reject: any) => {
         sendMessage('resources.readBinaryFile', { path })
         .then((base64Data: string) => {
@@ -32,4 +32,4 @@ export function readBinaryFile(path: string): Promise<ArrayBuffer> {
             reject(error);
         });
     });
-};
+}

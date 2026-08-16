@@ -1,36 +1,35 @@
 import { sendMessage } from '../ws/websocket';
 import type { NetRequestOptions, NetResponse } from "../types/api/net";
 
-export function request(url: string, method?: string, options?: NetRequestOptions): Promise<NetResponse> {
+export async function request(url: string, method?: string, options?: NetRequestOptions): Promise<NetResponse> {
     method = (method || "GET").toUpperCase();
-    return sendMessage('net.request', { url, method, ...options });
-};
+    return await sendMessage('net.request', { url, method, ...options });
+}
 
-export function get(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "GET", options);
-};
+export async function get(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'GET', options);
+}
 
-export function post(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "POST", options);
-};
+export async function post(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'POST', options);
+}
 
-export function head(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "HEAD", options);
-};
+export async function head(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'HEAD', options);
+}
 
-export function put(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "PUT", options);
-};
+export async function put(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'PUT', options);
+}
 
-function __delete(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "DELETE", options);
-};
-export { __delete as delete } // 'delete' is a keyword, so direct export won't work
+export async function del(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, "DELETE", options);
+}
 
-export function patch(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "PATCH", options);
-};
+export async function patch(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'PATCH', options);
+}
 
-export function options(url: string, options?: NetRequestOptions): Promise<NetResponse> {
-    return request(url, "OPTIONS", options);
-};
+export async function options(url: string, options?: NetRequestOptions): Promise<NetResponse> {
+    return await request(url, 'OPTIONS', options);
+}

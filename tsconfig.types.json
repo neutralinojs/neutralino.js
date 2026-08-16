@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "noEmit": true,
+        "skipLibCheck": false,
+        "strict": true
+    },
+    "files": ["dist/neutralino.d.ts"]
+}

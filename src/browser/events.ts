@@ -6,7 +6,7 @@ export function on(event: string, handler: (ev: CustomEvent) => void): Promise<R
         success: true,
         message: 'Event listener added'
     });
-};
+}
 
 export function off(event: string, handler: (ev: CustomEvent) => void): Promise<Response> {
     window.removeEventListener(event, handler);
@@ -14,7 +14,7 @@ export function off(event: string, handler: (ev: CustomEvent) => void): Promise<
         success: true,
         message: 'Event listener removed'
     });
-};
+}
 
 export function dispatch(event: string, data?: any): Promise<Response> {
     const customEvent = new CustomEvent(event, {detail: data});
@@ -23,4 +23,4 @@ export function dispatch(event: string, data?: any): Promise<Response> {
         success: true,
         message: 'Message dispatched'
     });
-};
+}

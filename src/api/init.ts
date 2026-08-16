@@ -24,7 +24,7 @@ export function init(options: InitOptions = {}): void {
 
     if(options.exportCustomMethods && window.NL_CMETHODS && window.NL_CMETHODS.length > 0) {
         for(const method of window.NL_CMETHODS) {
-            Neutralino.custom[method] = (...args) => {
+            window.Neutralino.custom[method] = (...args) => {
                 let data = {};
                 for(const [argi, argv] of args.entries()) {
                     if(typeof argv == 'object' && !Array.isArray(argv) && argv != null) {
