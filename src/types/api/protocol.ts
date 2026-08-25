@@ -7,6 +7,7 @@ export type ErrorCode =
     'NE_FS_NOPATHE' |
     'NE_FS_COPYFER' |
     'NE_FS_MOVEFER' |
+    'NE_FS_SCOPERR' |
     'NE_OS_INVMSGA' |
     'NE_OS_INVKNPT' |
     'NE_ST_INVSTKY' |
