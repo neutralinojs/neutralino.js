@@ -5,6 +5,7 @@ export interface Response {
   
   export type Builtin =
       'ready' |
+      'globalHotkeyFired' |
       'trayMenuItemClicked' |
       'windowClose' |
       'serverOffline' |

@@ -63,7 +63,9 @@ export interface LocaleInfo {
     locale: string;
     language: string;
     region: string;
-} 
+}
+
+export type GlobalHotkey = string;
 
 export type KnownPath =
     'config' |
