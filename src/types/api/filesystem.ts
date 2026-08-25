@@ -13,6 +13,15 @@ export interface DirectoryReaderOptions {
     recursive: boolean;
 }
 
+export interface TempFileOptions {
+    prefix?: string;
+    extension?: string;
+}
+
+export interface TempDirectoryOptions {
+    prefix?: string;
+}
+
 export interface OpenedFile {
     id: number;
     eof: boolean;
