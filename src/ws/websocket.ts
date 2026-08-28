@@ -19,6 +19,11 @@ export function init() {
 export function sendMessage(method: string, data?: any): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
 
+        if(!ws) {
+            reject(new Error('Neutralino is not initialized. Call Neutralino.init() before using Neutralino APIs.'));
+            return;
+        }
+
         if(ws?.readyState != WebSocket.OPEN) {
             sendWhenReady({method, data, resolve, reject});
             return;
