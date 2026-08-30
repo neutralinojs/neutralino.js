@@ -77,6 +77,10 @@ export function setIcon(icon: string): Promise<void> {
     return sendMessage('window.setIcon', { icon });
 }
 
+export function setBadge(count: number): Promise<void> {
+    return sendMessage('window.setBadge', { count });
+}
+
 export function move(x: number, y: number): Promise<void> {
     return sendMessage('window.move', { x, y });
 }

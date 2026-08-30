@@ -7,8 +7,11 @@ import type {
     GPUInfo,
     Display,
     Disk,
+    DiskInfo,
+    GPUInfo,
     MousePosition,
-    NetworkInterfaceInfo
+    NetworkInterfaceInfo,
+    NetworkInterfacesOptions
 } from '../types/api/computer';
 import type { SendKeyState } from '../types/enums';
 
@@ -44,6 +47,14 @@ export function getDisks(): Promise<Disk> {
     return sendMessage('computer.getDisks');
 };
 
+export function getDiskInfo(): Promise<DiskInfo> {
+    return sendMessage('computer.getDiskInfo');
+};
+
+export function getGPUInfo(): Promise<GPUInfo[]> {
+    return sendMessage('computer.getGPUInfo');
+};
+
 
 export function getHostname(): Promise<string> {
     return sendMessage('computer.getHostname');
@@ -65,8 +76,8 @@ export function sendKey(key: number, state: SendKeyState): Promise<void> {
     return sendMessage('computer.sendKey', { key, state });
 }
 
-export function getNetworkInterfaces(): Promise<NetworkInterfaceInfo> {
-    return sendMessage('computer.getNetworkInterfaces');
+export function getNetworkInterfaces(options?: NetworkInterfacesOptions): Promise<NetworkInterfaceInfo[]> {
+    return sendMessage('computer.getNetworkInterfaces', options);
 };
 
 export function getMachineId(): Promise<string> {
