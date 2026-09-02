@@ -34,11 +34,11 @@ export interface CPUInfo {
 
 export interface GPUInfo {
     id: number;
+    deviceId: number;
+    vendorId: number;
     vendor: string;
-    name: string;
-    memorySize: number;
-    cacheSize: number;
-    maxFrequency: number;
+    dedicatedMemory: number;
+    sharedMemory: number;
 }
 
 export interface Display {
