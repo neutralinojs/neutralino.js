@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: computer
+- Export the `computer.getGPUs()` function.
+
 ## v6.9.0
 
 ### API: net
