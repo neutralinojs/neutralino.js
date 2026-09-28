@@ -32,8 +32,8 @@ export function getCPUInfo(): Promise<CPUInfo> {
     return sendMessage('computer.getCPUInfo');
 };
 
-export function getGPUInfo(): Promise<GPUInfo[]> {
-    return sendMessage('computer.getGPUInfo');
+export function getGPUs(): Promise<GPUInfo[]> {
+    return sendMessage('computer.getGPUs');
 };
 
 export function getDisplays(): Promise<Display[]> {
