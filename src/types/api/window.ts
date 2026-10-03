@@ -31,8 +31,7 @@ export interface WindowPosOptions {
     y?: number;
     center?: boolean;
 }
-export interface WindowMenu extends Array<WindowMenuItem> {}
-
+export type WindowMenu = WindowMenuItem[];
 export interface WindowMenuItem {
     id?: string;
     text: string;

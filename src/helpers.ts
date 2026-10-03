@@ -21,7 +21,9 @@ export function arrayBufferToBase64(data: ArrayBuffer): string {
     return window.btoa(asciiStr);
 }
 
-export function normalizeElements(inputs: any[]): HTMLElement[] {
+export function normalizeElements(
+    inputs: Array<string | HTMLElement | Array<string | HTMLElement>>,
+): HTMLElement[] {
     const result: HTMLElement[] = [];
 
     for (const input of inputs) {
