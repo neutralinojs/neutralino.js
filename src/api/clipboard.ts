@@ -2,6 +2,7 @@ import { sendMessage } from '../ws/websocket';
 import { arrayBufferToBase64 } from '../helpers';
 import type { ClipboardImage } from '../types/api/clipboard';
 import type { ClipboardFormat } from '../types/enums';
+import type { SuccessResponse } from '../types/api/protocol';
 
 export function getFormat(): Promise<ClipboardFormat> {
     return sendMessage('clipboard.getFormat');
@@ -83,11 +84,11 @@ export function readImage(format: string = ''): Promise < ClipboardImage | null 
 	});
 };
 
-export function writeText(data: string): Promise<void> {
+export function writeText(data: string): Promise<SuccessResponse> {
     return sendMessage('clipboard.writeText', { data });
 };
 
-export function writeImage(image: ClipboardImage): Promise<void> {
+export function writeImage(image: ClipboardImage): Promise<SuccessResponse> {
     const props: any = {...image};
     if(image?.data) {
         props.data = arrayBufferToBase64(image.data);
@@ -99,10 +100,10 @@ export function readHTML(): Promise<string> {
 	return sendMessage('clipboard.readHTML');
 };
 
-export function writeHTML(data: string): Promise<void> {
+export function writeHTML(data: string): Promise<SuccessResponse> {
 	return sendMessage('clipboard.writeHTML', { data });
 };
 
-export function clear(): Promise<void> {
+export function clear(): Promise<SuccessResponse> {
     return sendMessage('clipboard.clear');
 };
