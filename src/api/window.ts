@@ -93,21 +93,23 @@ export function beginDrag(
 }
 
 function createDraggableListener(region: HTMLElement): EventListener {
-    return async function draggableListener(ev: PointerEvent) {
-        if (ev.button !== 0) return;
+    return async function draggableListener(ev: Event) {
+        const pointerEvent = ev as PointerEvent;
+
+        if (pointerEvent.button !== 0) return;
 
         const exclusions = draggableExclusions.get(region);
+
         if (exclusions) {
             for (const excludedEl of exclusions) {
-                if (excludedEl.contains(ev.target as Node)) return;
+                if (excludedEl.contains(pointerEvent.target as Node)) return;
             }
         }
 
-        await beginDrag(ev.screenX, ev.screenY);
-        ev.preventDefault();
+        await beginDrag(pointerEvent.screenX, pointerEvent.screenY);
+        pointerEvent.preventDefault();
     };
 }
-
 export function setDraggableRegion(
     DOMElementOrId: string | HTMLElement,
     options?: {
@@ -273,20 +275,11 @@ export function unsetDraggableRegion(
     });
 }
 
-export function setSize(options: WindowSizeOptions): Promise<void> {
-    return new Promise(async (resolve: any, reject: any) => {
-        let sizeOptions = await getSize();
+export async function setSize(options: WindowSizeOptions): Promise<void> {
+    const sizeOptions = await getSize();
+    options = { ...sizeOptions, ...options };
 
-        options = { ...sizeOptions, ...options }; // merge prioritizing options arg
-
-        sendMessage('window.setSize', options)
-            .then((response: any) => {
-                resolve(response);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    return await sendMessage('window.setSize', options);
 }
 
 export function getSize(): Promise<WindowSizeOptions> {
@@ -305,56 +298,54 @@ export function setBorderless(borderless: boolean): Promise<void> {
     return sendMessage('window.setBorderless', { borderless });
 }
 
-export function create(url: string, options?: WindowOptions): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
-        options = { ...options, useSavedState: false };
-        // useSavedState: false -> Child windows won't save their states
+export async function create(
+    url: string,
+    options?: WindowOptions,
+): Promise<void> {
+    options = { ...options, useSavedState: false };
+    function normalize(arg: unknown) {
+        if (typeof arg !== 'string') return arg;
 
-        function normalize(arg: any) {
-            if (typeof arg != 'string') return arg;
-            arg = arg.trim();
-            if (arg.includes(' ')) {
-                arg = `"${arg}"`;
+        let normalized = arg.trim();
+
+        if (normalized.includes(' ')) {
+            normalized = `"${normalized}"`;
+        }
+
+        return normalized;
+    }
+
+    let command = window.NL_ARGS.reduce(
+        (acc: string, arg: string, index: number) => {
+            if (
+                arg.includes('--path=') ||
+                arg.includes('--debug-mode') ||
+                arg.includes('--load-dir-res') ||
+                index == 0
+            ) {
+                acc += ' ' + normalize(arg);
             }
-            return arg;
-        }
+            return acc;
+        },
+        '',
+    );
 
-        let command = window.NL_ARGS.reduce(
-            (acc: string, arg: string, index: number) => {
-                if (
-                    arg.includes('--path=') ||
-                    arg.includes('--debug-mode') ||
-                    arg.includes('--load-dir-res') ||
-                    index == 0
-                ) {
-                    acc += ' ' + normalize(arg);
-                }
-                return acc;
-            },
-            '',
-        );
+    command += ' --url=' + normalize(url);
 
-        command += ' --url=' + normalize(url);
+    for (const key in options) {
+        if (key == 'processArgs') continue;
 
-        for (let key in options) {
-            if (key == 'processArgs') continue;
+        const cliKey =
+            '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-            let cliKey: string =
-                '-' + key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-            command += ` --window${cliKey}=${normalize(options[key])}`;
-        }
+        command += ` --window${cliKey}=${normalize(options[key])}`;
+    }
 
-        if (options && options.processArgs)
-            command += ' ' + options.processArgs;
+    if (options && options.processArgs) {
+        command += ' ' + options.processArgs;
+    }
 
-        os.execCommand(command, { background: true })
-            .then((processInfo: any) => {
-                resolve(processInfo);
-            })
-            .catch((error: any) => {
-                reject(error);
-            });
-    });
+    await os.execCommand(command, { background: true });
 }
 
 export function snapshot(path: string): Promise<void> {
@@ -363,8 +354,8 @@ export function snapshot(path: string): Promise<void> {
 
 export function setMainMenu(options: WindowMenu): Promise<void> {
     return sendMessage('window.setMainMenu', options);
-};
+}
 
 export function print(): Promise<void> {
     return sendMessage('window.print');
-};
+}

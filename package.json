@@ -10,7 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "node build.mjs",
         "watch": "rollup -c -w",
-        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
+        "lint": "eslint .",
         "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
     },
     "repository": {
@@ -24,15 +24,17 @@
     },
     "homepage": "https://github.com/neutralinojs/neutralino.js#readme",
     "devDependencies": {
+        "@eslint/js": "^9.39.5",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-terser": "^1.0.0",
         "@rollup/plugin-typescript": "^12.1.4",
-        "@types/node": "^24.3.0",
+        "@types/node": "^24.19.1",
         "@typescript-eslint/eslint-plugin": "^8.41.0",
         "@typescript-eslint/parser": "^8.41.0",
         "dts-bundle-generator": "^9.5.1",
         "eslint": "^9.34.0",
         "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.13.0",
         "prettier": "^3.6.2",
         "rollup": "^4.48.1",
         "rollup-plugin-cleanup": "^3.2.1",

@@ -13,7 +13,6 @@ import {
     writeFileSync,
     mkdirSync,
     existsSync,
-    readdirSync,
     rmSync,
 } from 'fs';
 import { exec } from 'child_process';
@@ -26,9 +25,7 @@ import cleanup from 'rollup-plugin-cleanup';
 import { generateDtsBundle } from 'dts-bundle-generator';
 
 // JSON modules is experimental https://nodejs.org/api/esm.html#esm_experimental_json_modules
-const { version } = JSON.parse(
-    readFileSync('./package.json', { encoding: 'utf8' }),
-);
+
 const outdir = 'dist';
 const devmode = process.argv.includes('--dev');
 
@@ -88,7 +85,7 @@ rollup({
         });
         return 0;
     })
-    .then(returned => {
+    .then(() => {
         console.log('Rolling up typescript declarations');
 
         const bundled = generateDtsBundle([
@@ -169,5 +166,8 @@ function addCommitHash() {
  * @returns {void}
  */
 function resetCommitHash() {
-    patchInitFile(/** @type {string} */ (commitHash), '<git_commit_hash_latest>');
+    patchInitFile(
+        /** @type {string} */ (commitHash),
+        '<git_commit_hash_latest>',
+    );
 }

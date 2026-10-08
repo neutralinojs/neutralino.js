@@ -3,6 +3,7 @@ export interface ClipboardImage {
     height: number;
     bpp: number;
     bpr: number;
+
     redMask: number;
     greenMask: number;
     blueMask: number;
