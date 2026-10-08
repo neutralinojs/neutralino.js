@@ -46,7 +46,9 @@ declare global {
         // --- globals ---
     }
     /** Neutralino global object for custom methods **/
-    const Neutralino: any;
+    const Neutralino: {
+        custom: Record<string, (...args: unknown[]) => unknown>;
+    };
 }
 
 export * as filesystem from './api/filesystem';

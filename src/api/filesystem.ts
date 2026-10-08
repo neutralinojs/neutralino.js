@@ -15,130 +15,156 @@ import type {
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
-};
+}
 
 export function remove(path: string): Promise<void> {
     return sendMessage('filesystem.remove', { path });
-};
+}
 
 export function writeFile(path: string, data: string): Promise<void> {
     return sendMessage('filesystem.writeFile', { path, data });
-};
+}
 
 export function appendFile(path: string, data: string): Promise<void> {
     return sendMessage('filesystem.appendFile', { path, data });
-};
+}
 
-export function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+export function writeBinaryFile(
+    path: string,
+    data: ArrayBuffer,
+): Promise<void> {
     return sendMessage('filesystem.writeBinaryFile', {
         path,
-        data: arrayBufferToBase64(data)
+        data: arrayBufferToBase64(data),
     });
-};
+}
 
-export function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void> {
+export function appendBinaryFile(
+    path: string,
+    data: ArrayBuffer,
+): Promise<void> {
     return sendMessage('filesystem.appendBinaryFile', {
         path,
-        data: arrayBufferToBase64(data)
+        data: arrayBufferToBase64(data),
     });
-};
+}
 
-export function readFile(path: string, options?: FileReaderOptions): Promise<string> {
+export function readFile(
+    path: string,
+    options?: FileReaderOptions,
+): Promise<string> {
     return sendMessage('filesystem.readFile', { path, ...options });
-};
+}
 
-export function readBinaryFile(path: string, options?: FileReaderOptions): Promise<ArrayBuffer> {
-    return new Promise((resolve: any, reject: any) => {
-        sendMessage('filesystem.readBinaryFile', { path, ...options })
-        .then((base64Data: string) => {
-            resolve(base64ToBytesArray(base64Data));
-        })
-        .catch((error: any) => {
-            reject(error);
-        });
-    });
-};
+export function readBinaryFile(
+    path: string,
+    options?: FileReaderOptions,
+): Promise<ArrayBuffer> {
+    return sendMessage<string>('filesystem.readBinaryFile', {
+        path,
+        ...options,
+    }).then(data => base64ToBytesArray(data) as ArrayBuffer);
+}
 
 export function openFile(path: string): Promise<number> {
     return sendMessage('filesystem.openFile', { path });
-};
+}
 
 export function createWatcher(path: string): Promise<number> {
     return sendMessage('filesystem.createWatcher', { path });
-};
+}
 
 export function removeWatcher(id: number): Promise<number> {
     return sendMessage('filesystem.removeWatcher', { id });
-};
+}
 
 export function getWatchers(): Promise<Watcher[]> {
     return sendMessage('filesystem.getWatchers');
-};
+}
 
-export function updateOpenedFile(id: number, event: string, data?: any): Promise<void> {
+export function updateOpenedFile(
+    id: number,
+    event: string,
+    data?: unknown,
+): Promise<void> {
     return sendMessage('filesystem.updateOpenedFile', { id, event, data });
-};
+}
 
 export function getOpenedFileInfo(id: number): Promise<OpenedFile> {
     return sendMessage('filesystem.getOpenedFileInfo', { id });
-};
+}
 
-export function readDirectory(path: string, options?: DirectoryReaderOptions): Promise<DirectoryEntry[]> {
+export function readDirectory(
+    path: string,
+    options?: DirectoryReaderOptions,
+): Promise<DirectoryEntry[]> {
     return sendMessage('filesystem.readDirectory', { path, ...options });
-};
+}
 
-export function copy(source: string, destination: string, options?: CopyOptions ): Promise<void> {
-    return sendMessage('filesystem.copy', { source, destination, ...options } );
-};
+export function copy(
+    source: string,
+    destination: string,
+    options?: CopyOptions,
+): Promise<void> {
+    return sendMessage('filesystem.copy', { source, destination, ...options });
+}
 
 export function move(source: string, destination: string): Promise<void> {
     return sendMessage('filesystem.move', { source, destination });
-};
+}
 
 export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
-};
+}
 
 export function getAbsolutePath(path: string): Promise<string> {
     return sendMessage('filesystem.getAbsolutePath', { path });
-};
+}
 
 export function getRelativePath(path: string, base?: string): Promise<string> {
     return sendMessage('filesystem.getRelativePath', { path, base });
-};
+}
 
 export function getPathParts(path: string): Promise<PathParts> {
     return sendMessage('filesystem.getPathParts', { path });
-};
+}
 
 export function getPermissions(path: string): Promise<Permissions> {
     return sendMessage('filesystem.getPermissions', { path });
-};
+}
 
-export function setPermissions(path: string, permissions: Permissions, mode: PermissionsMode): Promise<void> {
-    return sendMessage('filesystem.setPermissions', { path, ...permissions, mode });
-};
+export function setPermissions(
+    path: string,
+    permissions: Permissions,
+    mode: PermissionsMode,
+): Promise<void> {
+    return sendMessage('filesystem.setPermissions', {
+        path,
+        ...permissions,
+        mode,
+    });
+}
 
 export function getJoinedPath(...paths: string[]): Promise<string> {
     return sendMessage('filesystem.getJoinedPath', { paths });
-};
+}
 
 export function getNormalizedPath(path: string): Promise<string> {
     return sendMessage('filesystem.getNormalizedPath', { path });
-};
+}
 
 export function getUnnormalizedPath(path: string): Promise<string> {
     return sendMessage('filesystem.getUnnormalizedPath', { path });
-};
+}
 
 export function access(path: string, mode?: number): Promise<string> {
     return sendMessage('filesystem.access', { path, mode });
-};
+}
 
 export function chmod(path: string, mode: number): Promise<string> {
     return sendMessage('filesystem.chmod', { path, mode });
-};
+}
 
 export function chown(path: string, uid: number, gid: number): Promise<string> {
     return sendMessage('filesystem.chown', { path, uid, gid });
-};
+}
