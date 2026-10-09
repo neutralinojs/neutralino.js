@@ -5,12 +5,12 @@ export interface DirectoryEntry {
 }
 
 export interface FileReaderOptions {
-    pos: number;
-    size: number;
+    pos?: number;
+    size?: number;
 }
 
 export interface DirectoryReaderOptions {
-    recursive: boolean;
+    recursive?: boolean;
 }
 
 export interface OpenedFile {
@@ -34,9 +34,9 @@ export interface Watcher {
 }
 
 export interface CopyOptions {
-    recursive: boolean;
-    overwrite: boolean;
-    skip: boolean;
+    recursive?: boolean;
+    overwrite?: boolean;
+    skip?: boolean;
 }
 
 export interface PathParts {
