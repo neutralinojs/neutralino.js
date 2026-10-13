@@ -6,13 +6,14 @@ import type {
     ExecCommandResult,
     FolderDialogOptions,
     KnownPath,
+    LocaleInfo,
     OpenDialogOptions,
     SaveDialogOptions,
     SpawnedProcess,
     TrayOptions,
     SpawnedProcessOptions,
-    LocaleInfo,
 } from '../types/api/os';
+import type { SuccessResponse } from '../types/api/protocol';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
     return sendMessage('os.execCommand', { command, ...options });
@@ -22,7 +23,7 @@ export function spawnProcess(command: string, options?: SpawnedProcessOptions): 
     return sendMessage('os.spawnProcess', { command, ...options });
 };
 
-export function updateSpawnedProcess(id: number, event: string, data?: any): Promise<void> {
+export function updateSpawnedProcess(id: number, event: string, data?: any): Promise<SuccessResponse> {
     return sendMessage('os.updateSpawnedProcess', { id, event, data });
 };
 
@@ -34,7 +35,7 @@ export function getEnv(key: string): Promise<string> {
     return sendMessage('os.getEnv', { key });
 };
 
-export function setEnv(key: string, value: string): Promise<string> {
+export function setEnv(key: string, value: string): Promise<SuccessResponse> {
     return sendMessage('os.setEnv', { key, value });
 };
 
@@ -54,7 +55,7 @@ export function showSaveDialog(title?: string, options?: SaveDialogOptions): Pro
     return sendMessage('os.showSaveDialog', { title, ...options });
 };
 
-export function showNotification(title: string, content: string, icon?: Icon): Promise<void> {
+export function showNotification(title: string, content: string, icon?: Icon): Promise<SuccessResponse> {
     return sendMessage('os.showNotification', { title, content, icon });
 };
 
@@ -63,11 +64,11 @@ export function showMessageBox(title: string, content: string,
     return sendMessage('os.showMessageBox', { title, content, choice, icon });
 };
 
-export function setTray(options: TrayOptions): Promise<void> {
+export function setTray(options: TrayOptions): Promise<SuccessResponse> {
     return sendMessage('os.setTray', options);
 };
 
-export function open(url: string): Promise<void> {
+export function open(url: string): Promise<SuccessResponse> {
     return sendMessage('os.open', { url });
 };
 
@@ -75,7 +76,7 @@ export function getPath(name: KnownPath): Promise<string> {
     return sendMessage('os.getPath', { name });
 };
 
-export function trashItem(path: string): Promise<string> {
+export function trashItem(path: string): Promise<SuccessResponse> {
     return sendMessage('os.trashItem', { path });
 };
 

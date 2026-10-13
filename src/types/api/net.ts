@@ -7,23 +7,27 @@ export interface NetParams {
 }
 
 export interface NetRequestOptions {
-    timeout?: boolean,
-    params?: NetParams[],
-    headers?: NetHeaders[],
+    timeout?: number;
+    params?: NetParams;
+    headers?: NetHeaders;
     auth?: {
-        username: string,
-        password: string
-    },
-    encodePath: boolean,
-    keepAlive: boolean
+        username: string;
+        password: string;
+    };
+    body?: string;
+    allowRedirects?: boolean;
+    encodePath?: boolean;
+    keepAlive?: boolean;
+    contentType?: string;
 }
 
 export interface NetResponse {
-    status: number,
-    statusText: string,
-    body: string,
-    headers: NetHeaders[],
-    cookies: string,
-    location: string,
-    version: string
+    status: number;
+    statusText: string;
+    body: string;
+    headers: NetHeaders;
+    cookies: string;
+    contentType: string;
+    location: string;
+    version: string;
 }

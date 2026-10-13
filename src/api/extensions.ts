@@ -1,7 +1,8 @@
 import * as websocket from '../ws/websocket';
 import type { ExtensionStats } from '../types/api/extensions';
+import type { SuccessResponse } from '../types/api/protocol';
 
-export function dispatch(extensionId: string, event: string, data?: any): Promise<void> {
+export function dispatch(extensionId: string, event: string, data?: any): Promise<SuccessResponse> {
     return new Promise(async (resolve: any, reject: any) => {
         const stats = await getStats();
         if(!stats.loaded.includes(extensionId)) {
@@ -29,7 +30,7 @@ export function dispatch(extensionId: string, event: string, data?: any): Promis
     });
 };
 
-export function broadcast(event: string, data?: any): Promise<void> {
+export function broadcast(event: string, data?: any): Promise<SuccessResponse> {
     return websocket.sendMessage('extensions.broadcast', {event, data});
 };
 

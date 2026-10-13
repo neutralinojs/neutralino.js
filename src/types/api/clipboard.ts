@@ -9,5 +9,7 @@ export interface ClipboardImage {
     redShift: number;
     greenShift: number;
     blueShift: number;
+    alphaShift: number;
+    alphaMask: number;
     data: ArrayBuffer;
 }

@@ -1,6 +1,7 @@
 import { sendMessage } from '../ws/websocket';
 import * as os from './os';
 import type { RestartOptions } from "../types/api/app"
+import type { SuccessResponse } from '../types/api/protocol';
 
 export function exit(code?: number): Promise<void> {
     return sendMessage('app.exit', { code });
@@ -34,7 +35,7 @@ export function getConfig(): Promise<any> {
     return sendMessage('app.getConfig');
 };
 
-export function broadcast(event: string, data?: any): Promise<void> {
+export function broadcast(event: string, data?: any): Promise<SuccessResponse> {
     return sendMessage('app.broadcast', {event, data});
 };
 
@@ -42,11 +43,11 @@ export function readProcessInput(readAll?: boolean): Promise<string> {
     return sendMessage('app.readProcessInput', { readAll });
 };
 
-export function writeProcessOutput(data: string): Promise<void> {
+export function writeProcessOutput(data: string): Promise<SuccessResponse> {
     return sendMessage('app.writeProcessOutput', { data });
 };
 
-export function writeProcessError(data: string): Promise<void> {
+export function writeProcessError(data: string): Promise<SuccessResponse> {
     return sendMessage('app.writeProcessError', { data });
 };
 
