@@ -62,7 +62,7 @@ export * as updater from './api/updater';
 export * as clipboard from './api/clipboard';
 export * as resources from './api/resources';
 export * as server from './api/server';
-export * as net from './api/net';
+export { net } from './api/net';
 export * as custom from './api/custom';
 
 export { init } from './api/init';
