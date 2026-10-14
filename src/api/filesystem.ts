@@ -3,6 +3,8 @@ import { base64ToBytesArray, arrayBufferToBase64 } from '../helpers';
 import type {
     DirectoryEntry,
     DirectoryReaderOptions,
+    TempFileOptions,
+    TempDirectoryOptions,
     FileReaderOptions,
     CopyOptions,
     OpenedFile,
@@ -15,6 +17,14 @@ import type {
 
 export function createDirectory(path: string): Promise<void> {
     return sendMessage('filesystem.createDirectory', { path });
+};
+
+export function createTempFile(options?: TempFileOptions): Promise<string> {
+    return sendMessage('filesystem.createTempFile', { ...options });
+};
+
+export function createTempDirectory(options?: TempDirectoryOptions): Promise<string> {
+    return sendMessage('filesystem.createTempDirectory', { ...options });
 };
 
 export function remove(path: string): Promise<void> {
