@@ -58,6 +58,30 @@ export interface Disk {
     free: number;
 }
 
+export interface DiskInfo {
+    id: number;
+    name: string;
+    vendor: string;
+    model: string;
+    serial: string;
+    mountPoint: string;
+    fileSystem: string;
+    interface: string;
+    total: number;
+    used: number;
+    free: number;
+    usedPercent: number;
+}
+
+export interface GPUInfo {
+    id: number;
+    vendor: string;
+    name: string;
+    memorySize: number;
+    cacheSize: number;
+    maxFrequency: number;
+}
+
 export interface Resolution {
     width: number;
     height: number;
@@ -76,5 +100,15 @@ export interface NetworkInterfaceAddress {
 }
 
 export interface NetworkInterfaceInfo {
-    [key: string]: NetworkInterfaceAddress;
+    name: string;
+    ipv4: string[];
+    ipv6: string[];
+    mac: string;
+    isUp: boolean;
+    isLoopback: boolean;
+    isInternal: boolean;
+}
+
+export interface NetworkInterfacesOptions {
+    excludeLoopback?: boolean;
 }

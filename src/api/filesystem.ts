@@ -95,6 +95,10 @@ export function move(source: string, destination: string): Promise<void> {
     return sendMessage('filesystem.move', { source, destination });
 };
 
+export function moveToTrash(path: string): Promise<void> {
+    return sendMessage('filesystem.moveToTrash', { path });
+};
+
 export function getStats(path: string): Promise<Stats> {
     return sendMessage('filesystem.getStats', { path });
 };
