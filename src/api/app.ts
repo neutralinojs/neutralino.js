@@ -1,6 +1,6 @@
 import { sendMessage } from '../ws/websocket';
 import * as os from './os';
-import type { RestartOptions } from "../types/api/app"
+import type { AutoStartOptions, RestartOptions } from "../types/api/app"
 
 export function exit(code?: number): Promise<void> {
     return sendMessage('app.exit', { code });
@@ -52,4 +52,8 @@ export function writeProcessError(data: string): Promise<void> {
 
 export function getProcessId(): Promise<number> {
     return sendMessage('app.getProcessId');
+};
+
+export function setAutoStart(options: AutoStartOptions): Promise<void> {
+    return sendMessage('app.setAutoStart', options);
 };

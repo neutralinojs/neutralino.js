@@ -5,3 +5,10 @@ export interface OpenActionOptions {
 export interface RestartOptions {
     args: string;
 }
+
+export interface AutoStartOptions {
+    enabled: boolean;
+    path?: string;
+    args?: string[];
+    name?: string;
+}
