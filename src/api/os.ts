@@ -79,6 +79,14 @@ export function trashItem(path: string): Promise<string> {
     return sendMessage('os.trashItem', { path });
 };
 
+export function preventSleep(): Promise<void> {
+    return sendMessage('os.preventSleep');
+};
+
+export function allowSleep(): Promise<void> {
+    return sendMessage('os.allowSleep');
+};
+
 export function getLocaleInfo(): Promise<LocaleInfo> {
     return sendMessage('os.getLocaleInfo');
 };
