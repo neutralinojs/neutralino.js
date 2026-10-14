@@ -12,6 +12,7 @@ import type {
     TrayOptions,
     SpawnedProcessOptions,
     LocaleInfo,
+    GlobalHotkey,
 } from '../types/api/os';
 
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
@@ -81,4 +82,16 @@ export function trashItem(path: string): Promise<string> {
 
 export function getLocaleInfo(): Promise<LocaleInfo> {
     return sendMessage('os.getLocaleInfo');
+};
+
+export function registerGlobalHotkey(hotkey: GlobalHotkey): Promise<boolean> {
+    return sendMessage('os.registerGlobalHotkey', { hotkey });
+};
+
+export function unregisterGlobalHotkey(hotkey: GlobalHotkey): Promise<boolean> {
+    return sendMessage('os.unregisterGlobalHotkey', { hotkey });
+};
+
+export function getRegisteredHotkeys(): Promise<GlobalHotkey[]> {
+    return sendMessage('os.getRegisteredHotkeys');
 };
