@@ -24,6 +24,7 @@ import Json from '@rollup/plugin-json';
 import Minify from '@rollup/plugin-terser';
 import cleanup from 'rollup-plugin-cleanup';
 import { generateDtsBundle } from 'dts-bundle-generator';
+import { patchWithDocs } from './patchWithDocs.js';
 
 // JSON modules is experimental https://nodejs.org/api/esm.html#esm_experimental_json_modules
 const { version } = JSON.parse(
@@ -87,6 +88,9 @@ rollup({
             esModule: false,
         });
         return 0;
+    })
+    .then(() => {
+        return patchWithDocs();
     })
     .then(returned => {
         console.log('Rolling up typescript declarations');
