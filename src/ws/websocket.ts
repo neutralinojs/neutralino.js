@@ -16,18 +16,18 @@ export function init() {
     registerSocketEvents();
 }
 
-export function sendMessage(method: string, data?: any): Promise<any> {
+export function sendMessage(method: string, data?: any, stackErr: Error = new Error()): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
 
         if(ws?.readyState != WebSocket.OPEN) {
-            sendWhenReady({method, data, resolve, reject});
+            sendWhenReady({method, data, resolve, reject, stackErr});
             return;
         }
 
         const id: string = uuidv4();
         const accessToken: string = getAuthToken();
 
-        nativeCalls[id] = {resolve, reject};
+        nativeCalls[id] = {resolve, reject, stackErr};
 
         ws.send(JSON.stringify({
             id,
@@ -40,10 +40,16 @@ export function sendMessage(method: string, data?: any): Promise<any> {
 }
 
 export function sendWhenReady(message: any) {
+    if(!message.stackErr) {
+        message.stackErr = new Error();
+    }
     offlineMessageQueue.push(message);
 }
 
 export function sendWhenExtReady(extensionId: string, message: any) {
+    if(!message.stackErr) {
+        message.stackErr = new Error();
+    }
     if(extensionId in extensionMessageQueue) {
         extensionMessageQueue[extensionId].push(message);
     }
@@ -89,7 +95,8 @@ function registerSocketEvents() {
         if(message.id && message.id in nativeCalls) {
             // Native call response
             if(message.data?.error) {
-                nativeCalls[message.id].reject(message.data.error);
+                const err = createError(message.data.error, nativeCalls[message.id]?.stackErr);
+                nativeCalls[message.id].reject(err);
                 if(message.data.error.code == 'NE_RT_INVTOKN') {
                     // Invalid native method token
                     handleNativeMethodTokenError();
@@ -128,11 +135,26 @@ function registerSocketEvents() {
     });
 }
 
+function createError(errorData: any, stackErr?: Error): Error {
+    const err: any = new Error(errorData?.message || 'Neutralino call failed');
+    Object.assign(err, errorData);
+    if(stackErr?.stack) {
+        const stack = stackErr.stack;
+        const firstNewlineIndex = stack.indexOf('\n');
+        if(firstNewlineIndex !== -1) {
+            err.stack = `${err.name}: ${err.message}${stack.substring(firstNewlineIndex)}`;
+        } else {
+            err.stack = stack;
+        }
+    }
+    return err;
+}
+
 async function processQueue(messageQueue: any[]) {
     while(messageQueue.length > 0) {
         const message = messageQueue.shift();
         try {
-            const response = await sendMessage(message.method, message.data);
+            const response = await sendMessage(message.method, message.data, message.stackErr);
             message.resolve(response);
         }
         catch(err: any) {
