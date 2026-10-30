@@ -14,6 +14,15 @@ import type {
     LocaleInfo,
 } from '../types/api/os';
 
+// The title is optional for the dialog functions, so the options object
+// is also accepted as the first argument: showOpenDialog({ filters }).
+function dialogParams<T extends object>(titleOrOptions?: string | T, options?: T) {
+    if (typeof titleOrOptions === 'object' && titleOrOptions !== null) {
+        return { ...titleOrOptions };
+    }
+    return { title: titleOrOptions, ...options };
+}
+
 export function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult> {
     return sendMessage('os.execCommand', { command, ...options });
 };
@@ -42,16 +51,31 @@ export function getEnvs(): Promise<Envs> {
     return sendMessage('os.getEnvs');
 };
 
-export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]> {
-    return sendMessage('os.showOpenDialog', { title, ...options });
+export function showOpenDialog(options?: OpenDialogOptions): Promise<string[]>;
+export function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]>;
+export function showOpenDialog(
+    titleOrOptions?: string | OpenDialogOptions,
+    options?: OpenDialogOptions
+): Promise<string[]> {
+    return sendMessage('os.showOpenDialog', dialogParams(titleOrOptions, options));
 };
 
-export function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string> {
-    return sendMessage('os.showFolderDialog', { title, ...options });
+export function showFolderDialog(options?: FolderDialogOptions): Promise<string>;
+export function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string>;
+export function showFolderDialog(
+    titleOrOptions?: string | FolderDialogOptions,
+    options?: FolderDialogOptions
+): Promise<string> {
+    return sendMessage('os.showFolderDialog', dialogParams(titleOrOptions, options));
 };
 
-export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string> {
-    return sendMessage('os.showSaveDialog', { title, ...options });
+export function showSaveDialog(options?: SaveDialogOptions): Promise<string>;
+export function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string>;
+export function showSaveDialog(
+    titleOrOptions?: string | SaveDialogOptions,
+    options?: SaveDialogOptions
+): Promise<string> {
+    return sendMessage('os.showSaveDialog', dialogParams(titleOrOptions, options));
 };
 
 export function showNotification(title: string, content: string, icon?: Icon): Promise<void> {
