@@ -9,18 +9,15 @@ export interface NetParams {
 export type NetResponseFormat = 'text' | 'binary';
 
 export interface NetRequestOptions {
-    contentType?: string,
-    timeout?: number,
-    params?: NetParams,
-    headers?: NetHeaders,
+    timeout?: boolean,
+    params?: NetParams[],
+    headers?: NetHeaders[],
     auth?: {
         username: string,
         password: string
     },
-    body?: string,
-    allowRedirects?: boolean,
-    encodePath?: boolean,   // enabled by default
-    keepAlive?: boolean,    // disabled by default
+    encodePath: boolean,
+    keepAlive: boolean,
     responseType?: NetResponseFormat
 }
 
@@ -31,7 +28,6 @@ export interface NetResponse {
     bodyBytes?: Uint8Array,  // present when responseType is 'binary'
     headers: NetHeaders,
     cookies: string,
-    contentType: string,
     location: string,
     version: string
 }

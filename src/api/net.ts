@@ -9,9 +9,14 @@ import type {
     NetResponse
 } from '../types/api/net';
 
+// Wire-level entry point. Kept separate so net.fetch() doesn't depend on the
+// public NetRequestOptions shape.
+function __send(url: string, method: string, data: Record<string, unknown>): Promise<NetResponse> {
+    return sendMessage('net.request', { url, method: method.toUpperCase(), ...data });
+};
+
 export function request(url: string, method?: string, options?: NetRequestOptions): Promise<NetResponse> {
-    method = (method || "GET").toUpperCase();
-    return sendMessage('net.request', { url, method, ...options });
+    return __send(url, method || "GET", { ...options });
 };
 
 export function get(url: string, options?: NetRequestOptions): Promise<NetResponse> {
@@ -70,7 +75,7 @@ export async function fetch(url: string, init: NetFetchOptions = {}): Promise<Ne
         }
     }
 
-    const response: NetResponse = await __withSignal(request(
+    const response: NetResponse = await __withSignal(__send(
         __withParams(platformRequest.url, params),
         platformRequest.method,
         {
