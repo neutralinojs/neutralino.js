@@ -6,6 +6,10 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: net
+- Export `net.fetch(url, init)`, a fetch-like request that runs natively.
+- Add `responseType: 'binary'` to `net.request`; the body is returned as `bodyBytes`, so non-UTF-8 responses are preserved.
+
 ## v6.10.0
 
 ### API: computer
