@@ -6,6 +6,9 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### API: os
+- `os.showOpenDialog()`, `os.showFolderDialog()`, and `os.showSaveDialog()` now accept the options object as the first argument, since the title is optional: `os.showOpenDialog({ filters })`. Passing the title first still works.
+
 ## v6.10.0
 
 ### API: computer
