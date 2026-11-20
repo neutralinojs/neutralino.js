@@ -11,6 +11,7 @@ import type {
     NetworkInterfaceInfo
 } from '../types/api/computer';
 import type { SendKeyState } from '../types/enums';
+import type { SuccessResponse } from '../types/api/protocol';
 
 export function getMemoryInfo(): Promise<MemoryInfo> {
     return sendMessage('computer.getMemoryInfo');
@@ -40,7 +41,7 @@ export function getDisplays(): Promise<Display[]> {
     return sendMessage('computer.getDisplays');
 };
 
-export function getDisks(): Promise<Disk> {
+export function getDisks(): Promise<Disk[]> {
     return sendMessage('computer.getDisks');
 };
 
@@ -53,15 +54,15 @@ export function getMousePosition(): Promise<MousePosition> {
     return sendMessage('computer.getMousePosition');
 };
 
-export function setMousePosition(x: number, y: number): Promise<void> {
+export function setMousePosition(x: number, y: number): Promise<SuccessResponse> {
     return sendMessage('computer.setMousePosition', { x, y });
 }
 
-export function setMouseGrabbing(grabbing: boolean): Promise<void> {
+export function setMouseGrabbing(grabbing: boolean): Promise<SuccessResponse> {
     return sendMessage('computer.setMouseGrabbing', { grabbing });
 }
 
-export function sendKey(key: number, state: SendKeyState): Promise<void> {
+export function sendKey(key: number, state: SendKeyState): Promise<SuccessResponse> {
     return sendMessage('computer.sendKey', { key, state });
 }
 

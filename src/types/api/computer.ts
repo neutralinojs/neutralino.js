@@ -1,4 +1,4 @@
-import { NetworkFamily } from '../enums';
+import type { NetworkFamily } from '../enums';
 
 export interface MemoryInfo {
     physical: {
@@ -34,11 +34,11 @@ export interface CPUInfo {
 
 export interface GPUInfo {
     id: number;
+    deviceId: number;
+    vendorId: number;
     vendor: string;
-    name: string;
-    memorySize: number;
-    cacheSize: number;
-    maxFrequency: number;
+    dedicatedMemory: number;
+    sharedMemory: number;
 }
 
 export interface Display {
@@ -54,6 +54,7 @@ export interface Disk {
     vendor: string;
     model: string;
     serial: string;
+    mountPoint: string;
     total: number;
     free: number;
 }
@@ -76,5 +77,5 @@ export interface NetworkInterfaceAddress {
 }
 
 export interface NetworkInterfaceInfo {
-    [key: string]: NetworkInterfaceAddress;
+    [key: string]: NetworkInterfaceAddress[];
 }
