@@ -9,6 +9,9 @@ export type ErrorCode =
     'NE_FS_MOVEFER' |
     'NE_OS_INVMSGA' |
     'NE_OS_INVKNPT' |
+    'NE_OS_INVHOTKY' |
+    'NE_OS_UNLTOHK' |
+    'NE_OS_UNLTOUHK' |
     'NE_ST_INVSTKY' |
     'NE_ST_STKEYWE' |
     'NE_RT_INVTOKN' |
