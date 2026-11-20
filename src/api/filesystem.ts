@@ -79,6 +79,10 @@ export function updateOpenedFile(id: number, event: string, data?: any): Promise
     return sendMessage('filesystem.updateOpenedFile', { id, event, data });
 };
 
+export function getOpenedFiles(): Promise<number[]> {
+    return sendMessage('filesystem.getOpenedFiles');
+};
+
 export function getOpenedFileInfo(id: number): Promise<OpenedFile> {
     return sendMessage('filesystem.getOpenedFileInfo', { id });
 };
