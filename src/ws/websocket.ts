@@ -5,6 +5,7 @@ let ws;
 const nativeCalls = {};
 const offlineMessageQueue = [];
 const extensionMessageQueue = {}
+const binaryFrameDecoder = new TextDecoder();
 
 export function init() {
     initAuth();
@@ -12,6 +13,8 @@ export function init() {
     const hostname: string = (window.NL_GINJECTED || window.NL_CINJECTED) ? 
                             '127.0.0.1' : window.location.hostname;
     ws = new WebSocket(`ws://${hostname}:${window.NL_PORT}?connectToken=${connectToken}`);
+    // required for binary native responses
+    ws.binaryType = 'arraybuffer';
     registerLibraryEvents();
     registerSocketEvents();
 }
@@ -84,23 +87,16 @@ function registerLibraryEvents() {
 
 function registerSocketEvents() {
     ws.addEventListener('message', (event) => {
+        if(event.data instanceof ArrayBuffer) {
+            // Binary response frame: [uint32LE header length][JSON header][raw body]
+            __handleBinaryFrame(event.data);
+            return;
+        }
+
         const message = JSON.parse(event.data);
 
         if(message.id && message.id in nativeCalls) {
-            // Native call response
-            if(message.data?.error) {
-                nativeCalls[message.id].reject(message.data.error);
-                if(message.data.error.code == 'NE_RT_INVTOKN') {
-                    // Invalid native method token
-                    handleNativeMethodTokenError();
-                }
-            }
-            else if(message.data?.success) {
-                nativeCalls[message.id]
-                    .resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue
-                        : message.data);
-            }
-            delete nativeCalls[message.id];
+            __resolveNativeCall(message);
         }
         else if(message.event) {
             // Event from process
@@ -126,6 +122,46 @@ function registerSocketEvents() {
     ws.addEventListener('error', async (event) => {
         handleConnectError();
     });
+}
+
+function __handleBinaryFrame(buffer: ArrayBuffer) {
+    if(buffer.byteLength < 4) {
+        throw new Error('NE_CL_IVBFRM: Invalid binary response frame');
+    }
+
+    const headerLength: number = new DataView(buffer).getUint32(0, true);
+    if(headerLength > buffer.byteLength - 4) {
+        throw new Error('NE_CL_IVBFRM: Invalid binary response frame');
+    }
+
+    const header = JSON.parse(
+        binaryFrameDecoder.decode(new Uint8Array(buffer, 4, headerLength)),
+    );
+    __resolveNativeCall(header, new Uint8Array(buffer, 4 + headerLength));
+}
+
+function __resolveNativeCall(message: any, bodyBytes?: Uint8Array) {
+    if(!message.id || !(message.id in nativeCalls)) {
+        return;
+    }
+
+    if(message.data?.error) {
+        nativeCalls[message.id].reject(message.data.error);
+        if(message.data.error.code == 'NE_RT_INVTOKN') {
+            // Invalid native method token
+            handleNativeMethodTokenError();
+        }
+    }
+    else if(message.data?.success) {
+        const result = Object.prototype.hasOwnProperty.call(message.data, 'returnValue')
+            ? message.data.returnValue
+            : message.data;
+        if(bodyBytes !== undefined && typeof result === 'object' && result !== null) {
+            result.bodyBytes = bodyBytes;
+        }
+        nativeCalls[message.id].resolve(result);
+    }
+    delete nativeCalls[message.id];
 }
 
 async function processQueue(messageQueue: any[]) {
