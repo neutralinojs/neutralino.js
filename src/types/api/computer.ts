@@ -54,8 +54,26 @@ export interface Disk {
     vendor: string;
     model: string;
     serial: string;
+    mountPoint: string;
     total: number;
     free: number;
+}
+
+export type ConnectedDeviceType =
+    'MOUSE' |
+    'KEYBOARD' |
+    'TOUCHPAD' |
+    'TOUCHSCREEN' |
+    'GAMEPAD' |
+    'JOYSTICK' |
+    'PEN' |
+    'HID';
+
+export interface ConnectedDevice {
+    name: string;
+    type: ConnectedDeviceType;
+    vendorId: string;
+    productId: string;
 }
 
 export interface Resolution {
