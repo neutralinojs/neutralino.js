@@ -6,6 +6,11 @@ rename `Unreleased` topic with the new version tag. Finally, create a new `Unrel
 
 ## Unreleased
 
+### Bugfixes/improvements
+- Fix the `NetRequestOptions` TypeScript type: `headers` and `params` are key-value objects, `timeout` is a number, and `encodePath`/`keepAlive` are optional. Add the missing `body`, `contentType`, and `allowRedirects` options.
+- Add the missing `contentType` field to the `NetResponse` type.
+- Mark all fields of `FileReaderOptions`, `DirectoryReaderOptions`, and `CopyOptions` as optional in TypeScript, matching the API documentation.
+
 ## v6.10.0
 
 ### API: computer
