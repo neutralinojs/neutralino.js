@@ -82,3 +82,7 @@ export function trashItem(path: string): Promise<string> {
 export function getLocaleInfo(): Promise<LocaleInfo> {
     return sendMessage('os.getLocaleInfo');
 };
+
+export function getLocale(): Promise<LocaleInfo> {
+    return sendMessage('os.getLocale');
+};
