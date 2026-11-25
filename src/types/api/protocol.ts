@@ -23,7 +23,7 @@ export type ErrorCode =
     'NE_UP_UPDNOUF' |
     'NE_UP_UPDINER'
 
-export interface Error {
+export interface Error extends Partial<globalThis.Error> {
     code: ErrorCode;
     message: string;
 }
