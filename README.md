@@ -27,13 +27,28 @@ npm install
 npm run build
 ```
 
-How to test with the Neutralinojs server?
+How to test local client changes with the Neutralinojs framework?
+
+Keep the client checkout named `neutralino.js` and the framework checkout named
+`neutralinojs` in the same parent directory. Install the client dependencies
+with `npm install`, then [build the framework binary for your platform](https://neutralino.js.org/docs/contributing/framework-developer-guide/#compile-the-neutralinojs-framework).
+
+From the client checkout, run:
 
 ```bash
 cd ../neutralinojs
 bash ./scripts/update_client.sh
-./bin/neutralino-{platform}_{arch} --load-dir-res # Eg: ./bin/neutralino-linux_x64 --load-dir-res
+./bin/neutralino-linux_x64 --load-dir-res
 ```
+
+The last command is the Linux x64 example. Use the corresponding binary in
+`bin/` for your platform and architecture.
+
+The update script builds the local client in development mode and copies the
+generated bundles into `bin/resources/js/`. The test app loads them
+from that directory when started with `--load-dir-res`. Make changes in the
+client's `src/` directory, then rerun the update script and restart the app to
+test them.
 
 ### License
 
